@@ -64,7 +64,7 @@ const registrationSchema = new mongoose.Schema({
 // Add a pre-save hook to generate QR code if not provided
 registrationSchema.pre('save', async function(next) {
   if (!this.qrCode) {
-    // Here you would implement QR code generation
+    // Here you would implement QR code 
     // For example:
     // this.qrCode = await generateQRCode(this._id.toString());
     console.log('QR code generation placeholder');
