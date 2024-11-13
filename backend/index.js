@@ -1,15 +1,25 @@
+import dotenv from 'dotenv';
+import connectDB from './config/db.js';
 import express from 'express';
 
-// Load the .env file
 dotenv.config();
-const port = process.env.PORT || 5000;
 
-// Connect to the database
-connectDB();
+// Make the initialization async
+const init = async () => {
+    try {
+        await connectDB(); // Wait for the connection
+        
+        const app = express();
+        const PORT = process.env.PORT || 5000;
 
-const app = express();
+        app.listen(PORT, () => {
+            console.log(`Server running on port ${PORT}`);
+        });
+    } catch (error) {
+        console.error('Server initialization failed:', error);
+        process.exit(1);
+    }
+};
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use(cookieParser())
-app.use(cors()) 
+init(); // Run the async initialization
+  
