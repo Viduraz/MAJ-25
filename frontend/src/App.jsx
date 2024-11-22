@@ -6,7 +6,8 @@ import Signin from './Pages/Signin'
 import Signup from './Pages/Signup'
 import Header from './Components/Header'
 
-export default function App () {
+
+export default function App() {
   return <BrowserRouter>
   {/** Header imported */}
     <Header />
@@ -16,6 +17,7 @@ export default function App () {
       <Route path="/profile" element={<Profile />} />
       <Route path="/signin" element={<Signin />} />
       <Route path="/signup" element={<Signup />} />
+    
     </Routes>
   
   </BrowserRouter>
