@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema({
     password : {
         type: String,
         required: true
+    },
+    profilePicture : {
+        type: String,
+        default: "https://example.com/default-profile.png",
     }
 },{timestamps: true});
 
