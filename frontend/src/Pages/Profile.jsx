@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useRef, useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   updateUserStart,
   updateUserSuccess,
@@ -8,15 +9,42 @@ import {
   deleteUserSuccess,
   deleteUserFailure,
   signOut,
-} from '../redux/User/userSlice.js';
+} from '../redux/User/userSlice';
 
 export default function Profile() {
   const dispatch = useDispatch();
   const fileRef = useRef(null);
+  const [image, setImage] = useState(undefined);
+  const [imagePercent, setImagePercent] = useState(0);
+  const [imageError, setImageError] = useState(false);
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
-  const { currentUser, loading, error } = useSelector((state) => state.user);
 
+  const { currentUser, loading, error } = useSelector((state) => state.user);
+  useEffect(() => {
+    if (image) {
+      handleFileUpload(image);
+    }
+  }, [image]);
+  const handleFileUpload = async (image) => {
+    const formData = new FormData();
+    formData.append('file', image);
+
+    try {
+      const res = await fetch('/api/user/uploadProfilePicture', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.success) {
+        setFormData({ ...formData, profilePicture: data.url });
+      } else {
+        setImageError(true);
+      }
+    } catch (error) {
+      setImageError(true);
+    }
+  };
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -64,33 +92,41 @@ export default function Profile() {
   const handleSignOut = async () => {
     try {
       await fetch('/api/auth/signout');
-      dispatch(signOut());
+      dispatch(signOut())
     } catch (error) {
       console.log(error);
     }
   };
-
-  if (!currentUser) {
-    return (
-      <div className='p-3 max-w-lg mx-auto'>
-        <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
-        <p className='text-red-700 text-center'>No user is logged in.</p>
-      </div>
-    );
-  }
-
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
-      <div className='flex flex-col items-center'>
-        {/* Avatar Section */}
-        <img
-          src="https://via.placeholder.com/150" // Placeholder avatar URL
-          alt='avatar'
-          className='h-24 w-24 rounded-full object-cover mb-4'
-        />
-      </div>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+        <input
+          type='file'
+          ref={fileRef}
+          hidden
+          accept='image/*'
+          onChange={(e) => setImage(e.target.files[0])}
+        />
+        <img
+          src={formData.profilePicture || currentUser.profilePicture}
+          alt='profile'
+          className='h-24 w-24 self-center cursor-pointer rounded-full object-cover mt-2'
+          onClick={() => fileRef.current.click()}
+        />
+        <p className='text-sm self-center'>
+          {imageError ? (
+            <span className='text-red-700'>
+              Error uploading image (file size must be less than 2 MB)
+            </span>
+          ) : imagePercent > 0 && imagePercent < 100 ? (
+            <span className='text-slate-700'>{`Uploading: ${imagePercent} %`}</span>
+          ) : imagePercent === 100 ? (
+            <span className='text-green-700'>Image uploaded successfully</span>
+          ) : (
+            ''
+          )}
+        </p>
         <input
           defaultValue={currentUser.username}
           type='text'
