@@ -16,6 +16,10 @@ export default function Registration() {
   const [leaders, setLeaders] = useState([{ fullName: '', idNumber: '', gender: '', phoneNumber: '', email: '' }]);
   const [scoutCount, setScoutCount] = useState(0);
   const [scouts, setScouts] = useState([{ fullName: '', gender: '', phoneNumber: '', email: '' }]);
+  const [school, setSchool] = useState('');
+  const [amount, setAmount] = useState('');
+  const [paymentDate, setPaymentDate] = useState('');
+  const [receiptImage, setReceiptImage] = useState('');
 
   const handleLeaderCountChange = (e) => {
     const count = parseInt(e.target.value);
@@ -45,10 +49,14 @@ export default function Registration() {
     <>
       <h1 className="text-3xl font-bold text-blue-500 text-center mb-5">MAJ-25 Registration</h1>
 
-      
       <div className="mb-5">
         <label htmlFor="school" className="block text-lg font-medium text-gray-700">Select Your School</label>
-        <select id="school" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        <select
+          id="school"
+          value={school}
+          onChange={(e) => setSchool(e.target.value)}
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        >
           <option value="">-- Select Your School --</option>
           {schools.map((school, index) => (
             <option key={index} value={school}>{school}</option>
@@ -58,7 +66,7 @@ export default function Registration() {
 
       {step === 1 && (
         <>
-        <h2 className="text-2xl font-bold text-center mb-5">Register Your Adult Scout Leaders</h2>
+          <h2 className="text-2xl font-bold text-center mb-5">Register Your Adult Scout Leaders</h2>
           <div className="mb-5">
             <label htmlFor="leaderCount" className="block text-lg font-medium text-gray-700">How many adult leaders participated?</label>
             <input
@@ -137,6 +145,15 @@ export default function Registration() {
 
       {step === 3 && (
         <PaymentReceipt
+          school={school}
+          leaders={leaders}
+          scouts={scouts}
+          amount={amount}
+          paymentDate={paymentDate}
+          receiptImage={receiptImage}
+          setAmount={setAmount}
+          setPaymentDate={setPaymentDate}
+          setReceiptImage={setReceiptImage}
           onPrevious={() => setStep(2)}
         />
       )}
