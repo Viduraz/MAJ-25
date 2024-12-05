@@ -6,6 +6,10 @@ const registrationSchema = new mongoose.Schema({
     phoneNumber: { type: String, required: true },
     email: { type: String, required: true },
     school: { type: String, required: true },
+    idNumber: { type: Number, default: 0, required: true },
+    paymentDate: { type: Date },
+    amount: { type: Number },
+    receiptImage: { type: String },
     type: { type: String }
 }, { timestamps: true });
 
