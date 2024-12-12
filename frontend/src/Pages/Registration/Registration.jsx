@@ -47,15 +47,15 @@ export default function Registration() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold text-blue-500 text-center mb-5">MAJ-25 Registration</h1>
+      <h1 className="text-4xl font-extrabold text-green-600 text-center mb-6">MAJ-25 Registration</h1>
 
-      <div className="mb-5">
-        <label htmlFor="school" className="block text-lg font-medium text-gray-700">Select Your School</label>
+      <div className="mb-6">
+        <label htmlFor="school" className="block text-xl font-semibold text-gray-800">Select Your School</label>
         <select
           id="school"
           value={school}
           onChange={(e) => setSchool(e.target.value)}
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          className="mt-2 block w-full border border-gray-400 rounded-lg shadow-md focus:ring-green-600 focus:border-green-600"
         >
           <option value="">-- Select Your School --</option>
           {schools.map((school, index) => (
@@ -65,42 +65,42 @@ export default function Registration() {
       </div>
 
       {step === 1 && (
-        <>
-          <h2 className="text-2xl font-bold text-center mb-5">Register Your Adult Scout Leaders</h2>
-          <div className="mb-5">
-            <label htmlFor="leaderCount" className="block text-lg font-medium text-gray-700">How many adult leaders participated?</label>
+        <div className="bg-white p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
+          <h2 className="text-3xl font-extrabold text-center mb-6">Register Your Adult Scout Leaders</h2>
+          <div className="mb-6">
+            <label htmlFor="leaderCount" className="block text-xl font-semibold text-gray-800">How many adult leaders participated?</label>
             <input
               type="number"
               id="leaderCount"
               value={leaderCount}
               onChange={handleLeaderCountChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              className="mt-2 block w-full border border-gray-400 rounded-lg shadow-md focus:ring-green-600 focus:border-green-600 text-balance"
             />
           </div>
 
           {leaders.map((leader, index) => (
-            <div key={index} className="mb-5 border p-4 rounded-md">
-              <h2 className="text-lg font-medium">Leader {index + 1}</h2>
+            <div key={index} className="mb-6 border p-5 rounded-lg bg-gray-50">
+              <h2 className="text-xl font-semibold mb-3">Leader {index + 1}</h2>
               <input
                 type="text"
                 placeholder="Full Name"
                 value={leader.fullName}
                 onChange={(e) => handleLeaderChange(index, 'fullName', e.target.value)}
-                className="mt-1 block w-full border border-gray-300 rounded-md"
+                className="mt-2 block w-full border border-gray-400 rounded-lg shadow-md focus:ring-green-600 focus:border-green-600 text-center"
               />
               <input
                 type="text"
                 placeholder="ID Number"
                 value={leader.idNumber}
                 onChange={(e) => handleLeaderChange(index, 'idNumber', e.target.value)}
-                className="mt-1 block w-full border border-gray-300 rounded-md"
+                className="mt-2 block w-full border border-gray-400 rounded-lg shadow-md focus:ring-green-600 focus:border-green-600 text-center"
               />
-              <label htmlFor={`gender-${index}`} className="block text-lg font-medium text-gray-700 mt-2">Gender</label>
+              <label htmlFor={`gender-${index}`} className="block text-xl font-semibold text-gray-800 mt-3">Gender</label>
               <select
                 id={`gender-${index}`}
                 value={leader.gender}
                 onChange={(e) => handleLeaderChange(index, 'gender', e.target.value)}
-                className="mt-1 block w-full border border-gray-300 rounded-md"
+                className="mt-2 block w-full border border-gray-400 rounded-lg shadow-md focus:ring-green-600 focus:border-green-600 text-center"
               >
                 <option value="">-- Select Gender --</option>
                 <option value="Male">Male</option>
@@ -111,25 +111,22 @@ export default function Registration() {
                 placeholder="Phone Number"
                 value={leader.phoneNumber}
                 onChange={(e) => handleLeaderChange(index, 'phoneNumber', e.target.value)}
-                className="mt-1 block w-full border border-gray-300 rounded-md"
+                className="mt-2 block w-full border border-gray-400 rounded-lg shadow-md focus:ring-green-600 focus:border-green-600 text-center"
               />
               <input
                 type="email"
                 placeholder="Email"
                 value={leader.email}
                 onChange={(e) => handleLeaderChange(index, 'email', e.target.value)}
-                className="mt-1 block w-full border border-gray-300 rounded-md"
+                className="mt-2 block w-full border border-gray-400 rounded-lg shadow-md focus:ring-green-600 focus:border-green-600 text-center"
               />
             </div>
           ))}
 
-          <button
-            onClick={() => setStep(2)}
-            className="mt-5 bg-blue-500 text-white px-4 py-2 rounded-md"
-          >
-            Next
-          </button>
-        </>
+          <div className="flex justify-center mt-6">
+            <button onClick={() => setStep(2)} className="bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-700">Next</button>
+          </div>
+        </div>
       )}
 
       {step === 2 && (
