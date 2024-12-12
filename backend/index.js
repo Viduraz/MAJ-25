@@ -8,9 +8,9 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 dotenv.config();
 
-mongoose.connect(process.env.MONGOURI).then( () => {
+mongoose.connect(process.env.MONGOURI).then(() => {
     console.log('DB connected Successfully');
-}).catch( (Err) => {
+}).catch((err) => {
     console.log(err);
 });
 
@@ -22,7 +22,7 @@ app.use(cookieParser());
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
-    });
+});
 
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
