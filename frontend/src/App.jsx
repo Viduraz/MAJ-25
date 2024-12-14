@@ -12,6 +12,7 @@ import Sprofiles from './Pages/Profiles/Sprofiles';
 import PrivateRoute from './Components/PrivateRoute';
 import PrivateRoute1 from './Components/PrivateRouteProfile';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import Gallery from './Pages/Gallery';
 
 function App() {
   return (
@@ -21,10 +22,12 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+         
           <Route path="/about" element={<About />} />
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
           </Route>
+          <Route path="/gallery" element={<Gallery />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route element={<PrivateRoute />}>
