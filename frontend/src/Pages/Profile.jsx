@@ -21,13 +21,28 @@ export default function Profile() {
   const [imageError, setImageError] = useState(false);
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [loadingPicture, setLoadingPicture] = useState(true);
+  const [profilePicture, setProfilePicture] = useState(null);
 
   const { currentUser, loading, error } = useSelector((state) => state.user);
+
   useEffect(() => {
     if (image) {
       handleFileUpload(image);
     }
   }, [image]);
+
+  useEffect(() => {
+    const loadProfilePicture = async () => {
+      // Simulate loading profile picture
+      const picture = currentUser.profilePicture;
+      setProfilePicture(picture);
+      setLoadingPicture(false);
+    };
+
+    loadProfilePicture();
+  }, [currentUser]);
+
   const handleFileUpload = async (image) => {
     const formData = new FormData();
     formData.append('file', image);
@@ -50,6 +65,7 @@ export default function Profile() {
       setImageError(true);
     }
   };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -107,6 +123,11 @@ export default function Profile() {
       toast.error('An error occurred while signing out.');
     }
   };
+
+  if (loadingPicture) {
+    return <div>Loading profile picture...</div>;
+  }
+
   return (
     <>
       <ToastContainer />
@@ -121,7 +142,7 @@ export default function Profile() {
             onChange={(e) => setImage(e.target.files[0])}
           />
           <img
-            src={formData.profilePicture || currentUser.profilePicture}
+            src={formData.profilePicture || profilePicture}
             alt='profile'
             className='h-24 w-24 self-center cursor-pointer rounded-full object-cover mt-2'
             onClick={() => fileRef.current.click()}
