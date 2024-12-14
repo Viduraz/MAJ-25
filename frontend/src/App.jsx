@@ -1,16 +1,19 @@
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Header from './Components/Header';
+import Footer from './Components/Footer'; 
 import Home from './Pages/Home';
 import About from './Pages/About';
 import Profile from './Pages/Profile';
 import Signin from './Pages/Signin';
 import Signup from './Pages/Signup';
-import Header from './Components/Header';
 import Registration from './Pages/Registration/Registration';
-import PrivateRoute from './Components/PrivateRoute';
 import Sprofiles from './Pages/Profiles/Sprofiles';
+import PrivateRoute from './Components/PrivateRoute';
 import PrivateRoute1 from './Components/PrivateRouteProfile';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
-export default function App() {
+function App() {
   return (
     <BrowserRouter>
       {/** Header imported */}
@@ -31,7 +34,10 @@ export default function App() {
             <Route path="/sprofiles" element={<Sprofiles />} />
           </Route>
         </Routes>
+        <Footer /> {/** Footer added */}
       </div>
     </BrowserRouter>
   );
 }
+
+export default App;
