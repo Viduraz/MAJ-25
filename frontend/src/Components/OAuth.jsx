@@ -12,7 +12,7 @@ export default function OAuth () {
             const provider = new GoogleAuthProvider();
             const auth = getAuth(firebaseApp);
             const result = await signInWithPopup(auth, provider);
-            const res = await fetch('/api/auth/google', {
+            const res = await fetch('http://localhost:3000/api/auth/google', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -23,6 +23,11 @@ export default function OAuth () {
                     photo: result.user.photoURL,
                 }),
             });
+
+            if (!res.ok) {
+                throw new Error('Network response was not ok');
+            }
+
             const data = await res.json();
             dispatch(signInSuccess(data));
             navigate('/');
