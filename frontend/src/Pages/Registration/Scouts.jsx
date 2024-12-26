@@ -52,6 +52,13 @@ export default function Scouts({ scoutCount, scouts, handleScoutCountChange, han
               onChange={(e) => handleScoutChange(index, 'email', e.target.value)}
               className="mt-2 block w-full border border-gray-400 rounded-lg shadow-md focus:ring-green-600 focus:border-green-600 text-center"
             />
+            {/* <input
+              type="date"
+              placeholder="Date of Birth"
+              value={scout.dateOfBirth}
+              onChange={(e) => handleScoutChange(index, 'dateOfBirth', e.target.value)}
+              className="mt-2 block w-full border border-gray-400 rounded-lg shadow-md focus:ring-green-600 focus:border-green-600 text-center"
+            /> */}
           </div>
         ))}
 

@@ -46,7 +46,8 @@ export default function PaymentReceipt({ school, leaders, scouts, amount, paymen
           paymentDate: paymentDate,
           amount: amount,
           receiptImage: receiptImage,
-          type: 'Scout'
+          type: 'Scout',
+          
         });
       }
 
