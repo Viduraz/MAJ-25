@@ -13,6 +13,7 @@ import PrivateRoute from './Components/PrivateRoute';
 import PrivateRoute1 from './Components/PrivateRouteProfile';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Gallery from './Pages/Gallery';
+import ARegistrations from './Pages/AdminPages/ARegistrations';
 
 function App() {
   return (
@@ -30,12 +31,15 @@ function App() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/aregistrations" element={<ARegistrations/>}/>
           <Route element={<PrivateRoute />}>
             <Route path="/registration" element={<Registration />} />
           </Route>
           <Route element={<PrivateRoute1 />}>
             <Route path="/sprofiles" element={<Sprofiles />} />
           </Route>
+          
+          
         </Routes>
         <Footer /> {/** Footer added */}
       </div>
