@@ -96,6 +96,22 @@ export default function Sprofiles() {
         </div>
       </div>
 
+      {/* Activity List Section */}
+      <div className="mt-10">
+        <h2 className="text-3xl font-bold text-blue-600 mb-4">Activity List</h2>
+        <ul className="list-disc pl-5">
+          {Array.from({ length: 10 }, (_, index) => (
+            <li key={index}>Activity {index + 1}</li>
+          ))}
+        </ul>
+        {/* Check for Activity Award */}
+        {registrationData && registrationData.completedActivities >= 8 && (
+          <div className="mt-4 text-green-600 font-bold">
+            Congratulations! You've earned the Activity Award!
+          </div>
+        )}
+      </div>
+
       {/* Footer Section */}
       <footer className="mt-10 text-center text-gray-600">
         {/* Footer content can go here */}
