@@ -16,6 +16,9 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.7.1",
+    "@fortawesome/free-brands-svg-icons": "^6.7.1",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
@@ -24,9 +27,12 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.8.2",
     "nodemon": "^3.1.7",
+    "qrcode.react": "^4.2.0",
+    "react-qr-code": "^2.0.15",
     "react-toastify": "^10.0.6"
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
     "concurrently": "^9.1.0"
   }
 }
