@@ -13,7 +13,7 @@ export default function Footer() {
             className="w-24 h-24 mb-4"
           />
           <p className="text-sm text-gray-400 text-center md:text-left">
-            Maliyadeva Adarsha Jumboreeta <br /> Bringing an unbelievable camping experience for everyone.
+            Maliyadeva Adarsha Jambareeta <br /> Bringing an unbelievable camping experience for everyone.
           </p>
         </div>
 
