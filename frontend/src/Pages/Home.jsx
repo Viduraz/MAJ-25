@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import v1 from "../Assests/v1.mp4";
+import axios from "axios";
 
 export default function Home() {
   // Scroll to section function
@@ -20,10 +21,17 @@ export default function Home() {
 
   // Update count on component mount
   useEffect(() => {
-    const storedCount = parseInt(localStorage.getItem("registeredCount")) || 0;
-    const newCount = storedCount + Math.floor(Math.random() * 2) + 4;
-    setCount(newCount);
-    localStorage.setItem("registeredCount", newCount);
+    const fetchRegisteredCount = async () => {
+      try {
+        const response = await axios.get("http://localhost3000/api/registrations");
+        setCount(response.data.count);
+        localStorage.setItem("registeredCount", response.data.count);
+      } catch (error) {
+        console.error("Error fetching registered count:", error);
+      }
+    };
+
+    fetchRegisteredCount();
   }, []);
 
   // Update countdown every second
@@ -76,7 +84,7 @@ export default function Home() {
             Welcome To Unbelievable Camping Experience
           </p>
           <h1 className="text-6xl font-bold leading-tight mb-6">
-            Maliyadeva <span className="text-gray-400">Adarsha</span> Jumboreeta
+            Maliyadeva <span className="text-gray-400">Adarsha</span> Jambareeta
           </h1>
           <button className="bg-white text-gray-900 px-6 py-3 font-semibold rounded-full hover:bg-gray-300 transition duration-300">
             LEARN MORE
