@@ -23,9 +23,10 @@ export default function Home() {
   useEffect(() => {
     const fetchRegisteredCount = async () => {
       try {
-        const response = await axios.get("http://localhost3000/api/registrations");
-        setCount(response.data.count);
-        localStorage.setItem("registeredCount", response.data.count);
+        const response = await axios.get("http://localhost:3000/api/registration");
+        console.log("err",response );
+        setCount(response.data.length);
+        localStorage.setItem("registeredCount", response.data.length);
       } catch (error) {
         console.error("Error fetching registered count:", error);
       }
