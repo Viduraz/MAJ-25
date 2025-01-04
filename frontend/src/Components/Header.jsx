@@ -16,6 +16,9 @@ export default function Header() {
           <Link to='/gallery'>
             <li>Gallery</li>
           </Link>
+          <Link to ='/pass-activity'>
+            <li>Pass Activity</li>
+          </Link>
           <Link to='/about'>
             <li>About</li>
           </Link>
