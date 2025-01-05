@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
 import Scouts from './Scouts';
 import PaymentReceipt from './PaymentReceipt';
+import { toast } from 'react-hot-toast';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Registration() {
   const schools = [
-    "School A", "School B", "School C", "School D", "School E",
-    "School F", "School G", "School H", "School I", "School J",
-    "School K", "School L", "School M", "School N", "School O",
-    "School P", "School Q", "School R", "School S", "School T",
-    "School U", "School V", "School W", "School X", "School Y", "School Z",
+    "Giri/Dammaloka Vidyalaya", "Giri/Kalundawa Saranankara Maha Vidyalaya", "Giri/Mayurapada K.V.", "Giri/Mayurapada N.S.", "Giri/Ruggassagara Kanishta Vidyalaya",
+    "Giri/Wennoruwa Vijayaba M.V.", "Ibbagamuwa Central College", "Kuli/Assedduma Subarathi Vidyalaya", "Kuli/Bibiladeniya M.M.V.", "Kuli/Ethungahakotuwa M.C.C.",
+    "Kuli/Holy Angels Girl's College", "Kuli/Kanadulla M.V.", "Kuli/Magulagama Maha Vidyalaya", "Kuli/Moragane Maha Vidyalaya", "Kuli/Saranath N.S.",
+    "Ku/Athugalpura Prince College", "Ku/Athugalpura Vidyadeepa College", "Ku/Boyagane Maha Vidyalaya", "Ku/D.B. Welagedara M.V.", "Ku/D.P. Wickramasinghe College",
+    "Ku/D.S. Senanayaka National School", "Ku/Gallehera Maha Vidyalaya", "Ku/Humbuluwa Central College", "Ku/Lakdas De Mel College", "Ku/Mahinda Vidyalaya",
+    "Ku/Maliyadeva Adarsha College", "Ku/Maliyadeva College", "Ku/Rambadagalla Central College", "Ku/Royal International School", "Ku/Shantha Bernadet Maha Vidyalaya",
+    "Ku/Sir John Kothalawala College", "Ku/St.Anne's College", "Ku/Wellawa Central College", "Nika/Isipathana Central College", "Nika/Jayanthi Vidyalaya",
+    "Nika/Kebellewa Maha Vidyalaya", "Nika/Mahasen National School", "Nika/Rajabima College", "Nika/Sangabodhi Central College", "Nika/Sri Dheerananda M.V.",
+    "Nika/Sri Sarananda Maha Vidyalaya", "Nika/Thumbulla Maha Vidyalaya", "Nika/Wari/Sri Sumangala Central College", "Nika/Wari/Sri Sunanda Maha Vidyalaya",
+    "Ku/Sussex College", "Ku/Vishvoda College", "W/Giri/Boyawalana Maha Vidyalaya", "W/Giri/Gemunu Central College", "W/Giri/Pannala National School",
+    "W/Giri/Rathanalankara Maha Vidyalaya", "W/Giri/Sri Rahula Central College", "W/Giri/Wayamba President College", "W/Giri/Welpalla Sri Sangarathana M.V.",
+    "W/IB/Weera Colonel Niyomal Palipana College", "Wayamba International School", "Wayamba Royal College", "NW/M/Giri Sole Maha Vidyalaya"
   ];
 
   const [step, setStep] = useState(1);
@@ -20,6 +30,7 @@ export default function Registration() {
   const [amount, setAmount] = useState('');
   const [paymentDate, setPaymentDate] = useState('');
   const [receiptImage, setReceiptImage] = useState('');
+  const [leaderErrors, setLeaderErrors] = useState([]);
 
   const handleLeaderCountChange = (e) => {
     const count = parseInt(e.target.value);
@@ -33,9 +44,41 @@ export default function Registration() {
     setScouts(Array.from({ length: count }, () => ({ fullName: '', gender: '', phoneNumber: '', email: '' })));
   };
 
+  const validateLeader = (leader) => {
+    const errors = [];
+    if (!leader.fullName) {
+      errors.push("Full Name is required.");
+    }
+    if (!leader.idNumber) {
+      errors.push("ID Number is required.");
+    } else if (leader.idNumber.length > 12 || !/^[V0-9]*$/.test(leader.idNumber)) {
+      errors.push("ID Number must be a maximum of 12 characters and can include 'V'.");
+    }
+    if (!leader.phoneNumber) {
+      errors.push("Phone Number is required.");
+    } else if (leader.phoneNumber.length !== 10 || !/^\d{10}$/.test(leader.phoneNumber)) {
+      errors.push("Phone Number must be exactly 10 digits.");
+    }
+    if (!leader.gender) {
+      errors.push("Gender is required.");
+    }
+    if (!leader.email) {
+      errors.push("Email is required.");
+    } else if (!/\S+@\S+\.\S+/.test(leader.email)) {
+      errors.push("Email is invalid.");
+    }
+    return errors;
+  };
+
   const handleLeaderChange = (index, field, value) => {
     const updatedLeaders = [...leaders];
     updatedLeaders[index][field] = value;
+
+    const errors = validateLeader(updatedLeaders[index]);
+    const updatedErrors = [...leaderErrors];
+    updatedErrors[index] = errors;
+
+    setLeaderErrors(updatedErrors);
     setLeaders(updatedLeaders);
   };
 
@@ -43,6 +86,32 @@ export default function Registration() {
     const updatedScouts = [...scouts];
     updatedScouts[index][field] = value;
     setScouts(updatedScouts);
+  };
+
+  const handleNextStep = () => {
+    // Validate all leaders and school before proceeding to the next step
+    const allErrors = leaders.map(leader => validateLeader(leader));
+    const hasErrors = allErrors.some(errors => errors.length > 0);
+    
+    // Check if school is selected
+    const schoolError = !school ? ["School is required."] : [];
+    if (schoolError.length > 0) {
+        toast.error(schoolError[0]); // Show toast for school error
+    }
+
+    if (hasErrors || schoolError.length > 0) {
+        // If there are errors, show toast notifications for each error
+        allErrors.forEach((errors, index) => {
+            if (errors.length > 0) {
+                errors.forEach(error => {
+                    toast.error(`Leader ${index + 1}: ${error}`);
+                });
+            }
+        });
+    } else {
+        // Proceed to the next step if no errors
+        setStep(2);
+    }
   };
 
   return (
@@ -88,13 +157,23 @@ export default function Registration() {
                 onChange={(e) => handleLeaderChange(index, 'fullName', e.target.value)}
                 className="mt-2 block w-full border border-gray-400 rounded-lg shadow-md focus:ring-green-600 focus:border-green-600 text-center"
               />
+              {leaderErrors[index]?.find(error => error.includes("Full Name")) && (
+                <p className="text-red-500">{leaderErrors[index].find(error => error.includes("Full Name"))}</p>
+              )}
               <input
                 type="text"
                 placeholder="ID Number"
                 value={leader.idNumber}
-                onChange={(e) => handleLeaderChange(index, 'idNumber', e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value.toUpperCase().replace(/[^V0-9]/g, '').slice(0, 12);
+                  handleLeaderChange(index, 'idNumber', value);
+                }}
+                maxLength={12}
                 className="mt-2 block w-full border border-gray-400 rounded-lg shadow-md focus:ring-green-600 focus:border-green-600 text-center"
               />
+              {leaderErrors[index]?.find(error => error.includes("ID Number")) && (
+                <p className="text-red-500">{leaderErrors[index].find(error => error.includes("ID Number"))}</p>
+              )}
               <label htmlFor={`gender-${index}`} className="block text-xl font-semibold text-gray-800 mt-3">Gender</label>
               <select
                 id={`gender-${index}`}
@@ -106,13 +185,23 @@ export default function Registration() {
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
+              {leaderErrors[index]?.find(error => error.includes("Gender")) && (
+                <p className="text-red-500">{leaderErrors[index].find(error => error.includes("Gender"))}</p>
+              )}
               <input
                 type="text"
                 placeholder="Phone Number"
                 value={leader.phoneNumber}
-                onChange={(e) => handleLeaderChange(index, 'phoneNumber', e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/[^0-9]/g, '').slice(0, 10);
+                  handleLeaderChange(index, 'phoneNumber', value);
+                }}
+                maxLength={10}
                 className="mt-2 block w-full border border-gray-400 rounded-lg shadow-md focus:ring-green-600 focus:border-green-600 text-center"
               />
+              {leaderErrors[index]?.find(error => error.includes("Phone Number")) && (
+                <p className="text-red-500">{leaderErrors[index].find(error => error.includes("Phone Number"))}</p>
+              )}
               <input
                 type="email"
                 placeholder="Email"
@@ -120,11 +209,14 @@ export default function Registration() {
                 onChange={(e) => handleLeaderChange(index, 'email', e.target.value)}
                 className="mt-2 block w-full border border-gray-400 rounded-lg shadow-md focus:ring-green-600 focus:border-green-600 text-center"
               />
+              {leaderErrors[index]?.find(error => error.includes("Email")) && (
+                <p className="text-red-500">{leaderErrors[index].find(error => error.includes("Email"))}</p>
+              )}
             </div>
           ))}
 
           <div className="flex justify-center mt-6">
-            <button onClick={() => setStep(2)} className="bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-700">Next</button>
+            <button onClick={handleNextStep} className="bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-700">Next</button>
           </div>
         </div>
       )}

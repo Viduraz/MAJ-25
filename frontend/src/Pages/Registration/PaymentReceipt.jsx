@@ -3,6 +3,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import firebaseApp from '../../../Firebase';
+import * as XLSX from 'xlsx';
 
 export default function PaymentReceipt({ school, leaders, scouts, amount, paymentDate, receiptImage, setAmount, setPaymentDate, setReceiptImage, onPrevious }) {
 
@@ -17,6 +18,12 @@ export default function PaymentReceipt({ school, leaders, scouts, amount, paymen
   // HANDLE SENDING REQUEST TO SAVE REGISTRATIONS
 
   const sendRequest = async () => {
+    // Validation: Check for empty fields
+    if (!amount || !paymentDate || !receiptImage) {
+      toast.error("Please fill in all required fields.");
+      return; // Exit the function if validation fails
+    }
+
     try {
       // save leaders one by one
       for(const leader of leaders) {
@@ -47,16 +54,51 @@ export default function PaymentReceipt({ school, leaders, scouts, amount, paymen
           amount: amount,
           receiptImage: receiptImage,
           type: 'Scout',
-          
         });
       }
 
       toast.success("All registrations saved successfully!");
+      generateExcel();
 
     } catch (error) {
       console.error("Error saving registrations:", error);
       toast("An error occurred while saving the registrations.");
     }
+  }
+
+  // Function to generate Excel
+  const generateExcel = () => {
+    const data = [];
+
+    // Add headers
+    data.push(["School", "Amount", "Payment Date", "Leaders", "Leader Email", "Leader Phone Number", "Scouts", "Scout Email", "Scout Phone Number"]);
+
+    // Loop through leaders and scouts to fill the data
+    const maxRows = Math.max(leaders.length, scouts.length);
+    for (let i = 0; i < maxRows; i++) {
+      const leader = leaders[i] || {};
+      const scout = scouts[i] || {};
+      
+      data.push([
+        school,
+        amount,
+        paymentDate,
+        leader.fullName || '',
+        leader.email || '',
+        leader.phoneNumber || '',
+        scout.fullName || '',
+        scout.email || '',
+        scout.phoneNumber || ''
+      ]);
+    }
+
+    // Create a new workbook and add the data
+    const ws = XLSX.utils.aoa_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Registration Details");
+
+    // Save the Excel file
+    XLSX.writeFile(wb, "registration_details.xlsx");
   }
 
   // HANDLE RECEIPT IMAGE UPLOAD
