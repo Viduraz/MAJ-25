@@ -29,6 +29,7 @@
     "mongoose": "^8.8.2",
     "nodemon": "^3.1.7",
     "qrcode.react": "^4.2.0",
+    "react-countdown": "^2.3.6",
     "react-hot-toast": "^2.5.1",
     "react-qr-code": "^2.0.15",
     "react-toastify": "^10.0.6",
