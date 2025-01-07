@@ -157,72 +157,81 @@ export default function Home() {
         </h2>
         <div className="flex flex-wrap justify-center gap-8">
           {/* Committee Members */}
-        <div className="flex flex-wrap justify-center gap-8">
-          {/* Member 1 */}
-          <div className="flex flex-col items-center max-w-xs">
-            <img
-              src="https://via.placeholder.com/150"
-              alt="Member 1"
-              className="w-40 h-40 rounded-full object-cover border-4 border-gray-300 shadow-md"
-            />
-            <p className="text-xl font-semibold text-gray-700 mt-4">
-              Member 1
-            </p>
-            <p className="text-sm text-gray-500 mb-2">Event Manager</p>
-            <p className="text-sm text-gray-600">
-              mama thama all event activities wadda .
-            </p>
-          </div>
+          <div className="flex flex-wrap justify-center gap-8">
+            {/* Member 1 */}
+            <div className="flex flex-col items-center max-w-xs">
+              <img
+                src="https://via.placeholder.com/150"
+                alt="Member 1"
+                className="w-40 h-40 rounded-full object-cover border-4 border-gray-300 shadow-md"
+              />
+              <p className="text-xl font-semibold text-gray-700 mt-4">
+                Member 1
+              </p>
+              <p className="text-sm text-gray-500 mb-2">Event Manager</p>
+              <p className="text-sm text-gray-600">
+                mama thama all event activities wadda .
+              </p>
+            </div>
 
-          {/* Member 2 */}
-          <div className="flex flex-col items-center max-w-xs">
-            <img
-              src="https://via.placeholder.com/150"
-              alt="Member 2"
-              className="w-40 h-40 rounded-full object-cover border-4 border-gray-300 shadow-md"
-            />
-            <p className="text-xl font-semibold text-gray-700 mt-4">
-              member 2
-            </p>
-            <p className="text-sm text-gray-500 mb-2">Logistics Head</p>
-            <p className="text-sm text-gray-600">
-              mama thama logistics waddda.
-            </p>
-          </div>
+            {/* Member 2 */}
+            <div className="flex flex-col items-center max-w-xs">
+              <img
+                src="https://via.placeholder.com/150"
+                alt="Member 2"
+                className="w-40 h-40 rounded-full object-cover border-4 border-gray-300 shadow-md"
+              />
+              <p className="text-xl font-semibold text-gray-700 mt-4">
+                member 2
+              </p>
+              <p className="text-sm text-gray-500 mb-2">Logistics Head</p>
+              <p className="text-sm text-gray-600">
+                mama thama logistics waddda.
+              </p>
+            </div>
 
-          {/* Member 3 */}
-          <div className="flex flex-col items-center max-w-xs">
-            <img
-              src="https://via.placeholder.com/150"
-              alt="Member 3"
-              className="w-40 h-40 rounded-full object-cover border-4 border-gray-300 shadow-md"
-            />
-            <p className="text-xl font-semibold text-gray-700 mt-4">
-              member 3
-            </p>
-            <p className="text-sm text-gray-500 mb-2">Coordinator</p>
-            <p className="text-sm text-gray-600">
-              mama thama cordintor wadda
-            </p>
-          </div>
+            {/* Member 3 */}
+            <div className="flex flex-col items-center max-w-xs">
+              <img
+                src="https://via.placeholder.com/150"
+                alt="Member 3"
+                className="w-40 h-40 rounded-full object-cover border-4 border-gray-300 shadow-md"
+              />
+              <p className="text-xl font-semibold text-gray-700 mt-4">
+                member 3
+              </p>
+              <p className="text-sm text-gray-500 mb-2">Coordinator</p>
+              <p className="text-sm text-gray-600">
+                mama thama cordintor wadda
+              </p>
+            </div>
 
-          {/* Member 4 */}
-          <div className="flex flex-col items-center max-w-xs">
-            <img
-              src="https://via.placeholder.com/150"
-              alt="Member 4"
-              className="w-40 h-40 rounded-full object-cover border-4 border-gray-300 shadow-md"
-            />
-            <p className="text-xl font-semibold text-gray-700 mt-4">
-              Member 4
-            </p>
-            <p className="text-sm text-gray-500 mb-2">Finance Lead</p>
-            <p className="text-sm text-gray-600">
-              mama thama budget wadda
-            </p>
+            {/* Member 4 */}
+            <div className="flex flex-col items-center max-w-xs">
+              <img
+                src="https://via.placeholder.com/150"
+                alt="Member 4"
+                className="w-40 h-40 rounded-full object-cover border-4 border-gray-300 shadow-md"
+              />
+              <p className="text-xl font-semibold text-gray-700 mt-4">
+                Member 4
+              </p>
+              <p className="text-sm text-gray-500 mb-2">Finance Lead</p>
+              <p className="text-sm text-gray-600">
+                mama thama budget wadda
+              </p>
+            </div>
           </div>
         </div>
+      </div>
+
+      {/* Countdown Section */}
+      <div className="bg-gradient-to-r from-purple-500 to-blue-500 py-12 text-center rounded-lg shadow-lg mx-4">
+        <h2 className="text-4xl font-bold text-white mb-4">Countdown to Event</h2>
+        <div className="text-6xl font-extrabold text-white">
+          {formatTimeLeft()}
         </div>
+        <p className="text-lg text-white mt-2">Days : Hours : Minutes : Seconds</p>
       </div>
     </div>
   );
