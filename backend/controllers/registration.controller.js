@@ -25,3 +25,12 @@ export const getRegistration = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 };
+
+export const getAllRegistration = async (req, res) => {
+    try {
+        const registration = await Registration.find();
+        res.status(200).json(registration);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}

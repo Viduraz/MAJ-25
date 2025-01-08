@@ -25,11 +25,15 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
+    "jspdf": "^2.5.2",
     "mongoose": "^8.8.2",
     "nodemon": "^3.1.7",
     "qrcode.react": "^4.2.0",
+    "react-countdown": "^2.3.6",
+    "react-hot-toast": "^2.5.1",
     "react-qr-code": "^2.0.15",
-    "react-toastify": "^10.0.6"
+    "react-toastify": "^10.0.6",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
