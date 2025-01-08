@@ -16,24 +16,43 @@ export default function Scouts({ scoutCount, scouts, handleScoutCountChange, han
     return name.trim() !== ''; // Ensure full name is not empty
   };
 
-  const handleNext = () => {
-    for (let index = 0; index < scoutCount; index++) {
-      const scout = scouts[index];
-      if (!validateFullName(scout.fullName)) {
-        toast.error(`Scout ${index + 1}: Full name cannot be empty.`);
-        return; // Prevent going to the next page
-      }
-      if (!validateEmail(scout.email)) {
-        toast.error(`Scout ${index + 1}: Invalid email address.`);
-        return; // Prevent going to the next page
-      }
-      if (!validatePhoneNumber(scout.phoneNumber)) {
-        toast.error(`Scout ${index + 1}: Invalid phone number. Please enter a 10-digit number.`);
-        return; // Prevent going to the next page
-      }
+  // ... existing code ...
+// ... existing code ...
+const handleNext = () => {
+  const minDate = new Date(2006, 1, 1); // February 1, 2006 (months are 0-indexed)
+
+  for (let index = 0; index < scoutCount; index++) {
+    const scout = scouts[index];
+    
+    // Check for empty fields
+    if (!validateFullName(scout.fullName)) {
+      toast.error(`Scout ${index + 1}: Full name cannot be empty.`);
+      return; // Prevent going to the next page
     }
-    onNext(); // Proceed to the next page if all validations pass
-  };
+    if (!validateEmail(scout.email)) {
+      toast.error(`Scout ${index + 1}: Invalid email address.`);
+      return; // Prevent going to the next page
+    }
+    if (!validatePhoneNumber(scout.phoneNumber)) {
+      toast.error(`Scout ${index + 1}: Invalid phone number. Please enter a 10-digit number.`);
+      return; // Prevent going to the next page
+    }
+    if (!scout.gender) { // Check if gender is empty
+      toast.error(`Scout ${index + 1}: Gender cannot be empty.`);
+      return; // Prevent going to the next page
+    }
+    if (!scout.dateOfBirth) { // Check if date of birth is empty
+      toast.error(`Scout ${index + 1}: Date of birth cannot be empty.`);
+      return; // Prevent going to the next page
+    }
+    if (new Date(scout.dateOfBirth) < minDate) { // Check if date of birth is earlier than February 1, 2006
+      toast.error(`Scout ${index + 1}: Date of birth cannot be earlier than February 1, 2006.`);
+      return; // Prevent going to the next page
+    }
+  }
+  onNext(); // Proceed to the next page if all validations pass
+};
+
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-y-auto">
@@ -114,13 +133,19 @@ export default function Scouts({ scoutCount, scouts, handleScoutCountChange, han
                 }}
                 className={`mt-2 block w-full border ${validateEmail(scout.email) || scout.email === '' ? 'border-gray-400' : 'border-red-500'} rounded-lg shadow-md focus:ring-green-600 focus:border-green-600 text-center`}
               />
-              {/* <input
+              <label htmlFor={`dob-scout-${index}`} className="block text-xl font-semibold text-gray-800 mt-3">Date of Birth</label>
+              <input
                 type="date"
-                placeholder="Date of Birth"
+                id={`dob-scout-${index}`}
                 value={scout.dateOfBirth}
                 onChange={(e) => handleScoutChange(index, 'dateOfBirth', e.target.value)}
+                min="2006-02-01"
                 className="mt-2 block w-full border border-gray-400 rounded-lg shadow-md focus:ring-green-600 focus:border-green-600 text-center"
-              /> */}
+              />
+              <ul className="text-sm text-gray-600 mt-1 list-disc list-inside">
+                <li>You can register only scouts born after February 1, 2006.</li>
+                <li>Scouts over 18 years old must show their ID on the camp day.</li>
+              </ul>
             </div>
           ))}
         </div>
