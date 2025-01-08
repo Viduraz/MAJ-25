@@ -23,6 +23,7 @@ export default function Profile() {
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [loadingPicture, setLoadingPicture] = useState(true);
   const [profilePicture, setProfilePicture] = useState(null);
+  const [profilePictureLoaded, setProfilePictureLoaded] = useState(false);
 
   const { currentUser, loading, error } = useSelector((state) => state.user);
 
@@ -34,9 +35,13 @@ export default function Profile() {
 
   useEffect(() => {
     const loadProfilePicture = async () => {
-      // Simulate loading profile picture
       const picture = currentUser.profilePicture;
-      setProfilePicture(picture);
+      if (picture) {
+        setProfilePicture(picture);
+        setProfilePictureLoaded(true);
+      } else {
+        setProfilePictureLoaded(false);
+      }
       setLoadingPicture(false);
     };
 
@@ -124,7 +129,7 @@ export default function Profile() {
     }
   };
 
-  if (loadingPicture) {
+  if (loadingPicture || !profilePictureLoaded) {
     return <div>Loading profile picture...</div>;
   }
 

@@ -60,6 +60,11 @@ export default function PaymentReceipt({ school, leaders, scouts, amount, paymen
       toast.success("All registrations saved successfully!");
       generateExcel();
 
+      // Navigate to home page after a short delay to allow the download to start
+      setTimeout(() => {
+        window.location.href = '/'; // Change this to your home page route
+      }, 2000); // Adjust the delay as needed
+
     } catch (error) {
       console.error("Error saving registrations:", error);
       toast("An error occurred while saving the registrations.");
