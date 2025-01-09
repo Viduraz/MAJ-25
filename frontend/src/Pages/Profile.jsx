@@ -129,7 +129,7 @@ export default function Profile() {
     }
   };
 
-  if (loadingPicture || !profilePictureLoaded) {
+  if (loadingPicture) {
     return <div>Loading profile picture...</div>;
   }
 
@@ -147,7 +147,7 @@ export default function Profile() {
             onChange={(e) => setImage(e.target.files[0])}
           />
           <img
-            src={formData.profilePicture || profilePicture}
+            src={formData.profilePicture || profilePicture || 'path/to/default/image.jpg'}
             alt='profile'
             className='h-24 w-24 self-center cursor-pointer rounded-full object-cover mt-2'
             onClick={() => fileRef.current.click()}
