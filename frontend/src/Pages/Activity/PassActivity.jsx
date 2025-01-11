@@ -1,79 +1,143 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import axios from 'axios';
 
+const baseUrl = 'http://localhost:3000';
+var scoutDetails = {};
+
 function PassActivity() {
     const [selected, setSelected] = useState(() => {
-        return localStorage.getItem("selectedActivity") || "Activity 1";
+        const savedActivity = localStorage.getItem("selectedActivity");
+        return savedActivity ? JSON.parse(savedActivity) : { id: "", name: "" };
     });
 
-    const options = ["Activity 1", "Activity 2", "Activity 3"];
+    const [options, setOptions] = useState([]); // State to hold activities
     const [scanResult, setScanResult] = useState(null);
-    var scanner;
+    const [completedActivities, setCompletedActivities] = useState([]);
+    const [activitiesStats, setActivitiesStats] = useState({ completed: 0, pending: 0 });
 
+    const scanner = useRef(null); // Using useRef to hold the scanner object
+
+    // Handle dropdown change
     const handleChange = (e) => {
-        const newActivity = e.target.value;
-        setSelected(newActivity);
+        const newActivityId = e.target.value;
+        const newActivityName = options.find(option => option.id === newActivityId)?.name || "";
 
-        // Save the new selected activity to local storage
-        localStorage.setItem("selectedActivity", newActivity);
+        const newSelected = { id: newActivityId, name: newActivityName };
+        setSelected(newSelected);
+
+        // Save the activity id and name in local storage
+        localStorage.setItem("selectedActivity", JSON.stringify(newSelected));
     };
 
+    // Handle done button click
     const handleDone = () => {
         if (scanResult) {
-            // Send HTTP request to set activity code
-            axios.post('https://example.com/api/endpoint', {
-                scannedData: scanResult,
-                activityNo: selected
+            const activityName = selected.name;
+            axios.post(baseUrl + '/api/activity/pass', {
+                email: scoutDetails.email,
+                activityId: selected.id,
+                activityName: activityName,
             })
                 .then((response) => {
-        scanner.render(success, error);
-                    
-        console.log('Data sent successfully:', response.data);
+                    console.log('Data sent successfully:', response.data);
                     alert('Data sent successfully!');
+                    setScanResult(null); // Reset scanResult
+                    scanner.current.resume(); // Access the scanner using useRef
                 })
                 .catch((error) => {
-        scanner.render(success, error);
-        
-        console.error('Error sending data:', error);
+                    console.error('Error sending data:', error);
                     alert('Error sending data!');
+                    setScanResult(null); // Reset scanResult
+                    scanner.current.resume(); // Access the scanner using useRef
                 });
         }
-
-        // Reset scanResult
-        setScanResult(null);
     };
 
     const handleCancel = () => {
-        // Reset scanResult
-        setScanResult(null);
+        setScanResult(null); // Reset scanResult
+        scanner.current.resume(); // Access the scanner using useRef
     };
 
+    // Fetch activities from the backend
     useEffect(() => {
-        scanner = new Html5QrcodeScanner('reader', {
+        axios.get(baseUrl + '/api/activity')
+            .then((response) => {
+                const activityOptions = response.data.map((activity) => ({
+                    id: activity.id,
+                    name: activity.name,
+                }));
+                setOptions(activityOptions);
+
+                // Get selected activity from lo cal storage
+                const savedActivity = JSON.parse(localStorage.getItem("selectedActivity"));
+
+                // Check if saved activity exists in retrieved activities
+                if (savedActivity && activityOptions.some(option => option.id === savedActivity.id)) {
+                    setSelected(savedActivity);
+                } else {
+                    // If not, remove from local storage and select the first activity
+                    localStorage.removeItem("selectedActivity");
+                    if (activityOptions.length > 0) {
+                        const firstActivity = activityOptions[0];
+                        setSelected(firstActivity);
+                        localStorage.setItem("selectedActivity", JSON.stringify(firstActivity));
+                    }
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching activities:', error);
+            });
+    }, []);
+
+    // Initialize QR code scanner
+    useEffect(() => {
+        scanner.current = new Html5QrcodeScanner('reader', {
             qrbox: {
-                width: 250,
-                height: 250,
+                width: 500,
+                height: 500,
             },
             fps: 5,
         });
 
         const success = (result) => {
-            scanner.clear();
-            console.log(result); // Handle result here
-            setScanResult(result);
+            try {
+                const parsedResult = JSON.parse(result);
+                setScanResult(result);
+                scoutDetails = parsedResult;
+
+                // Fetch the registered user's completed activities
+                axios.get(`${baseUrl}/api/registration/${scoutDetails.email}`)
+                    .then((response) => {
+                        const userDetails = response.data;
+                        setCompletedActivities(userDetails.activities || []);
+
+                        const completedActivityIds = new Set(userDetails.activities.map(activity => activity.id));
+                        const completedCount = options.filter(option => completedActivityIds.has(option.id)).length;
+                        const pendingCount = options.length - completedCount;
+
+                        setActivitiesStats({ completed: completedCount, pending: pendingCount });
+                        scanner.current.pause(true); // Access the scanner using useRef
+                    })
+                    .catch((error) => {
+                        scanner.current.pause(true); // Access the scanner using useRef
+                        console.error('Error fetching user details:', error);
+                    });
+            } catch (err) {
+                console.error('Error parsing QR code result:', err);
+            }
         };
 
         const error = (err) => {
             console.warn(err);
         };
 
-        scanner.render(success, error);
+        scanner.current.render(success, error);
 
         return () => {
-            scanner.clear();
+            scanner.current.clear();
         };
-    }, []);
+    }, [options]);
 
     return (
         <div className="bg-gray-50">
@@ -95,26 +159,89 @@ function PassActivity() {
             {/* Dropdown */}
             <div className="w-64 mx-auto my-5">
                 <label className="block mb-2 text-sm font-medium text-gray-700">
-                    Choose an option:
+                    Choose an activity:
                 </label>
                 <select
-                    value={selected}
+                    value={selected.id}
                     onChange={handleChange}
                     className="w-full px-4 py-2 text-sm border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                    {options.map((option, index) => (
-                        <option key={index} value={option}>
-                            {option}
+                    {options.map((option) => (
+                        <option key={option.id} value={option.id}>
+                            {option.name}
                         </option>
                     ))}
                 </select>
-                <p className="mt-2 text-sm text-gray-600">Selected: {selected}</p>
+                <p className="mt-2 text-sm text-gray-600">
+                    Activity ID: {selected.id}
+                </p>
+                <div className="mt-2 text-sm text-gray-600">
+                    <p>Status:</p> {scanResult ? (
+                        // If scanResult is available, show status based on completion
+                        completedActivities.some(activity => activity.id === selected.id) ? (
+                            <span className="text-green-500 flex items-center justify-center">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth="1.5"
+                                    stroke="currentColor"
+                                    className="w-6 h-6"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M4.5 12.75l6 6 9-13.5"
+                                    />
+                                </svg>
+                                <span className="ml-2">Completed</span>
+                            </span>
+                        ) : (
+                            <span className="text-red-500 flex items-center justify-center">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth="1.5"
+                                    stroke="currentColor"
+                                    className="w-6 h-6"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M19.5 12H4.5"
+                                    />
+                                </svg>
+                                <span className="ml-2">Pending</span>
+                            </span>
+                        )
+                    ) : (
+                        // If scanResult is not available, just show Pending
+                        <span className="text-red-500 flex items-center justify-center">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="w-6 h-6"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M19.5 12H4.5"
+                                />
+                            </svg>
+                            <span className="ml-2">Waiting for scan</span>
+                        </span>
+                    )}
+                </div>
             </div>
 
             {/* QR Reader or Scan Result */}
             {scanResult ? (
                 <div className="text-center my-5">
-                    <p className="text-lg font-medium text-gray-700">Scan Result: {scanResult}</p>
+                    <p className="text-lg font-medium text-gray-700">Scan Result: {scoutDetails.fullName}</p>
                     <div className="flex justify-center space-x-4 mt-4">
                         {/* Done Button */}
                         <button
@@ -131,10 +258,94 @@ function PassActivity() {
                             Cancel
                         </button>
                     </div>
+
+                    {/* Activities Table */}
+                    <div className="my-5">
+                        <h2 className="text-xl font-bold text-gray-700">Activities Status</h2>
+                        <table className="w-full mt-3 border-collapse border border-gray-300">
+                            <thead>
+                                <tr>
+                                    <th className="border border-gray-300 px-4 py-2">Activity</th>
+                                    <th className="border border-gray-300 px-4 py-2">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {options.map((activity) => {
+                                    // Check if the activity is completed by matching the ID
+                                    const isCompleted = completedActivities.some(
+                                        (completed) => completed.id === activity.id
+                                    );
+                                    return (
+                                        <tr key={activity.id}>
+                                            <td className="border border-gray-300 px-4 py-2">{activity.name}</td>
+                                            <td className="border border-gray-300 px-4 py-2 text-center">
+                                                {isCompleted ? (
+                                                    <span className="text-green-500 flex items-center justify-center">
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            strokeWidth="1.5"
+                                                            stroke="currentColor"
+                                                            className="w-6 h-6"
+                                                        >
+                                                            <path
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                d="M4.5 12.75l6 6 9-13.5"
+                                                            />
+                                                        </svg>
+                                                        <span className="ml-2">Completed</span>
+                                                    </span>
+                                                ) : (
+                                                    <span className="text-red-500 flex items-center justify-center">
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            strokeWidth="1.5"
+                                                            stroke="currentColor"
+                                                            className="w-6 h-6"
+                                                        >
+                                                            <path
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                d="M19.5 12H4.5"
+                                                            />
+                                                        </svg>
+                                                        <span className="ml-2">Pending</span>
+                                                    </span>
+                                                )}
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                        {
+                        /* <div className="mt-4 text-gray-700">
+                            <p>Completed: {activitiesStats.completed}</p>
+                            <p>Pending: {activitiesStats.pending}</p>
+                        </div> */
+                        }
+                    </div>
+
+                    <div className="mt-4 p-6 bg-white rounded-lg shadow-md border border-gray-300">
+                        <h3 className="text-lg font-semibold text-gray-800">Activities Overview</h3>
+                        <div className="mt-2">
+                            <p className="text-sm text-gray-600">
+                                <span className="font-medium text-gray-800">Completed:</span> {activitiesStats.completed}
+                            </p>
+                            <p className="text-sm text-gray-600 mt-2">
+                                <span className="font-medium text-gray-800">Pending:</span> {activitiesStats.pending}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             ) : (
-                <div id="reader"></div>
+                <div></div>
             )}
+            <div id="reader" className="max-w-xl mx-auto">  </div>
         </div>
     );
 }
