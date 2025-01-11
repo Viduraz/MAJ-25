@@ -25,3 +25,18 @@ export const getRegistration = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 };
+
+
+
+export const getUserByEmail = async (req, res) => {
+    const { email } = req.params; // Get the activity ID from URL params
+
+    try {
+        const registration = await Registration.findOne({
+            email
+        });
+        res.status(200).json(registration);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+};

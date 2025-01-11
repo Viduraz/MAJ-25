@@ -9,6 +9,8 @@ export const passActivity = async (req, res, next) => {
             email
         });
 
+        console.log(registration)
+
         if (!registration) {
             return res.status(404).json({ message: "Registration not found" });
         }
