@@ -241,7 +241,7 @@ function PassActivity() {
             {/* QR Reader or Scan Result */}
             {scanResult ? (
                 <div className="text-center my-5">
-                    <p className="text-lg font-medium text-gray-700">Scan Result: {scoutDetails.fullName}</p>
+                    <p className="text-lg font-medium text-gray-700">Name: {scoutDetails.fullName}</p>
                     <div className="flex justify-center space-x-4 mt-4">
                         {/* Done Button */}
                         <button
@@ -322,12 +322,6 @@ function PassActivity() {
                                 })}
                             </tbody>
                         </table>
-                        {
-                        /* <div className="mt-4 text-gray-700">
-                            <p>Completed: {activitiesStats.completed}</p>
-                            <p>Pending: {activitiesStats.pending}</p>
-                        </div> */
-                        }
                     </div>
 
                     <div className="mt-4 p-6 bg-white rounded-lg shadow-md border border-gray-300">
