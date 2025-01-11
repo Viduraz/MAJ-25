@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
-import axios from 'axios'; // Install axios if not already installed: npm install axios
+import axios from 'axios';
 
 function PassActivity() {
     const [selected, setSelected] = useState(() => {
-        // Get previously selected activity from local storage, or default to "Activity 1"
         return localStorage.getItem("selectedActivity") || "Activity 1";
     });
 
