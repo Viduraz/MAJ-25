@@ -54,8 +54,16 @@ export default function Header() {
               </span>
             </li>
           </Link>
-          <Link to='/about'>
-            <li>About</li>
+          <Link to="/about">
+            <li
+              className={`relative group transition-all duration-300 ease-in-out ${
+                location.pathname === '/about' ? 'border-b-4 border-yellow-500 scale-110 font-bold' : ''
+              }`}
+            >
+              <span className="block px-2 py-1 hover:bg-gray-600 rounded transition-colors duration-300 ease-in-out">
+                About
+              </span>
+            </li>
           </Link>
           
           <Link to="/registration">

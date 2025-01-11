@@ -1,5 +1,3 @@
-import { activitySchema } from "./activity.model.js";
-
 import mongoose from "mongoose";
 
 const registrationSchema = new mongoose.Schema({
@@ -12,12 +10,7 @@ const registrationSchema = new mongoose.Schema({
     paymentDate: { type: Date },
     amount: { type: Number },
     receiptImage: { type: String },
-    type: { type: String },
-    activities: {
-        type: [activitySchema], // Embed the Activity schema
-        _id: false,
-        default: [],
-    },
+    type: { type: String }
 }, { timestamps: true });
 
 const Registration = mongoose.model("Registration", registrationSchema);

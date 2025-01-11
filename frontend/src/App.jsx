@@ -14,7 +14,6 @@ import PrivateRoute1 from './Components/PrivateRouteProfile';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Gallery from './Pages/Gallery';
 import ARegistrations from './Pages/AdminPages/ARegistrations';
-import PassActivity from './Pages/Activity/PassActivity';
 
 function App() {
   return (
@@ -24,7 +23,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/pass-activity" element={<PassActivity />} />
+         
           <Route path="/about" element={<About />} />
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
@@ -39,7 +38,6 @@ function App() {
           <Route element={<PrivateRoute1 />}>
             <Route path="/sprofiles" element={<Sprofiles />} />
           </Route>
-          
           
           
         </Routes>
