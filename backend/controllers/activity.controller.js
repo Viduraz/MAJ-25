@@ -1,30 +1,49 @@
-
 import Registration from "../models/registration.model.js";
 import Activity from '../models/activity.model.js';
 
 export const passActivity = async (req, res, next) => {
     try {
         const { email, activityName, activityId } = req.body;
-        const registration = await Registration.findOne({
-            email
-        });
-
-        console.log(registration)
+        const registration = await Registration.findOne({ email });
 
         if (!registration) {
             return res.status(404).json({ message: "Registration not found" });
         }
+
         const activityExists = registration.activities.some(
             (existingActivity) => existingActivity.id === activityId
         );
+
         if (!activityExists) {
             registration.activities.push({ id: activityId, name: activityName });
         }
 
-        await registration.save()
+        await registration.save();
         res.status(200).json(registration);
     } catch (error) {
-        res.status(404).json({ message: error.message });
+        // Mark the activity as done if an error occurs
+        const registration = await Registration.findOne({ email: req.body.email });
+        if (registration) {
+            registration.activities.push({ id: req.body.activityId, name: req.body.activityName });
+            await registration.save();
+        }
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// Fetch all activities done by a user based on their email
+export const getActivitiesByEmail = async (req, res) => {
+    try {
+        const { email } = req.params;
+        const registration = await Registration.findOne({ email });
+
+        if (!registration) {
+            return res.status(404).json({ message: "Registration not found" });
+        }
+
+        res.status(200).json(registration.activities);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };
 
@@ -95,6 +114,27 @@ export const deleteActivity = async (req, res) => {
         }
 
         res.status(200).json({ message: "Activity deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// Mark an activity as not done
+export const markActivityAsNotDone = async (req, res) => {
+    try {
+        const { email, activityId } = req.body;
+        const registration = await Registration.findOne({ email });
+
+        if (!registration) {
+            return res.status(404).json({ message: "Registration not found" });
+        }
+
+        registration.activities = registration.activities.filter(
+            (activity) => activity.id !== activityId
+        );
+
+        await registration.save();
+        res.status(200).json(registration);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
