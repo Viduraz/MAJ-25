@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import v1 from "../Assests/v1.mp4";
+
 import axios from "axios";
 
 export default function Home() {
@@ -75,7 +75,7 @@ export default function Home() {
           loop
           className="absolute top-0 left-0 w-full h-full object-cover"
         >
-          <source src={v1} type="video/mp4" />
+          <source src="https://drive.google.com/uc?export=download&id=1dHlEvg5qWI07woGyULlVz8KfrOVM4alO" type="video/mp4" />
         </video>
 
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
