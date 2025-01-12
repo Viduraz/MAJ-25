@@ -43,6 +43,10 @@ export default function Header() {
               </span>
             </li>
           </Link>
+          <Link to ='/pass-activity'>
+            <li>Pass Activity</li>
+          </Link>
+          
           <Link to="/gallery">
             <li
               className={`relative group transition-all duration-300 ease-in-out ${
