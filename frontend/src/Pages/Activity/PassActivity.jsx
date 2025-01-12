@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const baseUrl = 'http://localhost:3000';
 var scoutDetails = {};
@@ -28,30 +29,15 @@ function PassActivity() {
 
         // Save the activity id and name in local storage
         localStorage.setItem("selectedActivity", JSON.stringify(newSelected));
+
+        // Show a toast message
+        toast.success(`Selected activity: ${newActivityName}`);
     };
 
     // Handle done button click
     const handleDone = () => {
-        if (scanResult) {
-            const activityName = selected.name;
-            axios.post(baseUrl + '/api/activity/pass', {
-                email: scoutDetails.email,
-                activityId: selected.id,
-                activityName: activityName,
-            })
-                .then((response) => {
-                    console.log('Data sent successfully:', response.data);
-                    alert('Data sent successfully!');
-                    setScanResult(null); // Reset scanResult
-                    scanner.current.resume(); // Access the scanner using useRef
-                })
-                .catch((error) => {
-                    console.error('Error sending data:', error);
-                    alert('Error sending data!');
-                    setScanResult(null); // Reset scanResult
-                    scanner.current.resume(); // Access the scanner using useRef
-                });
-        }
+        // Show a toast message
+        toast.success('Activity marked as done!');
     };
 
     const handleCancel = () => {
