@@ -15,6 +15,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import Gallery from './Pages/Gallery';
 import ARegistrations from './Pages/AdminPages/ARegistrations';
 import PassActivity from './Pages/Activity/PassActivity';
+import AActivity from './Pages/AdminPages/AActivity';
+import AActivityPasser from './Pages/AdminPages/AActivityPasser';
 
 function App() {
   return (
@@ -39,7 +41,8 @@ function App() {
           <Route element={<PrivateRoute1 />}>
             <Route path="/sprofiles" element={<Sprofiles />} />
           </Route>
-          
+          <Route path="/aactivity" element={<AActivity />} />
+          <Route path="/aactivitypasser" element={<AActivityPasser />} />
           
           
         </Routes>
