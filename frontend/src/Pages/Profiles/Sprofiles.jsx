@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import QRCode from 'react-qr-code'; // Import from react-qr-code
+import { getStorage, ref, uploadString } from "firebase/storage"; // Import Firebase Storage functions
 
 export default function Sprofiles() {
   const [registrationData, setRegistrationData] = useState(null);
@@ -17,9 +18,24 @@ export default function Sprofiles() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfilePicture(reader.result);
+        const imageData = reader.result;
+        setProfilePicture(imageData);
+        uploadProfilePicture(imageData); // Call the upload function
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  // New function to upload the profile picture to Firebase
+  const uploadProfilePicture = async (imageData) => {
+    const storage = getStorage(); // Initialize Firebase Storage
+    const storageRef = ref(storage, 'profilePictures/userProfile.jpg'); // Create a reference to the location in storage
+
+    try {
+      await uploadString(storageRef, imageData, 'data_url'); // Upload the image data
+      console.log('Profile picture uploaded successfully!');
+    } catch (error) {
+      console.error('Error uploading profile picture:', error);
     }
   };
 
