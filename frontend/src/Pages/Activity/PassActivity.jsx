@@ -36,13 +36,39 @@ function PassActivity() {
 
     // Handle done button click
     const handleDone = () => {
-        // Show a toast message
-        toast.success('Activity marked as done!');
+
+        if (scanResult) {
+            const activityName = selected.name;
+            axios.post(baseUrl + '/api/activity/pass', {
+                email: scoutDetails.email,
+                activityId: selected.id,
+                activityName: activityName,
+            })
+                .then((response) => {
+                    console.log('Data sent successfully:', response.data);
+                    alert('Data sent successfully!');
+                    setScanResult(null); // Reset scanResult
+                    if(scanner.current.getState()==3){
+                        scanner.current.resume(); // Access the scanner using useRef
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error sending data:', error);
+                    alert('Error sending data!');
+                    setScanResult(null); // Reset scanResult
+                    if(scanner.current.getState()==3){
+                        scanner.current.resume(); // Access the scanner using useRef
+                    }
+                });
+        }
+
     };
 
     const handleCancel = () => {
         setScanResult(null); // Reset scanResult
-        scanner.current.resume(); // Access the scanner using useRef
+        if(scanner.current.getState()==3){
+            scanner.current.resume(); // Access the scanner using useRef
+        }
     };
 
     // Fetch activities from the backend
@@ -103,10 +129,14 @@ function PassActivity() {
                         const pendingCount = options.length - completedCount;
 
                         setActivitiesStats({ completed: completedCount, pending: pendingCount });
-                        scanner.current.pause(true); // Access the scanner using useRef
+                        if(scanner.current.getState()==2){
+                            scanner.current.pause(true); // Access the scanner using useRef
+                        }
                     })
                     .catch((error) => {
-                        scanner.current.pause(true); // Access the scanner using useRef
+                        if(scanner.current.getState()==2){
+                            scanner.current.pause(true); // Access the scanner using useRef
+                        }
                         console.error('Error fetching user details:', error);
                     });
             } catch (err) {
