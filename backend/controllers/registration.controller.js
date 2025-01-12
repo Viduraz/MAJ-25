@@ -39,7 +39,8 @@ export const getUserByEmail = async (req, res) => {
         res.status(200).json(registration);
     } catch (error) {
         res.status(404).json({ message: error.message });
-      
+    }     
+};
 export const getAllRegistration = async (req, res) => {
     try {
         const registration = await Registration.find();
@@ -47,6 +48,7 @@ export const getAllRegistration = async (req, res) => {
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
+
 };
 
 export const updateRegistration = async (req, res) => {
