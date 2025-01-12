@@ -43,6 +43,18 @@ export default function Header() {
               </span>
             </li>
           </Link>
+          <Link to='/pass-activity'>
+            <li
+              className={`relative group transition-all duration-300 ease-in-out ${
+                location.pathname === '/pass-activity' ? 'border-b-4 border-yellow-500 scale-110 font-bold' : ''
+              }`}
+            >
+              <span className="block px-2 py-1 hover:bg-gray-600 rounded transition-colors duration-300 ease-in-out">
+                Pass Activity
+              </span>
+            </li>
+          </Link>
+          
           <Link to="/gallery">
             <li
               className={`relative group transition-all duration-300 ease-in-out ${
