@@ -33,9 +33,6 @@ function PassActivity() {
     // Handle done button click
     const handleDone = () => {
 
-
-
-
         if (scanResult) {
             const activityName = selected.name;
             axios.post(baseUrl + '/api/activity/pass', {
