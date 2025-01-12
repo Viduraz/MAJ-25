@@ -28,6 +28,7 @@ export const getRegistration = async (req, res) => {
 
 
 
+
 export const getUserByEmail = async (req, res) => {
     const { email } = req.params; // Get the activity ID from URL params
 
@@ -38,5 +39,39 @@ export const getUserByEmail = async (req, res) => {
         res.status(200).json(registration);
     } catch (error) {
         res.status(404).json({ message: error.message });
+      
+export const getAllRegistration = async (req, res) => {
+    try {
+        const registration = await Registration.find();
+        res.status(200).json(registration);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+};
+
+export const updateRegistration = async (req, res) => {
+    const { id } = req.params;
+    const { fullName, gender, phoneNumber, email, school, idNumber, receiptImage, amount, paymentDate, type } = req.body;
+
+    try {
+        const updatedRegistration = await Registration.findByIdAndUpdate(
+            id,
+            { fullName, gender, phoneNumber, email, school, idNumber, receiptImage, amount, paymentDate, type },
+            { new: true }
+        );
+        res.status(200).json(updatedRegistration);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const deleteRegistration = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        await Registration.findByIdAndDelete(id);
+        res.status(200).json({ message: "Registration deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };

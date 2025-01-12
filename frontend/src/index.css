@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+    font-family: 'Norse Regular';
+    src: url('/path/to/Norse-Regular.woff2') format('woff2'),
+         url('/path/to/Norse-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Gotham Regular';
+    src: url('/path/to/Gotham-Regular.woff2') format('woff2'),
+         url('/path/to/Gotham-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Takoyaki Regular';
+    src: url('/path/to/Takoyaki-Regular.woff2') format('woff2'),
+         url('/path/to/Takoyaki-Regular.woff') format('woff');
+}
