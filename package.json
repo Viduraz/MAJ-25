@@ -17,7 +17,7 @@
   "description": "",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.7.1",
-    "@fortawesome/free-brands-svg-icons": "^6.7.1",
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.7",
