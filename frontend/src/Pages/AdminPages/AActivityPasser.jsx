@@ -77,6 +77,7 @@ function AActivityPasser() {
               className="flex justify-between items-center border-b border-gray-200 py-3"
             >
               <span className="text-gray-700 font-medium">{activity.name}</span>
+              <span className="text-gray-500">{new Date(activity.updatedAt).toLocaleString()}</span>
               <div className="flex gap-2">
                 <button
                   onClick={() => handleMarkAsDone(activity.id, activity.name)}

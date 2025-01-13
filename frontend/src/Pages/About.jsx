@@ -6,7 +6,7 @@ export default function About() {
       name: "Vidura Prabath",
       role: "Team Lead",
       description: "Leading the team to success with dedication and passion.",
-      image: "https://via.placeholder.com/150", 
+      image: "https://via.placeholder.com/150",
     },
     {
       name: "Jinadari Silva",
@@ -30,30 +30,18 @@ export default function About() {
 
   const oldScoutAssociation = [
     {
-      name: "Kasun Wijesinghe",
-      role: "President",
-      description:
-        "Oversees the association with vision and leadership to maintain traditions.",
-      image: "https://via.placeholder.com/150", 
-    },
-    {
-      name: "Samantha Herath",
-      role: "Assistant President",
-      description: "Supports the president and helps manage activities smoothly.",
+      name: "John Doe",
+      role: "Former Scout Leader",
+      description: "Led the scout team with exemplary leadership.",
       image: "https://via.placeholder.com/150",
     },
     {
-      name: "Thilini Jayasinghe",
-      role: "Secretary",
-      description: "Manages records, correspondence, and schedules effectively.",
+      name: "Jane Smith",
+      role: "Former Scout Member",
+      description: "Contributed significantly to the scout activities.",
       image: "https://via.placeholder.com/150",
     },
-    {
-      name: "Amal Silva",
-      role: "Treasurer",
-      description: "Handles all financial responsibilities and budgeting.",
-      image: "https://via.placeholder.com/150",
-    },
+    // Add more members as needed
   ];
 
   return (
@@ -76,20 +64,46 @@ export default function About() {
       {/* Introduction Section */}
       <div className="container mx-auto px-6 py-12 text-center">
         <h2 className="text-3xl font-semibold text-gray-800 mb-4">
-          Welcome to the Jamboreeta 
+          A Legacy of Excellence: Maliyadeva Adarsha Maha Vidyalaya
         </h2>
         <p className="text-lg text-gray-600 leading-relaxed">
-          Our Camp fosters leadership, teamwork, and outdoor skills for
-          students. With a proud history of creating future leaders, we focus on
-          community engagement, personal development, and adventure. Join us to
-          explore, learn, and grow as part of an enthusiastic and driven team.
+          Established in 1978 as Maliyadeva Adarsha Prathamika Vidyalaya, the school has a rich history of fostering leadership, teamwork, and academic excellence. 
+          Through the years, it has grown to become a cornerstone of education and scouting in the region.
         </p>
       </div>
 
-      {/* Organizing Team */}
+      {/* History Section */}
       <div className="bg-gray-100 py-12">
+        <div className="container mx-auto px-6">
+          <h2 className="text-4xl font-semibold text-gray-800 mb-6 text-center">
+            Our Journey
+          </h2>
+          <p className="text-gray-600 leading-relaxed mb-8">
+            From its modest beginnings with 123 students, under the leadership of Mr. T.B. Siriwardhana and the support of key figures like MP Piyadasa Wijesinghe, the school rapidly grew into an institution of academic and extracurricular excellence. By 1988, it had evolved into Maliyadeva Adarsha Maha Vidyalaya, offering A/L classes across various streams.
+          </p>
+          <p className="text-gray-600 leading-relaxed mb-8">
+            Scouting has been a vibrant part of the school since 1985, with Cub Scouts, Boy Scouts, Girl Scouts, and more divisions achieving excellence nationally and internationally. The school takes pride in its tradition of creating leaders who excel in various fields.
+          </p>
+        </div>
+      </div>
+
+      {/* jambareeta Section */}
+      <div className="container mx-auto px-6 py-12">
+        <h2 className="text-4xl font-semibold text-gray-800 mb-6 text-center">
+          Maliyadeva Adarsha jambareeta
+        </h2>
+        <p className="text-gray-600 leading-relaxed mb-8">
+          The Maliyadeva Adarsha jambareeta, first held in 2015, is a biennial gathering that fosters community, innovation, and lifelong learning. This event has grown significantly over the years, with successful editions in 2015, 2020, and now, in 2025.
+        </p>
+        <p className="text-gray-600 leading-relaxed mb-8">
+          MAJ 2025 promises to be the most impactful yet, with over 2,500 participants expected to join this 5-day event. With a focus on leadership, service, and global citizenship, MAJ 2025 aims to inspire future generations to reach their fullest potential.
+        </p>
+      </div>
+
+      {/* Organizing Team Section */}
+      <div className="bg-gray-200 py-12">
         <h2 className="text-4xl font-semibold text-gray-800 text-center mb-10">
-          Our Organizing Team
+          Meet Our Organizing Team
         </h2>
         <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 px-6">
           {organizingTeam.map((member, index) => (
@@ -118,19 +132,12 @@ export default function About() {
         </div>
       </div>
 
-      {/* MASG Old Scout Association */}
-      <div className="container mx-auto px-6 py-12 text-center">
-        <h2 className="text-4xl font-semibold text-gray-800 mb-4">
-          MASG Old Scout Association
+      {/* Old Scout Team */}
+      <div className="bg-gray-200 py-12">
+        <h2 className="text-4xl font-semibold text-gray-800 text-center mb-10">
+          Meet Our Old Scout Team
         </h2>
-        <p className="text-lg text-gray-600 leading-relaxed mb-8">
-          The MASG Old Scout Association brings together former scouts to
-          preserve traditions, provide guidance, and contribute to the community
-          with their experience and wisdom.
-        </p>
-
-        {/* Old Scout Team */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 px-6">
           {oldScoutAssociation.map((member, index) => (
             <div
               key={index}
