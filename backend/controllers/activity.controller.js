@@ -50,7 +50,7 @@ export const getActivitiesByEmail = async (req, res) => {
 // Create a new activity
 export const createActivity = async (req, res) => {
     try {
-        const { id, name } = req.body;
+        const { id, name, category } = req.body; // Include category
 
         // Check if the activity with the same id already exists
         const existingActivity = await Activity.findOne({ id });
@@ -59,7 +59,7 @@ export const createActivity = async (req, res) => {
         }
 
         // Create a new activity
-        const activity = new Activity({ id, name });
+        const activity = new Activity({ id, name, category });
         await activity.save();
 
         res.status(201).json(activity);
@@ -80,25 +80,24 @@ export const getActivities = async (req, res) => {
 
 // Update an activity
 export const updateActivity = async (req, res) => {
-    try {
-        const { id } = req.params; // Get the activity ID from URL params
-        const { name } = req.body; // Get the new name from the request body
+  try {
+    const { id } = req.params;
+    const { name, category } = req.body;
 
-        // Find the activity by id and update it
-        const updatedActivity = await Activity.findOneAndUpdate(
-            { id },
-            { name },
-            { new: true } // Return the updated activity
-        );
+    const updatedActivity = await Activity.findOneAndUpdate(
+      { id },
+      { name, category },
+      { new: true }
+    );
 
-        if (!updatedActivity) {
-            return res.status(404).json({ message: "Activity not found" });
-        }
-
-        res.status(200).json(updatedActivity);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+    if (!updatedActivity) {
+      return res.status(404).json({ message: "Activity not found" });
     }
+
+    res.status(200).json(updatedActivity);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 // Delete an activity
