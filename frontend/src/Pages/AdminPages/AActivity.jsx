@@ -4,7 +4,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 function ActivityManagement() {
   const [activities, setActivities] = useState([]);
-  const [newActivity, setNewActivity] = useState({ id: '', name: '' });
+  const [newActivity, setNewActivity] = useState({ id: '', name: '', category: '' });
   const [editActivity, setEditActivity] = useState(null);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ function ActivityManagement() {
     try {
       const response = await axios.post('http://localhost:3000/api/activity', newActivity);
       setActivities([...activities, response.data]);
-      setNewActivity({ id: '', name: '' });
+      setNewActivity({ id: '', name: '', category: '' });
       toast.success('Activity added successfully!');
     } catch (error) {
       toast.error('Error adding activity');
@@ -70,14 +70,21 @@ function ActivityManagement() {
             placeholder="ID"
             value={newActivity.id}
             onChange={(e) => setNewActivity({ ...newActivity, id: e.target.value })}
-            className="border p-2 rounded w-1/3"
+            className="border p-2 rounded w-1/4"
           />
           <input
             type="text"
             placeholder="Name"
             value={newActivity.name}
             onChange={(e) => setNewActivity({ ...newActivity, name: e.target.value })}
-            className="border p-2 rounded w-1/3"
+            className="border p-2 rounded w-1/4"
+          />
+          <input
+            type="text"
+            placeholder="Category"
+            value={newActivity.category}
+            onChange={(e) => setNewActivity({ ...newActivity, category: e.target.value })}
+            className="border p-2 rounded w-1/4"
           />
           <button
             onClick={handleAddActivity}
@@ -95,6 +102,7 @@ function ActivityManagement() {
             <tr className="bg-gray-200 text-left">
               <th className="border border-gray-300 p-2">ID</th>
               <th className="border border-gray-300 p-2">Name</th>
+              <th className="border border-gray-300 p-2">Category</th>
               <th className="border border-gray-300 p-2">Actions</th>
             </tr>
           </thead>
@@ -113,6 +121,18 @@ function ActivityManagement() {
                       />
                     ) : (
                       activity.name
+                    )}
+                  </td>
+                  <td className="border border-gray-300 p-2">
+                    {editActivity && editActivity.id === activity.id ? (
+                      <input
+                        type="text"
+                        value={editActivity.category}
+                        onChange={(e) => setEditActivity({ ...editActivity, category: e.target.value })}
+                        className="border p-2 rounded"
+                      />
+                    ) : (
+                      activity.category
                     )}
                   </td>
                   <td className="border border-gray-300 p-2">
@@ -152,7 +172,7 @@ function ActivityManagement() {
               ))
             ) : (
               <tr>
-                <td colSpan="3" className="text-center p-4">No activities available.</td>
+                <td colSpan="4" className="text-center p-4">No activities available.</td>
               </tr>
             )}
           </tbody>
