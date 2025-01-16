@@ -6,33 +6,46 @@ const baseUrl = 'http://localhost:3000';
 var scoutDetails = {};
 
 function PassActivity() {
+    const [categories, setCategories] = useState([]); // State to hold categories
+    const [selectedCategory, setSelectedCategory] = useState(""); // State to hold selected category
     const [selected, setSelected] = useState(() => {
         const savedActivity = localStorage.getItem("selectedActivity");
-        return savedActivity ? JSON.parse(savedActivity) : { id: "", name: "" };
+        return savedActivity ? JSON.parse(savedActivity) : { id: "", name: "", category: "" };
     });
-
-    const [options, setOptions] = useState([]); // State to hold activities
+    const [options, setOptions] = useState([]); // State to hold all activities
+    const [filteredOptions, setFilteredOptions] = useState([]); // State to hold filtered activities
     const [scanResult, setScanResult] = useState(null);
     const [completedActivities, setCompletedActivities] = useState([]);
     const [activitiesStats, setActivitiesStats] = useState({ completed: 0, pending: 0 });
 
-    const scanner = useRef(null); // Using useRef to hold the scanner object
+    const scanner = useRef(null);
 
-    // Handle dropdown change
-    const handleChange = (e) => {
+    const handleCategoryChange = (e) => {
+        const category = e.target.value;
+        setSelectedCategory(category);
+
+        // Filter activities by selected category
+        if (category) {
+            setFilteredOptions(options.filter(option => option.category === category));
+        } else {
+            setFilteredOptions(options); // Show all activities if no category is selected
+        }
+
+        // Reset selected activity when the category changes
+        setSelected({ id: "", name: "", category: "" });
+        localStorage.removeItem("selectedActivity");
+    };
+
+    const handleActivityChange = (e) => {
         const newActivityId = e.target.value;
-        const newActivityName = options.find(option => option.id === newActivityId)?.name || "";
+        const newActivityName = filteredOptions.find(option => option.id === newActivityId)?.name || "";
 
-        const newSelected = { id: newActivityId, name: newActivityName };
+        const newSelected = { id: newActivityId, name: newActivityName, category: selectedCategory };
         setSelected(newSelected);
-
-        // Save the activity id and name in local storage
         localStorage.setItem("selectedActivity", JSON.stringify(newSelected));
     };
 
-    // Handle done button click
     const handleDone = () => {
-
         if (scanResult) {
             const activityName = selected.name;
             axios.post(baseUrl + '/api/activity/pass', {
@@ -43,56 +56,54 @@ function PassActivity() {
                 .then((response) => {
                     console.log('Data sent successfully:', response.data);
                     alert('Data sent successfully!');
-                    setScanResult(null); // Reset scanResult
-
-                    if(scanner.current.getState()==3){
-                        scanner.current.resume(); // Access the scanner using useRef
+                    setScanResult(null);
+                    if (scanner.current.getState() === 3) {
+                        scanner.current.resume();
+                    } else {
+                        location.reload();
                     }
-
                 })
                 .catch((error) => {
                     console.error('Error sending data:', error);
                     alert('Error sending data!');
-                    setScanResult(null); // Reset scanResult
-                    if(scanner.current.getState()==3){
-                        scanner.current.resume(); // Access the scanner using useRef
+                    setScanResult(null);
+                    if (scanner.current.getState() === 3) {
+                        scanner.current.resume();
+                    } else {
+                        location.reload();
                     }
                 });
         }
-
     };
 
     const handleCancel = () => {
-        setScanResult(null); // Reset scanResult
-        if(scanner.current.getState()==3){
-            scanner.current.resume(); // Access the scanner using useRef
+        setScanResult(null);
+        if (scanner.current.getState() === 3) {
+            scanner.current.resume();
         }
     };
 
-    // Fetch activities from the backend
     useEffect(() => {
         axios.get(baseUrl + '/api/activity')
             .then((response) => {
-                const activityOptions = response.data.map((activity) => ({
+                const activities = response.data.map((activity) => ({
                     id: activity.id,
                     name: activity.name,
+                    category: activity.category,
                 }));
-                setOptions(activityOptions);
 
-                // Get selected activity from lo cal storage
+                // Extract distinct categories
+                const uniqueCategories = [...new Set(activities.map(activity => activity.category))];
+
+                setOptions(activities);
+                setFilteredOptions(activities);
+                setCategories(uniqueCategories);
+
                 const savedActivity = JSON.parse(localStorage.getItem("selectedActivity"));
-
-                // Check if saved activity exists in retrieved activities
-                if (savedActivity && activityOptions.some(option => option.id === savedActivity.id)) {
+                if (savedActivity && activities.some(option => option.id === savedActivity.id)) {
                     setSelected(savedActivity);
                 } else {
-                    // If not, remove from local storage and select the first activity
                     localStorage.removeItem("selectedActivity");
-                    if (activityOptions.length > 0) {
-                        const firstActivity = activityOptions[0];
-                        setSelected(firstActivity);
-                        localStorage.setItem("selectedActivity", JSON.stringify(firstActivity));
-                    }
                 }
             })
             .catch((error) => {
@@ -100,7 +111,6 @@ function PassActivity() {
             });
     }, []);
 
-    // Initialize QR code scanner
     useEffect(() => {
         scanner.current = new Html5QrcodeScanner('reader', {
             qrbox: {
@@ -116,24 +126,22 @@ function PassActivity() {
                 setScanResult(result);
                 scoutDetails = parsedResult;
 
-                // Fetch the registered user's completed activities
                 axios.get(`${baseUrl}/api/registration/${scoutDetails.email}`)
                     .then((response) => {
                         const userDetails = response.data;
                         setCompletedActivities(userDetails.activities || []);
-
                         const completedActivityIds = new Set(userDetails.activities.map(activity => activity.id));
-                        const completedCount = options.filter(option => completedActivityIds.has(option.id)).length;
-                        const pendingCount = options.length - completedCount;
+                        const completedCount = filteredOptions.filter(option => completedActivityIds.has(option.id)).length;
+                        const pendingCount = filteredOptions.length - completedCount;
 
                         setActivitiesStats({ completed: completedCount, pending: pendingCount });
-                        if(scanner.current.getState()==2){
-                            scanner.current.pause(true); // Access the scanner using useRef
+                        if (scanner.current.getState() === 2) {
+                            scanner.current.pause(true);
                         }
                     })
                     .catch((error) => {
-                        if(scanner.current.getState()==2){
-                            scanner.current.pause(true); // Access the scanner using useRef
+                        if (scanner.current.getState() === 2) {
+                            scanner.current.pause(true);
                         }
                         console.error('Error fetching user details:', error);
                     });
@@ -151,10 +159,11 @@ function PassActivity() {
         return () => {
             scanner.current.clear();
         };
-    }, [options]);
+    }, [filteredOptions]);
 
     return (
         <div className="bg-gray-50">
+
             {/* Hero Section */}
             <div className="relative h-[400px]">
                 <img
@@ -170,8 +179,101 @@ function PassActivity() {
                 </div>
             </div>
 
+            <div className="flex justify-center space-x-4 my-5">
+                {/* Category Dropdown */}
+                <div className="w-64">
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                        Choose a category:
+                    </label>
+                    <select
+                        value={selectedCategory}
+                        onChange={handleCategoryChange}
+                        className="w-full px-4 py-2 text-sm border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                        <option value="">All Categories</option>
+                        {categories.map((category) => (
+                            <option key={category} value={category}>
+                                {category}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                {/* Activities Dropdown */}
+                <div className="w-64">
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
+                        Choose an activity:
+                    </label>
+                    <select
+                        value={selected.id}
+                        onChange={handleActivityChange}
+                        className="w-full px-4 py-2 text-sm border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                        {filteredOptions.map((option) => (
+                            <option key={option.id} value={option.id}>
+                                {option.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            </div>
+
+            {/* Activity ID and Status Section */}
+            <div className="my-10 text-center">
+                <p className="text-lg font-medium text-gray-800">
+                    Activity ID: <span className="text-blue-600">{selected.id}</span>
+                </p>
+                <div className="mt-4 text-lg text-gray-800">
+                    <p>Status:</p>
+                    {scanResult ? (
+                        completedActivities.some(activity => activity.id === selected.id) ? (
+                            <span className="text-green-500 flex items-center justify-center">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth="1.5"
+                                    stroke="currentColor"
+                                    className="w-6 h-6"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                </svg>
+                                <span className="ml-2">Completed</span>
+                            </span>
+                        ) : (
+                            <span className="text-red-500 flex items-center justify-center">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth="1.5"
+                                    stroke="currentColor"
+                                    className="w-6 h-6"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12H4.5" />
+                                </svg>
+                                <span className="ml-2">Pending</span>
+                            </span>
+                        )
+                    ) : (
+                        <span className="text-red-500 flex items-center justify-center">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="1.5"
+                                stroke="currentColor"
+                                className="w-6 h-6"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12H4.5" />
+                            </svg>
+                            <span className="ml-2">Waiting for scan</span>
+                        </span>
+                    )}
+                </div>
+            </div>
             {/* Dropdown */}
-            <div className="w-64 mx-auto my-5">
+            {/* <div className="w-64 mx-auto my-5">
                 <label className="block mb-2 text-sm font-medium text-gray-700">
                     Choose an activity:
                 </label>
@@ -250,7 +352,7 @@ function PassActivity() {
                         </span>
                     )}
                 </div>
-            </div>
+            </div> */}
 
             {/* QR Reader or Scan Result */}
             {scanResult ? (
