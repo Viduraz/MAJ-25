@@ -23,18 +23,27 @@ function PassActivity() {
     const handleCategoryChange = (e) => {
         const category = e.target.value;
         setSelectedCategory(category);
-
-        // Filter activities by selected category
-        if (category) {
-            setFilteredOptions(options.filter(option => option.category === category));
+    
+        // Filter activities based on the selected category
+        const filtered = category
+            ? options.filter(option => option.category === category)
+            : options; // Show all activities if no category is selected
+    
+        setFilteredOptions(filtered);
+    
+        if (filtered.length > 0) {
+            // Set the selected activity to the first activity in the filtered list
+            const firstActivity = filtered[0];
+            setSelected(firstActivity);
+            localStorage.setItem("selectedActivity", JSON.stringify(firstActivity));
         } else {
-            setFilteredOptions(options); // Show all activities if no category is selected
+            // Reset selected activity if no activities in the category
+            setSelected({ id: "", name: "", category: "" });
+            localStorage.removeItem("selectedActivity");
         }
-
-        // Reset selected activity when the category changes
-        setSelected({ id: "", name: "", category: "" });
-        localStorage.removeItem("selectedActivity");
     };
+    
+    
 
     const handleActivityChange = (e) => {
         const newActivityId = e.target.value;
@@ -80,6 +89,8 @@ function PassActivity() {
         setScanResult(null);
         if (scanner.current.getState() === 3) {
             scanner.current.resume();
+        }else {
+            location.reload();
         }
     };
 
@@ -89,20 +100,31 @@ function PassActivity() {
                 const activities = response.data.map((activity) => ({
                     id: activity.id,
                     name: activity.name,
-                    category: activity.category,
+                    category: activity.category ? activity.category.trim() : "",
                 }));
-
+    
                 // Extract distinct categories
                 const uniqueCategories = [...new Set(activities.map(activity => activity.category))];
-
+    
                 setOptions(activities);
                 setFilteredOptions(activities);
                 setCategories(uniqueCategories);
-
+    
+                // Check if saved activity exists in localStorage and is valid
                 const savedActivity = JSON.parse(localStorage.getItem("selectedActivity"));
                 if (savedActivity && activities.some(option => option.id === savedActivity.id)) {
                     setSelected(savedActivity);
+                    setSelectedCategory(savedActivity.category);
+                } else if (activities.length > 0) {
+                    // Default to the first activity if no valid saved activity is found
+                    const firstActivity = activities[0];
+                    setSelected(firstActivity);
+                    setSelectedCategory(firstActivity.category);
+                    localStorage.setItem("selectedActivity", JSON.stringify(firstActivity));
                 } else {
+                    // If no activities are available, reset the selected state and category
+                    setSelected({ id: "", name: "", category: "" });
+                    setSelectedCategory("");
                     localStorage.removeItem("selectedActivity");
                 }
             })
@@ -110,6 +132,8 @@ function PassActivity() {
                 console.error('Error fetching activities:', error);
             });
     }, []);
+    
+    
 
     useEffect(() => {
         scanner.current = new Html5QrcodeScanner('reader', {
