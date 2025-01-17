@@ -20,17 +20,25 @@ function PassActivity() {
 
     const scanner = useRef(null);
 
+    const categoryColors = [
+        { border: "border-blue-400", bg: "bg-blue-100", lightBg: "bg-blue-50" },
+        { border: "border-green-400", bg: "bg-green-100", lightBg: "bg-green-50" },
+        { border: "border-purple-400", bg: "bg-purple-100", lightBg: "bg-purple-50" },
+        { border: "border-yellow-400", bg: "bg-yellow-100", lightBg: "bg-yellow-50" },
+        { border: "border-pink-400", bg: "bg-pink-100", lightBg: "bg-pink-50" }
+    ];
+
     const handleCategoryChange = (e) => {
         const category = e.target.value;
         setSelectedCategory(category);
-    
+
         // Filter activities based on the selected category
         const filtered = category
             ? options.filter(option => option.category === category)
             : options; // Show all activities if no category is selected
-    
+
         setFilteredOptions(filtered);
-    
+
         if (filtered.length > 0) {
             // Set the selected activity to the first activity in the filtered list
             const firstActivity = filtered[0];
@@ -42,8 +50,8 @@ function PassActivity() {
             localStorage.removeItem("selectedActivity");
         }
     };
-    
-    
+
+
 
     const handleActivityChange = (e) => {
         const newActivityId = e.target.value;
@@ -89,7 +97,7 @@ function PassActivity() {
         setScanResult(null);
         if (scanner.current.getState() === 3) {
             scanner.current.resume();
-        }else {
+        } else {
             location.reload();
         }
     };
@@ -102,14 +110,14 @@ function PassActivity() {
                     name: activity.name,
                     category: activity.category ? activity.category.trim() : "",
                 }));
-    
+
                 // Extract distinct categories
                 const uniqueCategories = [...new Set(activities.map(activity => activity.category))];
-    
+
                 setOptions(activities);
                 setFilteredOptions(activities);
                 setCategories(uniqueCategories);
-    
+
                 // Check if saved activity exists in localStorage and is valid
                 const savedActivity = JSON.parse(localStorage.getItem("selectedActivity"));
                 if (savedActivity && activities.some(option => option.id === savedActivity.id)) {
@@ -132,8 +140,8 @@ function PassActivity() {
                 console.error('Error fetching activities:', error);
             });
     }, []);
-    
-    
+
+
 
     useEffect(() => {
         scanner.current = new Html5QrcodeScanner('reader', {
@@ -296,87 +304,7 @@ function PassActivity() {
                     )}
                 </div>
             </div>
-            {/* Dropdown */}
-            {/* <div className="w-64 mx-auto my-5">
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                    Choose an activity:
-                </label>
-                <select
-                    value={selected.id}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 text-sm border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                    {options.map((option) => (
-                        <option key={option.id} value={option.id}>
-                            {option.name}
-                        </option>
-                    ))}
-                </select>
-                <p className="mt-2 text-sm text-gray-600">
-                    Activity ID: {selected.id}
-                </p>
-                <div className="mt-2 text-sm text-gray-600">
-                    <p>Status:</p> {scanResult ? (
-                        // If scanResult is available, show status based on completion
-                        completedActivities.some(activity => activity.id === selected.id) ? (
-                            <span className="text-green-500 flex items-center justify-center">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth="1.5"
-                                    stroke="currentColor"
-                                    className="w-6 h-6"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M4.5 12.75l6 6 9-13.5"
-                                    />
-                                </svg>
-                                <span className="ml-2">Completed</span>
-                            </span>
-                        ) : (
-                            <span className="text-red-500 flex items-center justify-center">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth="1.5"
-                                    stroke="currentColor"
-                                    className="w-6 h-6"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M19.5 12H4.5"
-                                    />
-                                </svg>
-                                <span className="ml-2">Pending</span>
-                            </span>
-                        )
-                    ) : (
-                        // If scanResult is not available, just show Pending
-                        <span className="text-red-500 flex items-center justify-center">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth="1.5"
-                                stroke="currentColor"
-                                className="w-6 h-6"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M19.5 12H4.5"
-                                />
-                            </svg>
-                            <span className="ml-2">Waiting for scan</span>
-                        </span>
-                    )}
-                </div>
-            </div> */}
+
 
             {/* QR Reader or Scan Result */}
             {scanResult ? (
@@ -399,70 +327,107 @@ function PassActivity() {
                         </button>
                     </div>
 
-                    {/* Activities Table */}
-                    <div className="my-5">
+                    <div className="my-2">
                         <h2 className="text-xl font-bold text-gray-700">Activities Status</h2>
-                        <table className="w-full mt-3 border-collapse border border-gray-300">
+                        <table className="w-full mt-5 border-collapse border border-gray-300">
                             <thead>
                                 <tr>
-                                    <th className="border border-gray-300 px-4 py-2">Activity</th>
-                                    <th className="border border-gray-300 px-4 py-2">Status</th>
+                                    <th className="border bg-blue-300 border-gray-300 px-4 py-2">Activity</th>
+                                    <th className="border bg-blue-300 border-gray-300 px-4 py-2">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {options.map((activity) => {
-                                    // Check if the activity is completed by matching the ID
-                                    const isCompleted = completedActivities.some(
-                                        (completed) => completed.id === activity.id
-                                    );
+                                {Object.entries(
+                                    options.reduce((acc, activity) => {
+                                        acc[activity.category] = acc[activity.category] || [];
+                                        acc[activity.category].push(activity);
+                                        return acc;
+                                    }, {})
+                                ).map(([category, activities], index, categoryArray) => {
+                                    const currentColors = categoryColors[index % categoryColors.length];
+                                    const nextColors = categoryColors[(index + 1) % categoryColors.length];
+
                                     return (
-                                        <tr key={activity.id}>
-                                            <td className="border border-gray-300 px-4 py-2">{activity.name}</td>
-                                            <td className="border border-gray-300 px-4 py-2 text-center">
-                                                {isCompleted ? (
-                                                    <span className="text-green-500 flex items-center justify-center">
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            strokeWidth="1.5"
-                                                            stroke="currentColor"
-                                                            className="w-6 h-6"
+                                        <React.Fragment key={category}>
+                                            <tr>
+                                                <td colSpan="2" className="p-0">
+                                                    <div
+                                                        className={`rounded-lg border ${currentColors.border} ${nextColors ? `border-b-${nextColors.border.split("-")[1]}-400` : ""
+                                                            }`}
+                                                    >
+                                                        {/* Category Header */}
+                                                        <div
+                                                            className={`px-4 py-2 font-semibold text-gray-700 ${currentColors.bg} border-b ${currentColors.border}`}
                                                         >
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                d="M4.5 12.75l6 6 9-13.5"
-                                                            />
-                                                        </svg>
-                                                        <span className="ml-2">Completed</span>
-                                                    </span>
-                                                ) : (
-                                                    <span className="text-red-500 flex items-center justify-center">
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            strokeWidth="1.5"
-                                                            stroke="currentColor"
-                                                            className="w-6 h-6"
+                                                            {category}
+                                                        </div>
+                                                        {/* Activities */}
+                                                        <div
+                                                            className={`p-4 ${currentColors.lightBg} md:w-full md:rounded-lg`}
                                                         >
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                d="M19.5 12H4.5"
-                                                            />
-                                                        </svg>
-                                                        <span className="ml-2">Pending</span>
-                                                    </span>
-                                                )}
-                                            </td>
-                                        </tr>
+                                                            {activities.map((activity) => {
+                                                                const isCompleted = completedActivities.some(
+                                                                    (completed) => completed.id === activity.id
+                                                                );
+                                                                return (
+                                                                    <div
+                                                                        key={activity.id}
+                                                                        className="flex justify-between items-center border-b last:border-b-0 border-gray-300 py-2"
+                                                                    >
+                                                                        <span>{activity.name}</span>
+                                                                        {isCompleted ? (
+                                                                            <span className="text-green-500 flex items-center">
+                                                                                <svg
+                                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                                    fill="none"
+                                                                                    viewBox="0 0 24 24"
+                                                                                    strokeWidth="1.5"
+                                                                                    stroke="currentColor"
+                                                                                    className="w-6 h-6"
+                                                                                >
+                                                                                    <path
+                                                                                        strokeLinecap="round"
+                                                                                        strokeLinejoin="round"
+                                                                                        d="M4.5 12.75l6 6 9-13.5"
+                                                                                    />
+                                                                                </svg>
+                                                                                <span className="ml-2">Completed</span>
+                                                                            </span>
+                                                                        ) : (
+                                                                            <span className="text-red-500 flex items-center">
+                                                                                <svg
+                                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                                    fill="none"
+                                                                                    viewBox="0 0 24 24"
+                                                                                    strokeWidth="1.5"
+                                                                                    stroke="currentColor"
+                                                                                    className="w-6 h-6"
+                                                                                >
+                                                                                    <path
+                                                                                        strokeLinecap="round"
+                                                                                        strokeLinejoin="round"
+                                                                                        d="M19.5 12H4.5"
+                                                                                    />
+                                                                                </svg>
+                                                                                <span className="ml-2">Pending</span>
+                                                                            </span>
+                                                                        )}
+                                                                    </div>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </React.Fragment>
                                     );
                                 })}
                             </tbody>
                         </table>
                     </div>
+
+
+
 
                     <div className="mt-4 p-6 bg-white rounded-lg shadow-md border border-gray-300">
                         <h3 className="text-lg font-semibold text-gray-800">Activities Overview</h3>
