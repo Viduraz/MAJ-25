@@ -8,7 +8,7 @@ function AActivityPasser() {
 
   const fetchUserActivities = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/activity/user/${email}`);
+      const response = await axios.get(`http://localhost:3000/api/activity`);
       setUserActivities(response.data);
       toast.success('User activities loaded successfully!');
     } catch (error) {
