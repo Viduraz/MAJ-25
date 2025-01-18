@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 export const activitySchema = new mongoose.Schema({
     id: { type: String, required: true },
     name: { type: String, required: true },
+    category: { type: String, required: true },
 }, { timestamps: true }); // Add timestamps here
 
 const Activity = mongoose.model("Activity", activitySchema);

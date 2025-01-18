@@ -22,9 +22,17 @@ function ActivityManagement() {
     }
   };
 
+  const generateNextActivityId = () => {
+    const activityCount = activities.length;
+    const nextId = activityCount + 1;
+    return `Activity-${nextId.toString().padStart(2, '0')}`;
+  };
+
   const handleAddActivity = async () => {
     try {
-      const response = await axios.post('http://localhost:3000/api/activity', newActivity);
+      const activityId = generateNextActivityId();
+      const activityToAdd = { ...newActivity, id: activityId };
+      const response = await axios.post('http://localhost:3000/api/activity', activityToAdd);
       setActivities([...activities, response.data]);
       setNewActivity({ id: '', name: '', category: '' });
       toast.success('Activity added successfully!');
@@ -71,6 +79,7 @@ function ActivityManagement() {
             value={newActivity.id}
             onChange={(e) => setNewActivity({ ...newActivity, id: e.target.value })}
             className="border p-2 rounded w-1/4"
+            readOnly
           />
           <input
             type="text"
@@ -79,13 +88,20 @@ function ActivityManagement() {
             onChange={(e) => setNewActivity({ ...newActivity, name: e.target.value })}
             className="border p-2 rounded w-1/4"
           />
-          <input
-            type="text"
-            placeholder="Category"
+          <select
             value={newActivity.category}
             onChange={(e) => setNewActivity({ ...newActivity, category: e.target.value })}
             className="border p-2 rounded w-1/4"
-          />
+          >
+            <option value="">Select Category</option>
+            <option value="Scout_Craft">Scout_Craft</option>
+            <option value="Health_And_Environment">Health and Environment</option>
+            <option value="Society_and_Culture">Society and Culture</option>
+            <option value="Adventure">Adventure</option>
+            <option value="Technology">Technology</option>
+            <option value="Bussiness_&_Entrepreneurship">Bussiness & Entrepreneurship</option>
+            <option value="Water_activities">Water activities</option>
+          </select>
           <button
             onClick={handleAddActivity}
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
