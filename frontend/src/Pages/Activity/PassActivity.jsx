@@ -329,103 +329,101 @@ function PassActivity() {
 
                     <div className="my-2">
                         <h2 className="text-xl font-bold text-gray-700">Activities Status</h2>
-                        <div className="max-w-3xl mx-auto">
-                            <table className="w-full mt-5 border-collapse border border-gray-300 shadow-lg rounded-lg overflow-hidden">
-                                <thead className="bg-blue-500 text-white">
-                                    <tr>
-                                        <th className="border px-4 py-2">Activity</th>
-                                        <th className="border px-4 py-2">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {Object.entries(
-                                        options.reduce((acc, activity) => {
-                                            acc[activity.category] = acc[activity.category] || [];
-                                            acc[activity.category].push(activity);
-                                            return acc;
-                                        }, {})
-                                    ).map(([category, activities], index, categoryArray) => {
-                                        const currentColors = categoryColors[index % categoryColors.length];
-                                        const nextColors = categoryColors[(index + 1) % categoryColors.length];
+                        <table className="w-full mt-5 border-collapse border border-gray-300">
+                            <thead>
+                                <tr>
+                                    <th className="border bg-blue-300 border-gray-300 px-4 py-2">Activity</th>
+                                    <th className="border bg-blue-300 border-gray-300 px-4 py-2">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {Object.entries(
+                                    options.reduce((acc, activity) => {
+                                        acc[activity.category] = acc[activity.category] || [];
+                                        acc[activity.category].push(activity);
+                                        return acc;
+                                    }, {})
+                                ).map(([category, activities], index, categoryArray) => {
+                                    const currentColors = categoryColors[index % categoryColors.length];
+                                    const nextColors = categoryColors[(index + 1) % categoryColors.length];
 
-                                        return (
-                                            <React.Fragment key={category}>
-                                                <tr>
-                                                    <td colSpan="2" className="p-0">
+                                    return (
+                                        <React.Fragment key={category}>
+                                            <tr>
+                                                <td colSpan="2" className="p-0">
+                                                    <div
+                                                        className={`rounded-lg border ${currentColors.border} ${nextColors ? `border-b-${nextColors.border.split("-")[1]}-400` : ""
+                                                            }`}
+                                                    >
+                                                        {/* Category Header */}
                                                         <div
-                                                            className={`rounded-lg border ${currentColors.border} ${nextColors ? `border-b-${nextColors.border.split("-")[1]}-400` : ""
-                                                                }`}
+                                                            className={`px-4 py-2 font-semibold text-gray-700 ${currentColors.bg} border-b ${currentColors.border}`}
                                                         >
-                                                            {/* Category Header */}
-                                                            <div
-                                                                className={`px-4 py-2 font-semibold text-gray-700 ${currentColors.bg} border-b ${currentColors.border}`}
-                                                            >
-                                                                {category}
-                                                            </div>
-                                                            {/* Activities */}
-                                                            <div
-                                                                className={`p-4 ${currentColors.lightBg} md:w-full md:rounded-lg`}
-                                                            >
-                                                                {activities.map((activity) => {
-                                                                    const isCompleted = completedActivities.some(
-                                                                        (completed) => completed.id === activity.id
-                                                                    );
-                                                                    return (
-                                                                        <div
-                                                                            key={activity.id}
-                                                                            className="flex justify-between items-center border-b last:border-b-0 border-gray-300 py-2 hover:bg-gray-100 transition duration-200"
-                                                                        >
-                                                                            <span className="text-gray-800 font-medium">{activity.name}</span>
-                                                                            {isCompleted ? (
-                                                                                <span className="text-green-500 flex items-center">
-                                                                                    <svg
-                                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                                        fill="none"
-                                                                                        viewBox="0 0 24 24"
-                                                                                        strokeWidth="1.5"
-                                                                                        stroke="currentColor"
-                                                                                        className="w-6 h-6"
-                                                                                    >
-                                                                                        <path
-                                                                                            strokeLinecap="round"
-                                                                                            strokeLinejoin="round"
-                                                                                            d="M4.5 12.75l6 6 9-13.5"
-                                                                                        />
-                                                                                    </svg>
-                                                                                    <span className="ml-2">Completed</span>
-                                                                                </span>
-                                                                            ) : (
-                                                                                <span className="text-red-500 flex items-center">
-                                                                                    <svg
-                                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                                        fill="none"
-                                                                                        viewBox="0 0 24 24"
-                                                                                        strokeWidth="1.5"
-                                                                                        stroke="currentColor"
-                                                                                        className="w-6 h-6"
-                                                                                    >
-                                                                                        <path
-                                                                                            strokeLinecap="round"
-                                                                                            strokeLinejoin="round"
-                                                                                            d="M19.5 12H4.5"
-                                                                                        />
-                                                                                    </svg>
-                                                                                    <span className="ml-2">Pending</span>
-                                                                                </span>
-                                                                            )}
-                                                                        </div>
-                                                                    );
-                                                                })}
-                                                            </div>
+                                                            {category}
                                                         </div>
-                                                    </td>
-                                                </tr>
-                                            </React.Fragment>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
-                        </div>
+                                                        {/* Activities */}
+                                                        <div
+                                                            className={`p-4 ${currentColors.lightBg} md:w-full md:rounded-lg`}
+                                                        >
+                                                            {activities.map((activity) => {
+                                                                const isCompleted = completedActivities.some(
+                                                                    (completed) => completed.id === activity.id
+                                                                );
+                                                                return (
+                                                                    <div
+                                                                        key={activity.id}
+                                                                        className="flex justify-between items-center border-b last:border-b-0 border-gray-300 py-2"
+                                                                    >
+                                                                        <span>{activity.name}</span>
+                                                                        {isCompleted ? (
+                                                                            <span className="text-green-500 flex items-center">
+                                                                                <svg
+                                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                                    fill="none"
+                                                                                    viewBox="0 0 24 24"
+                                                                                    strokeWidth="1.5"
+                                                                                    stroke="currentColor"
+                                                                                    className="w-6 h-6"
+                                                                                >
+                                                                                    <path
+                                                                                        strokeLinecap="round"
+                                                                                        strokeLinejoin="round"
+                                                                                        d="M4.5 12.75l6 6 9-13.5"
+                                                                                    />
+                                                                                </svg>
+                                                                                <span className="ml-2">Completed</span>
+                                                                            </span>
+                                                                        ) : (
+                                                                            <span className="text-red-500 flex items-center">
+                                                                                <svg
+                                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                                    fill="none"
+                                                                                    viewBox="0 0 24 24"
+                                                                                    strokeWidth="1.5"
+                                                                                    stroke="currentColor"
+                                                                                    className="w-6 h-6"
+                                                                                >
+                                                                                    <path
+                                                                                        strokeLinecap="round"
+                                                                                        strokeLinejoin="round"
+                                                                                        d="M19.5 12H4.5"
+                                                                                    />
+                                                                                </svg>
+                                                                                <span className="ml-2">Pending</span>
+                                                                            </span>
+                                                                        )}
+                                                                    </div>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </React.Fragment>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
                     </div>
 
 
