@@ -13,11 +13,12 @@ const registrationSchema = new mongoose.Schema({
     amount: { type: Number },
     receiptImage: { type: String },
     type: { type: String },
-    activities: {
-        type: [activitySchema], // Embed the Activity schema
-        _id: false,
+    activities: [{
+        id: { type: String},
+        name: { type: String },
         default: [],
-    },
+
+    }],
 }, { timestamps: true });
 
 const Registration = mongoose.model("Registration", registrationSchema);

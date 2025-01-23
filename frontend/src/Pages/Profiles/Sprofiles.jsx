@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import QRCode from 'react-qr-code'; // Import from react-qr-code
-import { getStorage, ref, uploadString } from "firebase/storage"; // Import Firebase Storage functions
+import React, { useState, useEffect } from 'react';
+import QRCode from 'react-qr-code';
+import { getStorage, ref, uploadString } from 'firebase/storage';
+import axios from 'axios';
 
 export default function Sprofiles() {
   const [registrationData, setRegistrationData] = useState(null);
   const [profilePicture, setProfilePicture] = useState(null);
+  const [activities, setActivities] = useState([]);
 
   useEffect(() => {
     const savedRegistration = localStorage.getItem('registration');
@@ -12,6 +14,21 @@ export default function Sprofiles() {
       setRegistrationData(JSON.parse(savedRegistration));
     }
   }, []);
+
+  useEffect(() => {
+    if (registrationData && registrationData.email) {
+      fetchUserActivities(registrationData.email);
+    }
+  }, [registrationData]);
+
+  const fetchUserActivities = async (email) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/activity/user/${email}`);
+      setActivities(response.data);
+    } catch (error) {
+      console.error('Error fetching user activities:', error);
+    }
+  };
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -43,18 +60,17 @@ export default function Sprofiles() {
     <div className="flex flex-col bg-gradient-to-br from-blue-100 via-white to-blue-300 min-h-screen p-10 relative">
       <header className="text-center mb-8">
         <h1 className="text-5xl font-extrabold text-gray-800">
-          Welcome {registrationData ? registrationData.fullName : 'Guest'} !
+          Welcome {registrationData ? registrationData.fullName : 'Guest'}!
         </h1>
       </header>
 
       {/* QR Code Section at Top Left */}
-      <div className="absolute top-5 left-4"> {/* Positioning QR code */}
+      <div className="absolute top-5 left-4">
         <h3 className="text-xl font-semibold">Profile QR Code</h3>
         {registrationData && (
           <QRCode 
-            value={JSON.stringify(registrationData)} // Generate QR code from registration data
-            size={128} 
-            className="mt-2" 
+            value={JSON.stringify(registrationData)}
+            size={128}
           />
         )}
       </div>
@@ -62,7 +78,7 @@ export default function Sprofiles() {
       {/* Profile Picture in Top Right Corner */}
       <div className="absolute top-4 right-4">
         <img
-          src={profilePicture || 'default-profile.png'} // Replace with a default image path
+          src={profilePicture || 'default-profile.png'}
           alt="Profile"
           className="w-16 h-16 rounded-full object-cover border-2 border-gray-300"
         />
@@ -70,7 +86,7 @@ export default function Sprofiles() {
       </div>
 
       {/* Profile Details Section */}
-      <div className="flex flex-col items-center bg-white rounded-xl shadow-md p-6 transition-transform transform hover:scale-105 mt-20"> {/* Added margin-top */}
+      <div className="flex flex-col items-center bg-white rounded-xl shadow-md p-6 transition-transform transform hover:scale-105 mt-20">
         <h2 className="text-3xl font-bold text-blue-600 mb-4">{registrationData ? registrationData.fullName : 'Guest'}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mt-4">
           <div>
@@ -87,7 +103,7 @@ export default function Sprofiles() {
           </div>
           <div>
             <label className="block text-gray-700">Gender</label>
-            <input type="text" value={registrationData ? registrationData.gender : ' Gender'} className="border rounded w-full p-2" readOnly />
+            <input type="text" value={registrationData ? registrationData.gender : 'Gender'} className="border rounded w-full p-2" readOnly />
           </div>
           <div>
             <label className="block text-gray-700">Phone Number</label>
@@ -107,24 +123,33 @@ export default function Sprofiles() {
           </div>
           <div>
             <label className="block text-gray-700">Date Of Birth</label>
+            <input type="text" value={registrationData ? registrationData.dateOfBirth : 'DOB'} className="border rounded w-full p-2" readOnly />
+          </div>
+          <div>
+            <label className="block text-gray-700">Payment Method</label>
             <input type="text" value={registrationData ? registrationData.paymentMethod : 'pm'} className="border rounded w-full p-2" readOnly />
           </div>
         </div>
       </div>
 
-      {/* Activity List Section */}
-      <div className="mt-10">
-        <h2 className="text-3xl font-bold text-blue-600 mb-4">Activity List</h2>
-        <ul className="list-disc pl-5">
-          {Array.from({ length: 10 }, (_, index) => (
-            <li key={index}>Activity {index + 1}</li>
-          ))}
-        </ul>
-        {/* Check for Activity Award */}
-        {registrationData && registrationData.completedActivities >= 8 && (
-          <div className="mt-4 text-green-600 font-bold">
-            Congratulations! You've earned the Activity Award!
-          </div>
+      {/* Activities Section */}
+      <div className="mt-10 bg-white rounded-xl shadow-md p-6">
+        <h2 className="text-2xl font-bold text-blue-600 mb-4">Activities</h2>
+        {activities.length > 0 ? (
+          <ul className="list-disc list-inside">
+            {activities.map((activity, index) => (
+              <li key={index} className="text-gray-700">
+                {activity.name} - passed on {new Date(activity.updatedAt).toLocaleString()}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-700">No activities completed yet.</p>
+        )}
+        {activities.length >= 2 ? (
+          <p className="text-green-600 mt-4">You're available for an activity badge!</p>
+        ) : (
+          <p className="text-red-600 mt-4">You're not available for an activity badge yet.</p>
         )}
       </div>
 

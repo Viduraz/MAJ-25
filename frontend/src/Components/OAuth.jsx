@@ -3,6 +3,8 @@ import firebaseApp from '../../Firebase';
 import { useDispatch } from 'react-redux';
 import { signInSuccess } from '../redux/User/userSlice';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 export default function OAuth () {
     const dispatch = useDispatch();
@@ -40,8 +42,9 @@ export default function OAuth () {
     <button
     type='button'
     onClick={handleGoogleClick}
-    className='bg-red-700 text-white rounded-lg p-3 uppercase hover:opacity-95'>
-    Continue with google
+    className='bg-red-700 text-white rounded-lg p-3 uppercase hover:opacity-95 flex items-center justify-center'>
+    <FontAwesomeIcon icon={faGoogle} className="mr-2" />
+    Continue with Google
   </button>
   )
 }

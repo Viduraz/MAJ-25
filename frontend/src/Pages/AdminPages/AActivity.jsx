@@ -4,7 +4,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 function ActivityManagement() {
   const [activities, setActivities] = useState([]);
-  const [newActivity, setNewActivity] = useState({ id: '', name: '' });
+  const [newActivity, setNewActivity] = useState({ id: '', name: '', category: '' });
   const [editActivity, setEditActivity] = useState(null);
 
   useEffect(() => {
@@ -22,11 +22,19 @@ function ActivityManagement() {
     }
   };
 
+  const generateNextActivityId = () => {
+    const activityCount = activities.length;
+    const nextId = activityCount + 1;
+    return `Activity-${nextId.toString().padStart(2, '0')}`;
+  };
+
   const handleAddActivity = async () => {
     try {
-      const response = await axios.post('http://localhost:3000/api/activity', newActivity);
+      const activityId = generateNextActivityId();
+      const activityToAdd = { ...newActivity, id: activityId };
+      const response = await axios.post('http://localhost:3000/api/activity', activityToAdd);
       setActivities([...activities, response.data]);
-      setNewActivity({ id: '', name: '' });
+      setNewActivity({ id: '', name: '', category: '' });
       toast.success('Activity added successfully!');
     } catch (error) {
       toast.error('Error adding activity');
@@ -70,15 +78,30 @@ function ActivityManagement() {
             placeholder="ID"
             value={newActivity.id}
             onChange={(e) => setNewActivity({ ...newActivity, id: e.target.value })}
-            className="border p-2 rounded w-1/3"
+            className="border p-2 rounded w-1/4"
+            readOnly
           />
           <input
             type="text"
             placeholder="Name"
             value={newActivity.name}
             onChange={(e) => setNewActivity({ ...newActivity, name: e.target.value })}
-            className="border p-2 rounded w-1/3"
+            className="border p-2 rounded w-1/4"
           />
+          <select
+            value={newActivity.category}
+            onChange={(e) => setNewActivity({ ...newActivity, category: e.target.value })}
+            className="border p-2 rounded w-1/4"
+          >
+            <option value="">Select Category</option>
+            <option value="Scout_Craft">Scout_Craft</option>
+            <option value="Health_And_Environment">Health and Environment</option>
+            <option value="Society_and_Culture">Society and Culture</option>
+            <option value="Adventure">Adventure</option>
+            <option value="Technology">Technology</option>
+            <option value="Bussiness_&_Entrepreneurship">Bussiness & Entrepreneurship</option>
+            <option value="Water_activities">Water activities</option>
+          </select>
           <button
             onClick={handleAddActivity}
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
@@ -95,6 +118,7 @@ function ActivityManagement() {
             <tr className="bg-gray-200 text-left">
               <th className="border border-gray-300 p-2">ID</th>
               <th className="border border-gray-300 p-2">Name</th>
+              <th className="border border-gray-300 p-2">Category</th>
               <th className="border border-gray-300 p-2">Actions</th>
             </tr>
           </thead>
@@ -113,6 +137,18 @@ function ActivityManagement() {
                       />
                     ) : (
                       activity.name
+                    )}
+                  </td>
+                  <td className="border border-gray-300 p-2">
+                    {editActivity && editActivity.id === activity.id ? (
+                      <input
+                        type="text"
+                        value={editActivity.category}
+                        onChange={(e) => setEditActivity({ ...editActivity, category: e.target.value })}
+                        className="border p-2 rounded"
+                      />
+                    ) : (
+                      activity.category
                     )}
                   </td>
                   <td className="border border-gray-300 p-2">
@@ -152,7 +188,7 @@ function ActivityManagement() {
               ))
             ) : (
               <tr>
-                <td colSpan="3" className="text-center p-4">No activities available.</td>
+                <td colSpan="4" className="text-center p-4">No activities available.</td>
               </tr>
             )}
           </tbody>
