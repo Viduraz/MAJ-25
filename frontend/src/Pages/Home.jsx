@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import v1 from "../Assests/v1.mp4";
 import axios from "axios";
+import { motion } from "framer-motion";
+import AnimationContainer from "@/Components/AnimationContainer";
 
 export default function Home() {
   // Scroll to section function
@@ -23,8 +25,10 @@ export default function Home() {
   useEffect(() => {
     const fetchRegisteredCount = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/registration");
-        console.log("err",response );
+        const response = await axios.get(
+          "http://localhost:3000/api/registration"
+        );
+        console.log("err", response);
         setCount(response.data.length);
         localStorage.setItem("registeredCount", response.data.length);
       } catch (error) {
@@ -62,7 +66,9 @@ export default function Home() {
 
   // Function to format time left
   const formatTimeLeft = () => {
-    return `${timeLeft.days || 0}d ${timeLeft.hours || 0}h ${timeLeft.minutes || 0}m ${timeLeft.seconds || 0}s`;
+    return `${timeLeft.days || 0}d ${timeLeft.hours || 0}h ${
+      timeLeft.minutes || 0
+    }m ${timeLeft.seconds || 0}s`;
   };
 
   return (
@@ -73,62 +79,84 @@ export default function Home() {
           autoPlay
           muted
           loop
-          className="absolute top-0 left-0 w-full h-full object-cover"
+          className="absolute top-0 left-0 object-cover w-full h-full"
         >
           <source src={v1} type="video/mp4" />
         </video>
 
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
 
-        <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
-          <p className="text-xl tracking-wide uppercase mb-4">
+        <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center text-white">
+          <p className="mb-4 text-xl tracking-wide uppercase">
             Welcome To Unbelievable Camping Experience
           </p>
-          <h1 className="text-6xl font-bold leading-tight mb-6">
+          <h1 className="mb-6 text-6xl font-bold leading-tight">
             Maliyadeva <span className="text-gray-400">Adarsha</span> Jambareeta
           </h1>
-          <button className="bg-white text-gray-900 px-6 py-3 font-semibold rounded-full hover:bg-gray-300 transition duration-300">
+          <button className="px-6 py-3 font-semibold text-gray-900 transition duration-300 bg-white rounded-full hover:bg-gray-300">
             LEARN MORE
           </button>
         </div>
 
         <div
-          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 cursor-pointer"
+          className="absolute transform -translate-x-1/2 cursor-pointer bottom-4 left-1/2"
           onClick={scrollToSection}
         >
-          <div className="w-8 h-8 border-2 border-white rounded-full flex items-center justify-center">
+          <div className="flex items-center justify-center w-8 h-8 border-2 border-white rounded-full">
             <div className="w-1 h-4 bg-white animate-bounce"></div>
           </div>
         </div>
 
-        <div className="absolute top-4 right-4 p-4 bg-white bg-opacity-75 rounded-lg shadow-lg hover:bg-opacity-100 transition duration-300 ease-in-out cursor-pointer">
-          <div className="text-sm text-gray-700">Number of Registered Scouts</div>
-          <div className="text-4xl font-bold text-gray-900">{count}</div>
-          <div className="hidden group-hover:block text-xs text-gray-500 mt-2">
-            Hovered over the count!
+        <AnimatedCounter targetCount={count} />
+
+        <div className="absolute top-4 left-4">
+          <div className="flex items-center gap-6">
+            {["Days", "Hours", "Minutes", "Seconds"].map((label, index) => {
+              const value =
+                label === "Days"
+                  ? timeLeft.days || 0
+                  : label === "Hours"
+                  ? timeLeft.hours || 0
+                  : label === "Minutes"
+                  ? timeLeft.minutes || 0
+                  : timeLeft.seconds || 0;
+
+              return (
+                <div key={index} className="flex flex-col items-center gap-2">
+                  <span className="flex items-center justify-center w-16 h-16 text-3xl font-bold bg-white rounded-lg shadow-md text-primary">
+                    {value}
+                  </span>
+                  <span className="text-sm font-medium text-white">
+                    {label}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </div>
-
-        <div style={styles.countdown}>{formatTimeLeft()}</div>
       </div>
 
       {/* CampSite MAP Section */}
-      <div className="bg-gray-100 py-16 px-4 text-center">
-        <h2 className="text-4xl font-bold text-gray-800 mb-8">CampSite MAP</h2>
-        <div className="flex justify-center">
-          <img
-            src="https://via.placeholder.com/400"
-            alt="Campsite Map"
-            className="cursor-pointer rounded-lg shadow-lg hover:opacity-90"
-            onClick={() => setIsModalOpen(true)}
-          />
+      <AnimationContainer>
+        <div className="px-4 py-16 text-center bg-gray-100">
+          <h2 className="mb-8 text-4xl font-bold text-gray-800">
+            CampSite MAP
+          </h2>
+          <div className="flex justify-center">
+            <img
+              src="https://via.placeholder.com/400"
+              alt="Campsite Map"
+              className="rounded-lg shadow-lg cursor-pointer hover:opacity-90"
+              onClick={() => setIsModalOpen(true)}
+            />
+          </div>
         </div>
-      </div>
+      </AnimationContainer>
 
       {/* Modal for larger image */}
       {isModalOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75"
           onClick={() => setIsModalOpen(false)}
         >
           <div className="relative">
@@ -138,7 +166,7 @@ export default function Home() {
               className="max-w-full max-h-screen rounded-lg"
             />
             <button
-              className="absolute top-2 right-2 bg-white text-black px-3 py-1 rounded-full text-sm font-bold hover:bg-gray-300"
+              className="absolute px-3 py-1 text-sm font-bold text-black bg-white rounded-full top-2 right-2 hover:bg-gray-300"
               onClick={() => setIsModalOpen(false)}
             >
               Close
@@ -148,105 +176,156 @@ export default function Home() {
       )}
 
       {/* Organizing Committee Section */}
-      <div
-        id="organizing-committee"
-        className="bg-gray-100 py-16 px-4 text-center"
-      >
-        <h2 className="text-4xl font-bold text-gray-800 mb-12">
-          Our Organizing Committee
-        </h2>
-        <div className="flex flex-wrap justify-center gap-8">
-          {/* Committee Members */}
+      <AnimationContainer>
+        <div
+          id="organizing-committee"
+          className="px-4 py-16 text-center bg-gray-100 "
+        >
+          <h2 className="mb-12 text-4xl font-bold text-gray-800">
+            Our Organizing Committee
+          </h2>
           <div className="flex flex-wrap justify-center gap-8">
-            {/* Member 1 */}
-            <div className="flex flex-col items-center max-w-xs">
-              <img
-                src="https://via.placeholder.com/150"
-                alt="Member 1"
-                className="w-40 h-40 rounded-full object-cover border-4 border-gray-300 shadow-md"
-              />
-              <p className="text-xl font-semibold text-gray-700 mt-4">
-                Member 1
-              </p>
-              <p className="text-sm text-gray-500 mb-2">Event Manager</p>
-              <p className="text-sm text-gray-600">
-                mama thama all event activities wadda .
-              </p>
-            </div>
+            {/* Committee Members */}
+            <div className="flex flex-wrap justify-center gap-8">
+              {/* Member 1 */}
+              <div className="flex flex-col items-center max-w-xs">
+                <img
+                  src="https://via.placeholder.com/150"
+                  alt="Member 1"
+                  className="object-cover w-40 h-40 border-4 border-gray-300 rounded-full shadow-md"
+                />
+                <p className="mt-4 text-xl font-semibold text-gray-700">
+                  Member 1
+                </p>
+                <p className="mb-2 text-sm text-gray-500">Event Manager</p>
+                <p className="text-sm text-gray-600">
+                  mama thama all event activities wadda .
+                </p>
+              </div>
 
-            {/* Member 2 */}
-            <div className="flex flex-col items-center max-w-xs">
-              <img
-                src="https://via.placeholder.com/150"
-                alt="Member 2"
-                className="w-40 h-40 rounded-full object-cover border-4 border-gray-300 shadow-md"
-              />
-              <p className="text-xl font-semibold text-gray-700 mt-4">
-                member 2
-              </p>
-              <p className="text-sm text-gray-500 mb-2">Logistics Head</p>
-              <p className="text-sm text-gray-600">
-                mama thama logistics waddda.
-              </p>
-            </div>
+              {/* Member 2 */}
+              <div className="flex flex-col items-center max-w-xs">
+                <img
+                  src="https://via.placeholder.com/150"
+                  alt="Member 2"
+                  className="object-cover w-40 h-40 border-4 border-gray-300 rounded-full shadow-md"
+                />
+                <p className="mt-4 text-xl font-semibold text-gray-700">
+                  member 2
+                </p>
+                <p className="mb-2 text-sm text-gray-500">Logistics Head</p>
+                <p className="text-sm text-gray-600">
+                  mama thama logistics waddda.
+                </p>
+              </div>
 
-            {/* Member 3 */}
-            <div className="flex flex-col items-center max-w-xs">
-              <img
-                src="https://via.placeholder.com/150"
-                alt="Member 3"
-                className="w-40 h-40 rounded-full object-cover border-4 border-gray-300 shadow-md"
-              />
-              <p className="text-xl font-semibold text-gray-700 mt-4">
-                member 3
-              </p>
-              <p className="text-sm text-gray-500 mb-2">Coordinator</p>
-              <p className="text-sm text-gray-600">
-                mama thama cordintor wadda
-              </p>
-            </div>
+              {/* Member 3 */}
+              <div className="flex flex-col items-center max-w-xs">
+                <img
+                  src="https://via.placeholder.com/150"
+                  alt="Member 3"
+                  className="object-cover w-40 h-40 border-4 border-gray-300 rounded-full shadow-md"
+                />
+                <p className="mt-4 text-xl font-semibold text-gray-700">
+                  member 3
+                </p>
+                <p className="mb-2 text-sm text-gray-500">Coordinator</p>
+                <p className="text-sm text-gray-600">
+                  mama thama cordintor wadda
+                </p>
+              </div>
 
-            {/* Member 4 */}
-            <div className="flex flex-col items-center max-w-xs">
-              <img
-                src="https://via.placeholder.com/150"
-                alt="Member 4"
-                className="w-40 h-40 rounded-full object-cover border-4 border-gray-300 shadow-md"
-              />
-              <p className="text-xl font-semibold text-gray-700 mt-4">
-                Member 4
-              </p>
-              <p className="text-sm text-gray-500 mb-2">Finance Lead</p>
-              <p className="text-sm text-gray-600">
-                mama thama budget wadda
-              </p>
+              {/* Member 4 */}
+              <div className="flex flex-col items-center max-w-xs">
+                <img
+                  src="https://via.placeholder.com/150"
+                  alt="Member 4"
+                  className="object-cover w-40 h-40 border-4 border-gray-300 rounded-full shadow-md"
+                />
+                <p className="mt-4 text-xl font-semibold text-gray-700">
+                  Member 4
+                </p>
+                <p className="mb-2 text-sm text-gray-500">Finance Lead</p>
+                <p className="text-sm text-gray-600">mama thama budget wadda</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </AnimationContainer>
+
+      {/* Logo Marquee */}
+      <AnimationContainer>
+        <section className="py-16 mb-5 overflow-hidden bg-gray-50">
+          <div className="flex space-x-12 animate-marquee">
+            {logos.concat(logos).map((logo, index) => (
+              <img
+                key={index}
+                src={logo}
+                alt="Partner logo"
+                width={120}
+                height={40}
+                className="h-[clamp(30px,4vw,50px)] w-auto object-contain"
+              />
+            ))}
+          </div>
+        </section>
+      </AnimationContainer>
 
       {/* Countdown Section */}
-      <div className="bg-gradient-to-r from-purple-500 to-blue-500 py-12 text-center rounded-lg shadow-lg mx-4">
-        <h2 className="text-4xl font-bold text-white mb-4">Countdown to Event</h2>
-        <div className="text-6xl font-extrabold text-white">
-          {formatTimeLeft()}
+      <AnimationContainer>
+        <div className="py-12 mx-4 text-center rounded-lg shadow-lg bg-gradient-to-r from-purple-500 to-blue-500">
+          <h2 className="mb-4 text-4xl font-bold text-white">
+            Countdown to Event
+          </h2>
+          <div className="text-6xl font-extrabold text-white">
+            {formatTimeLeft()}
+          </div>
+          <p className="mt-2 text-lg text-white">
+            Days : Hours : Minutes : Seconds
+          </p>
         </div>
-        <p className="text-lg text-white mt-2">Days : Hours : Minutes : Seconds</p>
-      </div>
+      </AnimationContainer>
     </div>
   );
 }
 
-const styles = {
-  countdown: {
-    position: "absolute",
-    top: "10px",
-    left: "10px",
-    padding: "10px",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    color: "white",
-    borderRadius: "5px",
-    fontSize: "20px",
-    fontWeight: "bold",
-  },
+const logos = [
+  "https://upload.wikimedia.org/wikipedia/commons/a/ab/Meta-Logo.png",
+  "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
+  "https://upload.wikimedia.org/wikipedia/commons/e/e3/Microsoft_Azure_Logo.svg",
+  "https://upload.wikimedia.org/wikipedia/commons/9/96/Slack_Icon.png",
+  "https://upload.wikimedia.org/wikipedia/commons/b/b9/Slack_Technologies_Logo.svg",
+];
+
+const AnimatedCounter = ({ targetCount }) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    // Animate the counter from 0 to targetCount
+    const interval = setInterval(() => {
+      setCount((prev) => {
+        if (prev < targetCount) {
+          return prev + 1; // Increment counter
+        }
+        clearInterval(interval); // Stop the interval when targetCount is reached
+        return prev;
+      });
+    }, 30); // Adjust speed as needed (30ms for a smooth experience)
+
+    return () => clearInterval(interval); // Cleanup interval on unmount
+  }, [targetCount]);
+
+  return (
+    <div className="absolute p-4 transition duration-300 ease-in-out bg-white bg-opacity-75 rounded-lg shadow-lg cursor-pointer top-4 right-4 hover:bg-opacity-100">
+      <div className="text-sm text-gray-700">Number of Registered Scouts</div>
+      <motion.div
+        className="text-4xl font-bold text-center text-gray-900"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        {count}
+      </motion.div>
+    </div>
+  );
 };

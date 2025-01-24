@@ -1,3 +1,4 @@
+import AnimationContainer from "@/Components/AnimationContainer";
 import React, { useState } from "react";
 
 export default function Gallery() {
@@ -13,47 +14,49 @@ export default function Gallery() {
     "https://scontent-hkg1-1.xx.fbcdn.net/v/t1.6435-9/84921806_860689367693934_7116471852662259712_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeFeYGTQwhSfn1F__84QFw8fD657CDfP1IYPrnsIN8_UhrCSB2hKHb7IOM_asbqwxtKzW9u4UgfWmpsirFiJ9w2R&_nc_ohc=ObA_144kSTcQ7kNvgGAWeHp&_nc_zt=23&_nc_ht=scontent-hkg1-1.xx&_nc_gid=Awe2n8aJErAbX52pGMmT-rj&oh=00_AYD3EDIDD23HbPyXc4YlNnUU8L8tKPX_K-umVq-pKTKO5A&oe=67850BC8",
     "https://scontent-hkg4-1.xx.fbcdn.net/v/t1.6435-9/86284780_860702051025999_1335291408042426368_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeH67qV6EV5_zT5W7BCo9uBR5AOr_JYABdrkA6v8lgAF2sq4Hc2KQHG15-iKlIktui7rKzsG2FGwmY9K9AaUL8dO&_nc_ohc=C-3tPTb51gUQ7kNvgF3k2sU&_nc_zt=23&_nc_ht=scontent-hkg4-1.xx&_nc_gid=AEOe453logn-FYyn2DHrWEe&oh=00_AYCL_X8Sws6WqLaXKXyeP9MPZ6-y1Q2FPZ9nR8v-TcKeGw&oe=678523BD",
     " https://scontent-hkg4-1.xx.fbcdn.net/v/t1.6435-9/86699232_860705464358991_4962917410123284480_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeFtZbOC_-N8TEi5kVuLQfC_LyfNKJR_HgEvJ80olH8eAejHNID0_zRUMBZ9ZCirS6Y6Bmaa3fqYGgDtyMOa40rX&_nc_ohc=o5weBARnuysQ7kNvgElf_5B&_nc_zt=23&_nc_ht=scontent-hkg4-1.xx&_nc_gid=AtTfmf1pEzXYfTp28Ne8ZQq&oh=00_AYDnLkDpnjm3rD-miwwb6EJNc1JQ3Zfetur1hDQwLB3Xlg&oe=67852A34",
-    "https://scontent-hkg1-1.xx.fbcdn.net/v/t1.6435-9/86391615_860707557692115_5814275302234259456_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeGfQWL7ITu-Xr1oDWMo4Ihox7eJ-_Vw3mDHt4n79XDeYOWNJ2OrsSZhOyw6AnUoSqznbyIMZIpcIiFnWVLXb1-I&_nc_ohc=8UEQk1OHE1gQ7kNvgGxy6iB&_nc_zt=23&_nc_ht=scontent-hkg1-1.xx&_nc_gid=AfU8j21r3yDcL3k9ejzBHvW&oh=00_AYD-pfoj8lVdJZ45tF2kdf18V8K-tnqBnYv4j0wLokfLFA&oe=67852CD6"
+    "https://scontent-hkg1-1.xx.fbcdn.net/v/t1.6435-9/86391615_860707557692115_5814275302234259456_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeGfQWL7ITu-Xr1oDWMo4Ihox7eJ-_Vw3mDHt4n79XDeYOWNJ2OrsSZhOyw6AnUoSqznbyIMZIpcIiFnWVLXb1-I&_nc_ohc=8UEQk1OHE1gQ7kNvgGxy6iB&_nc_zt=23&_nc_ht=scontent-hkg1-1.xx&_nc_gid=AfU8j21r3yDcL3k9ejzBHvW&oh=00_AYD-pfoj8lVdJZ45tF2kdf18V8K-tnqBnYv4j0wLokfLFA&oe=67852CD6",
   ];
 
   return (
     <div className="min-h-screen bg-gray-100">
       <div
-  className="relative w-full h-64 sm:h-80 md:h-96 lg:h-[32rem] bg-cover bg-center"
-  style={{
-    backgroundImage: `url('https://scontent-hkg1-1.xx.fbcdn.net/v/t1.6435-9/84479872_859290007833870_2172793800081014784_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeEiA4EYV5ie9hgyRs7tqnyQlb0Zogu-pnKVvRmiC76mcns_eO9SLI57ls_1_khAcowzY3Ob-ssDY-7s-tCNh_Lq&_nc_ohc=drOkbXKai3MQ7kNvgE5f6sH&_nc_zt=23&_nc_ht=scontent-hkg1-1.xx&_nc_gid=AyqMc2kBAGvSDLfJQ3bQmy_&oh=00_AYAbRJSx0qQt2EzC7eZDJq_gHJXG5sda8Uq4keCjX_Sq3g&oe=6785280B')`,
-  }}
->
-  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-    <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase text-center">
-      Gallery
-    </h1>
-  </div>
-</div>
-
-      {/* Gallery Section */}
-      <div className="container mx-auto py-12 px-4">
-        <h2 className="text-4xl font-bold text-gray-800 text-center mb-8">
-          Our Beautiful Moments
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {dummyImages.map((image, index) => (
-            <div key={index} className="relative group">
-              <img
-                src={image}
-                alt={`Gallery Image ${index + 1}`}
-                className="w-full h-48 object-cover rounded-lg shadow-lg cursor-pointer transition-transform transform group-hover:scale-105"
-                onClick={() => setSelectedImage(image)}
-              />
-            </div>
-          ))}
+        className="relative w-full h-64 sm:h-80 md:h-96 lg:h-[32rem] bg-cover bg-center"
+        style={{
+          backgroundImage: `url('https://scontent-hkg1-1.xx.fbcdn.net/v/t1.6435-9/84479872_859290007833870_2172793800081014784_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeEiA4EYV5ie9hgyRs7tqnyQlb0Zogu-pnKVvRmiC76mcns_eO9SLI57ls_1_khAcowzY3Ob-ssDY-7s-tCNh_Lq&_nc_ohc=drOkbXKai3MQ7kNvgE5f6sH&_nc_zt=23&_nc_ht=scontent-hkg1-1.xx&_nc_gid=AyqMc2kBAGvSDLfJQ3bQmy_&oh=00_AYAbRJSx0qQt2EzC7eZDJq_gHJXG5sda8Uq4keCjX_Sq3g&oe=6785280B')`,
+        }}
+      >
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <h1 className="text-3xl font-bold text-center text-white uppercase sm:text-4xl md:text-5xl lg:text-6xl">
+            Gallery
+          </h1>
         </div>
       </div>
+
+      {/* Gallery Section */}
+      <AnimationContainer>
+        <div className="container px-4 py-12 mx-auto">
+          <h2 className="mb-8 text-4xl font-bold text-center text-gray-800">
+            Our Beautiful Moments
+          </h2>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {dummyImages.map((image, index) => (
+              <div key={index} className="relative group">
+                <img
+                  src={image}
+                  alt={`Gallery Image ${index + 1}`}
+                  className="object-cover w-full h-48 transition-transform transform rounded-lg shadow-lg cursor-pointer group-hover:scale-105"
+                  onClick={() => setSelectedImage(image)}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </AnimationContainer>
 
       {/* Modal for Enlarged Image */}
       {selectedImage && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75"
           onClick={() => setSelectedImage(null)}
         >
           <div className="relative">
@@ -65,7 +68,7 @@ export default function Gallery() {
             />
             {/* Close Button */}
             <button
-              className="absolute top-2 right-2 bg-white text-black px-3 py-1 rounded-full text-sm font-bold hover:bg-gray-300"
+              className="absolute px-3 py-1 text-sm font-bold text-black bg-white rounded-full top-2 right-2 hover:bg-gray-300"
               onClick={() => setSelectedImage(null)}
             >
               Close
@@ -74,7 +77,7 @@ export default function Gallery() {
             <a
               href={selectedImage}
               download
-              className="absolute bottom-2 right-2 bg-white text-black px-3 py-1 rounded-full text-sm font-bold hover:bg-gray-300 flex items-center"
+              className="absolute flex items-center px-3 py-1 text-sm font-bold text-black bg-white rounded-full bottom-2 right-2 hover:bg-gray-300"
               onClick={(e) => e.stopPropagation()} // Prevent modal close when clicking on the download button
             >
               <svg
