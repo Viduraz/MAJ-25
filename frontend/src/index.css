@@ -18,3 +18,9 @@
     src: url('/path/to/Takoyaki-Regular.woff2') format('woff2'),
          url('/path/to/Takoyaki-Regular.woff') format('woff');
 }
+
+@layer base {
+  :root {
+        --radius: 0.5rem;
+    }
+}
