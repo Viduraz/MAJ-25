@@ -10,12 +10,12 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/Components/ui/button";
 import { SchoolSelect } from "./Components/ScoolSelect";
+import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 
 export default function Registration() {
   const schools = [
@@ -92,6 +92,7 @@ export default function Registration() {
   const [paymentDate, setPaymentDate] = useState("");
   const [receiptImage, setReceiptImage] = useState("");
   const [leaderErrors, setLeaderErrors] = useState([]);
+  const [touchedFields, setTouchedFields] = useState([]);
 
   const handleLeaderCountChange = (e) => {
     const count = parseInt(e.target.value);
@@ -122,35 +123,22 @@ export default function Registration() {
 
   const validateLeader = (leader) => {
     const errors = [];
-    if (!leader.fullName) {
-      errors.push("Full Name is required.");
-    }
-    if (!leader.idNumber) {
-      errors.push("ID Number is required.");
-    } else if (
-      leader.idNumber.length > 12 ||
-      !/^[V0-9]*$/.test(leader.idNumber)
-    ) {
+    if (!leader.fullName) errors.push("Full Name is required.");
+    if (!leader.idNumber) errors.push("ID Number is required.");
+    else if (leader.idNumber.length > 12 || !/^[V0-9]*$/.test(leader.idNumber))
       errors.push(
         "ID Number must be a maximum of 12 characters and can include 'V'."
       );
-    }
-    if (!leader.phoneNumber) {
-      errors.push("Phone Number is required.");
-    } else if (
+    if (!leader.phoneNumber) errors.push("Phone Number is required.");
+    else if (
       leader.phoneNumber.length !== 10 ||
       !/^\d{10}$/.test(leader.phoneNumber)
-    ) {
+    )
       errors.push("Phone Number must be exactly 10 digits.");
-    }
-    if (!leader.gender) {
-      errors.push("Gender is required.");
-    }
-    if (!leader.email) {
-      errors.push("Email is required.");
-    } else if (!/\S+@\S+\.\S+/.test(leader.email)) {
+    if (!leader.gender) errors.push("Gender is required.");
+    if (!leader.email) errors.push("Email is required.");
+    else if (!/\S+@\S+\.\S+/.test(leader.email))
       errors.push("Email is invalid.");
-    }
     return errors;
   };
 
@@ -158,10 +146,37 @@ export default function Registration() {
     const updatedLeaders = [...leaders];
     updatedLeaders[index][field] = value;
 
-    const errors = validateLeader(updatedLeaders[index]);
-    const updatedErrors = [...leaderErrors];
-    updatedErrors[index] = errors;
+    // Mark the field as touched
+    const updatedTouchedFields = [...touchedFields];
+    if (!updatedTouchedFields[index]) {
+      updatedTouchedFields[index] = {};
+    }
+    updatedTouchedFields[index][field] = true;
 
+    const errors = validateLeader(updatedLeaders[index]);
+
+    // Only show errors for touched fields
+    const filteredErrors = errors.filter((error) => {
+      if (error.includes("Full Name") && updatedTouchedFields[index]?.fullName)
+        return true;
+      if (error.includes("ID Number") && updatedTouchedFields[index]?.idNumber)
+        return true;
+      if (
+        error.includes("Phone Number") &&
+        updatedTouchedFields[index]?.phoneNumber
+      )
+        return true;
+      if (error.includes("Gender") && updatedTouchedFields[index]?.gender)
+        return true;
+      if (error.includes("Email") && updatedTouchedFields[index]?.email)
+        return true;
+      return false;
+    });
+
+    const updatedErrors = [...leaderErrors];
+    updatedErrors[index] = filteredErrors;
+
+    setTouchedFields(updatedTouchedFields);
     setLeaderErrors(updatedErrors);
     setLeaders(updatedLeaders);
   };
@@ -329,7 +344,7 @@ export default function Registration() {
                         {leaderErrors[globalIndex]?.find((error) =>
                           error.includes("Gender")
                         ) && (
-                          <p className="text-red-500">
+                          <p className="text-xs text-red-500">
                             {leaderErrors[globalIndex].find((error) =>
                               error.includes("Gender")
                             )}
@@ -381,9 +396,9 @@ export default function Registration() {
               </p>
             )}
           </div>
-          <div className="flex justify-between w-full px-2 mt-1 ">
+          <div className="flex justify-between w-full px-2 mt-2 ">
             <Button disabled={currentPage === 1} onClick={handlePreviousPage}>
-              Previous
+              <ArrowBigLeft className="w-6 h-6" />
             </Button>
             <p className="text-lg font-semibold ">
               {currentPage} of {Math.ceil(leaders.length / leadersPerPage)}
@@ -394,7 +409,7 @@ export default function Registration() {
               }
               onClick={handleNextPage}
             >
-              Next
+              <ArrowBigRight className="w-6 h-6" />
             </Button>
           </div>
 
@@ -457,6 +472,6 @@ const InputField = ({
       maxLength={maxLength}
       className=""
     />
-    {/*  {error && <p className="text-red-500">{error}</p>} */}
+    {error && <p className="text-xs text-red-500">{error}</p>}
   </div>
 );

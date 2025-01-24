@@ -13,6 +13,7 @@ import { ScoutDatePicker } from "./Components/ScoutDatePicker";
 import { Label } from "@/Components/ui/label";
 
 import { Button } from "@/Components/ui/button";
+import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 
 export default function Scouts({
   scoutCount,
@@ -210,7 +211,7 @@ export default function Scouts({
                     </div>
                   </div>
                   <div className="flex flex-col gap-2 ">
-                    <Label>Phone Number</Label>
+                    <Label>Email Address</Label>
                     <Input
                       type="email"
                       placeholder="Email"
@@ -262,7 +263,7 @@ export default function Scouts({
         </div>
         <div className="flex justify-between w-full px-2 mt-1 ">
           <Button disabled={currentPage === 1} onClick={handlePreviousPage}>
-            Previous
+            <ArrowBigLeft className="w-6 h-6" />
           </Button>
           <p className="text-lg font-semibold ">
             {currentPage} of {Math.ceil(scouts.length / scoutPerPage)}
@@ -271,7 +272,7 @@ export default function Scouts({
             disabled={currentPage === Math.ceil(scouts.length / scoutPerPage)}
             onClick={handleNextPage}
           >
-            Next
+            <ArrowBigRight className="w-6 h-6" />
           </Button>
         </div>
 
