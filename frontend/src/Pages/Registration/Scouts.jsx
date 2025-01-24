@@ -119,7 +119,7 @@ export default function Scouts({
         </div>
 
         <div className="mb-6 overflow-y-auto scrollbar-hide max-h-[25rem]">
-          {paginatedScouts?.length > 0 ? (
+          {scoutCount > 0 && paginatedScouts?.length > 0 ? (
             paginatedScouts?.map((scout, localIndex) => {
               const globalIndex = (currentPage - 1) * scoutPerPage + localIndex;
 
@@ -261,20 +261,22 @@ export default function Scouts({
             </p>
           )}
         </div>
-        <div className="flex justify-between w-full px-2 mt-1 ">
-          <Button disabled={currentPage === 1} onClick={handlePreviousPage}>
-            <ArrowBigLeft className="w-6 h-6" />
-          </Button>
-          <p className="text-lg font-semibold ">
-            {currentPage} of {Math.ceil(scouts.length / scoutPerPage)}
-          </p>
-          <Button
-            disabled={currentPage === Math.ceil(scouts.length / scoutPerPage)}
-            onClick={handleNextPage}
-          >
-            <ArrowBigRight className="w-6 h-6" />
-          </Button>
-        </div>
+        {scoutCount > 0 && (
+          <div className="flex justify-between w-full px-2 mt-1 ">
+            <Button disabled={currentPage === 1} onClick={handlePreviousPage}>
+              <ArrowBigLeft className="w-6 h-6" />
+            </Button>
+            <p className="text-lg font-semibold ">
+              {currentPage} of {Math.ceil(scouts.length / scoutPerPage)}
+            </p>
+            <Button
+              disabled={currentPage === Math.ceil(scouts.length / scoutPerPage)}
+              onClick={handleNextPage}
+            >
+              <ArrowBigRight className="w-6 h-6" />
+            </Button>
+          </div>
+        )}
 
         <div className="flex justify-between mt-6">
           <Button

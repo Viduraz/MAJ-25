@@ -261,10 +261,14 @@ export default function Registration() {
             />
           </div>
           <div className=" max-h-[28rem] overflow-y-auto scrollbar-hide">
-            <div className="w-full gap-2 px-2 mb-2 ">
-              <p className="text-xl font-semibold text-center ">Leader List</p>
-            </div>
-            {paginatedLeaders.length > 0 ? (
+            {leaderCount > 0 ? (
+              <div className="w-full gap-2 px-2 mb-2 ">
+                <p className="text-xl font-semibold text-center ">
+                  Leader List
+                </p>
+              </div>
+            ) : null}
+            {leaderCount > 0 ? (
               paginatedLeaders.map((leader, localIndex) => {
                 const globalIndex =
                   (currentPage - 1) * leadersPerPage + localIndex;
@@ -396,22 +400,24 @@ export default function Registration() {
               </p>
             )}
           </div>
-          <div className="flex justify-between w-full px-2 mt-2 ">
-            <Button disabled={currentPage === 1} onClick={handlePreviousPage}>
-              <ArrowBigLeft className="w-6 h-6" />
-            </Button>
-            <p className="text-lg font-semibold ">
-              {currentPage} of {Math.ceil(leaders.length / leadersPerPage)}
-            </p>
-            <Button
-              disabled={
-                currentPage === Math.ceil(leaders.length / leadersPerPage)
-              }
-              onClick={handleNextPage}
-            >
-              <ArrowBigRight className="w-6 h-6" />
-            </Button>
-          </div>
+          {leaderCount > 0 && paginatedLeaders.length > 0 ? (
+            <div className="flex justify-between w-full px-2 mt-2 ">
+              <Button disabled={currentPage === 1} onClick={handlePreviousPage}>
+                <ArrowBigLeft className="w-6 h-6" />
+              </Button>
+              <p className="text-lg font-semibold ">
+                {currentPage} of {Math.ceil(leaders.length / leadersPerPage)}
+              </p>
+              <Button
+                disabled={
+                  currentPage === Math.ceil(leaders.length / leadersPerPage)
+                }
+                onClick={handleNextPage}
+              >
+                <ArrowBigRight className="w-6 h-6" />
+              </Button>
+            </div>
+          ) : null}
 
           <div className="flex justify-center mt-6">
             <Button
