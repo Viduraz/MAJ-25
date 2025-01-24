@@ -18,6 +18,7 @@ import PassActivity from './Pages/Activity/PassActivity';
 import AActivity from './Pages/AdminPages/AActivity';
 import AActivityPasser from './Pages/AdminPages/AActivityPasser';
 import AprofileQr from './Pages/AdminPages/AprofileQr';
+import { AGallery } from './Pages/AdminPages/AGallery';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <Route path="/aactivity" element={<AActivity />} />
           <Route path="/aactivitypasser" element={<AActivityPasser />} />
           <Route path="/aprofileqr" element={<AprofileQr />} />
+          <Route path="/agallery" element={<AGallery />} />
           
         </Routes>
         <Footer /> {/** Footer added */}

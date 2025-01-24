@@ -1,18 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import QRCode from 'react-qr-code';
-import { getStorage, ref, uploadString } from 'firebase/storage';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import firebaseApp from '../../../Firebase';
 import axios from 'axios';
+import defaultAvatar from '../../Assests/default-avatar.png'; 
+import { toast, Toaster } from 'react-hot-toast'; // Add this import
 
 export default function Sprofiles() {
   const [registrationData, setRegistrationData] = useState(null);
-  const [profilePicture, setProfilePicture] = useState(null);
+  const [profileUrl, setProfileUrl] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const [activities, setActivities] = useState([]);
 
+  // Load registration data and profile photo on component mount
   useEffect(() => {
-    const savedRegistration = localStorage.getItem('registration');
-    if (savedRegistration) {
-      setRegistrationData(JSON.parse(savedRegistration));
-    }
+    const loadProfile = async () => {
+      // Load registration data
+      const savedRegistration = localStorage.getItem('registration');
+      if (savedRegistration) {
+        const data = JSON.parse(savedRegistration);
+        setRegistrationData(data);
+        
+        // Try to load existing profile photo
+        if (data.email) {
+          try {
+            const storage = getStorage(firebaseApp);
+            const photoRef = ref(storage, `profilePhotos/${data.email}`);
+            const url = await getDownloadURL(photoRef);
+            setProfileUrl(url);
+          } catch (error) {
+            console.log('No existing profile photo');
+            setProfileUrl(defaultAvatar);
+          }
+        }
+      }
+    };
+
+    loadProfile();
   }, []);
 
   useEffect(() => {
@@ -30,41 +54,72 @@ export default function Sprofiles() {
     }
   };
 
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const imageData = reader.result;
-        setProfilePicture(imageData);
-        uploadProfilePicture(imageData); // Call the upload function
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // Handle file upload
+  const handlePhotoUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-  // New function to upload the profile picture to Firebase
-  const uploadProfilePicture = async (imageData) => {
-    const storage = getStorage(); // Initialize Firebase Storage
-    const storageRef = ref(storage, 'profilePictures/userProfile.jpg'); // Create a reference to the location in storage
+    if (!registrationData?.email) {
+      toast.error('Please login first');
+      return;
+    }
 
     try {
-      await uploadString(storageRef, imageData, 'data_url'); // Upload the image data
-      console.log('Profile picture uploaded successfully!');
+      setUploading(true);
+      const storage = getStorage(firebaseApp);
+      const photoRef = ref(storage, `profilePhotos/${registrationData.email}`);
+
+      await uploadBytes(photoRef, file);
+      const url = await getDownloadURL(photoRef);
+      setProfileUrl(url);
+
+      // Update registration data in localStorage with photo URL
+      const updatedData = { ...registrationData, profilePhoto: url };
+      localStorage.setItem('registration', JSON.stringify(updatedData));
+      setRegistrationData(updatedData);
+      
+      toast.success('Profile photo updated successfully!');
     } catch (error) {
-      console.error('Error uploading profile picture:', error);
+      console.error('Error uploading photo:', error);
+      toast.error('Failed to upload photo');
+    } finally {
+      setUploading(false);
     }
   };
 
   return (
     <div className="flex flex-col bg-gradient-to-br from-blue-100 via-white to-blue-300 min-h-screen p-10 relative">
+      <Toaster position="top-center" reverseOrder={false} />
       <header className="text-center mb-8">
         <h1 className="text-5xl font-extrabold text-gray-800">
           Welcome {registrationData ? registrationData.fullName : 'Guest'}!
         </h1>
       </header>
 
-      {/* QR Code Section at Top Left */}
+      {/* Profile Photo Section */}
+      <div className="absolute top-5 right-4 text-center">
+        <div className="relative group">
+          <img
+            src={profileUrl || defaultAvatar}
+            alt="Profile"
+            className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg group-hover:opacity-80 transition-opacity"
+          />
+          <label className="absolute inset-0 flex items-center justify-center cursor-pointer opacity-0 group-hover:opacity-100">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handlePhotoUpload}
+              className="hidden"
+              disabled={uploading}
+            />
+            <span className="bg-black bg-opacity-50 text-white text-sm py-1 px-2 rounded">
+              {uploading ? 'Uploading...' : 'Change Photo'}
+            </span>
+          </label>
+        </div>
+      </div>
+
+      {/* QR Code Section */}
       <div className="absolute top-5 left-4">
         <h3 className="text-xl font-semibold">Profile QR Code</h3>
         {registrationData && (
@@ -75,18 +130,8 @@ export default function Sprofiles() {
         )}
       </div>
 
-      {/* Profile Picture in Top Right Corner */}
-      <div className="absolute top-4 right-4">
-        <img
-          src={profilePicture || 'default-profile.png'}
-          alt="Profile"
-          className="w-16 h-16 rounded-full object-cover border-2 border-gray-300"
-        />
-        <input type="file" accept="image/*" onChange={handleImageChange} className="mt-2" />
-      </div>
-
-      {/* Profile Details Section */}
-      <div className="flex flex-col items-center bg-white rounded-xl shadow-md p-6 transition-transform transform hover:scale-105 mt-20">
+       {/* Profile Details Section */}
+       <div className="flex flex-col items-center bg-white rounded-xl shadow-md p-6 transition-transform transform hover:scale-105 mt-20">
         <h2 className="text-3xl font-bold text-blue-600 mb-4">{registrationData ? registrationData.fullName : 'Guest'}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mt-4">
           <div>
@@ -131,7 +176,6 @@ export default function Sprofiles() {
           </div>
         </div>
       </div>
-
       {/* Activities Section */}
       <div className="mt-10 bg-white rounded-xl shadow-md p-6">
         <h2 className="text-2xl font-bold text-blue-600 mb-4">Activities</h2>
