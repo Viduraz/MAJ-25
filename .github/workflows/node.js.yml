@@ -1,0 +1,44 @@
+name: Build Project
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install root dependencies
+        run: npm install
+
+      - name: Install frontend dependencies
+        run: npm install --prefix frontend
+
+      - name: Install backend dependencies
+        run: npm install --prefix backend
+
+      - name: Build frontend
+        run: npm run build --prefix frontend
+
+      - name: Build backend
+        run: npm run build --prefix backend
+
+      - name: Run linter
+        run: npm run lint
