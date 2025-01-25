@@ -1,6 +1,4 @@
-
 import AnimationContainer from "@/Components/AnimationContainer";
-import React, { useState } from "react";
 import React, { useState, useEffect } from "react";
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 import firebaseApp from '../../Firebase';
@@ -54,13 +52,6 @@ export default function Gallery() {
       <div
         className="relative w-full h-64 sm:h-80 md:h-96 lg:h-[32rem] bg-cover bg-center"
         style={{
-
-          backgroundImage: `url('https://scontent-hkg1-1.xx.fbcdn.net/v/t1.6435-9/84479872_859290007833870_2172793800081014784_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeEiA4EYV5ie9hgyRs7tqnyQlb0Zogu-pnKVvRmiC76mcns_eO9SLI57ls_1_khAcowzY3Ob-ssDY-7s-tCNh_Lq&_nc_ohc=drOkbXKai3MQ7kNvgE5f6sH&_nc_zt=23&_nc_ht=scontent-hkg1-1.xx&_nc_gid=AyqMc2kBAGvSDLfJQ3bQmy_&oh=00_AYAbRJSx0qQt2EzC7eZDJq_gHJXG5sda8Uq4keCjX_Sq3g&oe=6785280B')`,
-        }}
-      >
-        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <h1 className="text-3xl font-bold text-center text-white uppercase sm:text-4xl md:text-5xl lg:text-6xl">
-
           backgroundImage: `url('${bannerUrl || 'loading...'}')`
         }}
       >
@@ -72,6 +63,21 @@ export default function Gallery() {
       </div>
 
       {/* Gallery Section */}
+      <AnimationContainer>
+        <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {images.map((url, index) => (
+            <div
+              key={index}
+              className="relative overflow-hidden rounded-lg shadow-lg cursor-pointer"
+              onClick={() => setSelectedImage(url)}
+            >
+              <img
+                src={url}
+                alt={`Gallery Image ${index + 1}`}
+                className="object-cover w-full h-full transition-transform duration-300 transform hover:scale-105"
+              />
+            </div>
+          ))}
         </div>
       </AnimationContainer>
 
