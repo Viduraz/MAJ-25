@@ -37,6 +37,7 @@
     "react-toastify": "^10.0.6",
     "tailwindcss-animate": "^1.0.7",
     "xlsx": "^0.18.5"
+    "react-redux": "^8.0.5"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
