@@ -40,7 +40,7 @@ export default defineConfig({
   },
   publicDir: 'public',
   server: {
-    port: 3000,
+    port: 5173,
     fs: {
       allow: [
         path.resolve(__dirname),
@@ -50,5 +50,11 @@ export default defineConfig({
         ),
       ],
     },
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true
+      }
+    }
   }
 });

@@ -4,7 +4,10 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "npm run build --prefix frontend",
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:backend": "nodemon backend/index.js",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
