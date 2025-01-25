@@ -1,14 +1,11 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import campbadge from '../Assests/campbadge.png';
-import { signOut } from '../redux/User/userSlice';
-import { ToastContainer, toast } from 'react-toastify';
 
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
   const location = useLocation();
-  const dispatch = useDispatch();
   
   const [bgColor, setBgColor] = useState('bg-teal-700');
 
@@ -24,17 +21,6 @@ export default function Header() {
     };
   }, []);
 
-  const handleSignOut = async () => {
-    try {
-      await fetch('/api/auth/signout');
-      dispatch(signOut());
-      toast.success('Signed out successfully!');
-    } catch (error) {
-      console.log(error);
-      toast.error('An error occurred while signing out.');
-    }
-  };
-
   return (
     <header className={`header ${bgColor} text-white`}>
       <div className="flex justify-between items-center max-w-6xl mx-auto px-6 py-4 transition-all duration-300 ease-in-out">
@@ -45,7 +31,7 @@ export default function Header() {
         </Link>
 
         {/* Navigation Links */}
-        <ul className="flex gap-8 text-base font-medium items-center">
+        <ul className="flex gap-8 text-base font-medium">
           <Link to="/">
             <li
               className={`relative group transition-all duration-300 ease-in-out ${
@@ -119,12 +105,6 @@ export default function Header() {
               <Link to="/profile">
                 <span className="hover:text-gray-300">Profile</span>
               </Link>
-              <button
-                onClick={handleSignOut}
-                className="hover:text-gray-300 transition-colors duration-300 ease-in-out"
-              >
-                Sign Out
-              </button>
             </>
           ) : (
             <Link to="/signin">
@@ -135,7 +115,6 @@ export default function Header() {
           )}
         </div>
       </div>
-      <ToastContainer />
     </header>
   );
 }

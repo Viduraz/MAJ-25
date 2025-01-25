@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -77,7 +77,7 @@ function AActivityPasser() {
               className="flex justify-between items-center border-b border-gray-200 py-3"
             >
               <span className="text-gray-700 font-medium">{activity.name}</span>
-              <FetchCompletionTime email={email} activityId={activity.id} />
+              <span className="text-gray-500">{new Date(activity.updatedAt).toLocaleString()}</span>
               <div className="flex gap-2">
                 <button
                   onClick={() => handleMarkAsDone(activity.id, activity.name)}
@@ -99,30 +99,6 @@ function AActivityPasser() {
         )}
       </ul>
     </div>
-  );
-}
-
-function FetchCompletionTime({ email, activityId }) {
-  const [completionTime, setCompletionTime] = useState(null);
-
-  useEffect(() => {
-    if (email) {
-      axios.get(`http://localhost:3000/api/registration/${email}`)
-        .then(response => {
-          const registration = response.data;
-          const activity = registration?.activities?.find(a => a.id === activityId);
-          if (activity) {
-            setCompletionTime(new Date(registration.updatedAt).toLocaleString());
-          }
-        })
-        .catch(error => console.error('Error fetching completion time:', error));
-    }
-  }, [email, activityId]);
-
-  return (
-    <span className="text-gray-500">
-      {completionTime || 'Not completed'}
-    </span>
   );
 }
 
