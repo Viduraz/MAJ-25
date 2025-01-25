@@ -4,7 +4,10 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "npm run build --prefix frontend",
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:backend": "nodemon backend/index.js",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -24,7 +27,6 @@
     "html2canvas": "^1.4.1",
     "jsonwebtoken": "^9.0.2",
     "jspdf": "^2.5.2",
-    "lucide-react": "^0.474.0",
     "mongoose": "^8.8.2",
     "nodemon": "^3.1.7",
     "qrcode.react": "^4.2.0",
@@ -32,7 +34,6 @@
     "react-hot-toast": "^2.5.1",
     "react-qr-code": "^2.0.15",
     "react-toastify": "^10.0.6",
-    "tailwindcss-animate": "^1.0.7",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
