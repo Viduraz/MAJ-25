@@ -4,16 +4,43 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
+  root: path.resolve(__dirname, './'),
   resolve: {
     alias: {
-      // Map the `@` alias to the `src/` directory
       "@": path.resolve(__dirname, "src"),
+      "@fonts": path.resolve(__dirname, "public/fonts")
     },
   },
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true,
+    assetsDir: 'assets',
+    assetsInclude: ['**/*.woff', '**/*.woff2'],
+    rollupOptions: {
+      input: path.resolve(__dirname, 'index.html'),
+      output: {
+        assetFileNames: 'assets/[name]-[hash][extname]',
+        manualChunks: {
+          'vendor': [
+            // Third party dependencies
+            'react',
+            'react-dom',
+            'react-router-dom'
+          ],
+          'fonts': [
+            // Font awesome imports
+            '@fortawesome/fontawesome-free'
+          ]
+        }
+      }
+    },
+    chunkSizeWarningLimit: 1000 // Increase warning limit to 1000kb if needed
+  },
+  publicDir: 'public',
   server: {
+    port: 3000,
     fs: {
       allow: [
-        // Allow serving files from the project root and the Font Awesome directory
         path.resolve(__dirname),
         path.resolve(
           __dirname,
@@ -21,5 +48,5 @@ export default defineConfig({
         ),
       ],
     },
-  },
+  }
 });
