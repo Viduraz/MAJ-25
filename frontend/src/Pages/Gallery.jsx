@@ -1,6 +1,10 @@
+
+import AnimationContainer from "@/Components/AnimationContainer";
+import React, { useState } from "react";
 import React, { useState, useEffect } from "react";
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 import firebaseApp from '../../Firebase';
+
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -44,11 +48,19 @@ export default function Gallery() {
     fetchBanner();
   }, []);
 
+
   return (
     <div className="min-h-screen bg-gray-100">
       <div
         className="relative w-full h-64 sm:h-80 md:h-96 lg:h-[32rem] bg-cover bg-center"
         style={{
+
+          backgroundImage: `url('https://scontent-hkg1-1.xx.fbcdn.net/v/t1.6435-9/84479872_859290007833870_2172793800081014784_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cf85f3&_nc_eui2=AeEiA4EYV5ie9hgyRs7tqnyQlb0Zogu-pnKVvRmiC76mcns_eO9SLI57ls_1_khAcowzY3Ob-ssDY-7s-tCNh_Lq&_nc_ohc=drOkbXKai3MQ7kNvgE5f6sH&_nc_zt=23&_nc_ht=scontent-hkg1-1.xx&_nc_gid=AyqMc2kBAGvSDLfJQ3bQmy_&oh=00_AYAbRJSx0qQt2EzC7eZDJq_gHJXG5sda8Uq4keCjX_Sq3g&oe=6785280B')`,
+        }}
+      >
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <h1 className="text-3xl font-bold text-center text-white uppercase sm:text-4xl md:text-5xl lg:text-6xl">
+
           backgroundImage: `url('${bannerUrl || 'loading...'}')`
         }}
       >
@@ -60,28 +72,13 @@ export default function Gallery() {
       </div>
 
       {/* Gallery Section */}
-      <div className="container mx-auto py-12 px-4">
-        <h2 className="text-4xl font-bold text-gray-800 text-center mb-8">
-          Our Beautiful Moments
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {images.map((image, index) => (
-            <div key={index} className="relative group">
-              <img
-                src={image}
-                alt={`Gallery Image ${index + 1}`}
-                className="w-full h-48 object-cover rounded-lg shadow-lg cursor-pointer transition-transform transform group-hover:scale-105"
-                onClick={() => setSelectedImage(image)}
-              />
-            </div>
-          ))}
         </div>
-      </div>
+      </AnimationContainer>
 
       {/* Modal for Enlarged Image */}
       {selectedImage && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75"
           onClick={() => setSelectedImage(null)}
         >
           <div className="relative">
@@ -93,7 +90,7 @@ export default function Gallery() {
             />
             {/* Close Button */}
             <button
-              className="absolute top-2 right-2 bg-white text-black px-3 py-1 rounded-full text-sm font-bold hover:bg-gray-300"
+              className="absolute px-3 py-1 text-sm font-bold text-black bg-white rounded-full top-2 right-2 hover:bg-gray-300"
               onClick={() => setSelectedImage(null)}
             >
               Close
@@ -102,7 +99,7 @@ export default function Gallery() {
             <a
               href={selectedImage}
               download
-              className="absolute bottom-2 right-2 bg-white text-black px-3 py-1 rounded-full text-sm font-bold hover:bg-gray-300 flex items-center"
+              className="absolute flex items-center px-3 py-1 text-sm font-bold text-black bg-white rounded-full bottom-2 right-2 hover:bg-gray-300"
               onClick={(e) => e.stopPropagation()} // Prevent modal close when clicking on the download button
             >
               <svg
