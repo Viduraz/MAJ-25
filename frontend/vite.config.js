@@ -36,21 +36,20 @@ export default defineConfig({
             return 'vendor';
           }
         }
-      }
+      },
+      external: [
+        'react-redux', 
+        '@reduxjs/toolkit', 
+        'redux-persist',
+        'react-router-dom' // Add this line
+      ]
     },
     chunkSizeWarningLimit: 2000
   },
-  publicDir: 'public',
   server: {
     port: 5173,
     fs: {
-      allow: [
-        path.resolve(__dirname),
-        path.resolve(
-          __dirname,
-          "node_modules/@fortawesome/fontawesome-free/webfonts"
-        ),
-      ],
+      allow: ['.', 'node_modules']
     },
     proxy: {
       '/api': {
