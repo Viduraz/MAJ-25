@@ -8,7 +8,6 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
-      "@fonts": path.resolve(__dirname, "public/fonts")
     },
   },
   build: {
@@ -18,25 +17,28 @@ export default defineConfig({
     assetsInclude: ['**/*.woff', '**/*.woff2'],
     rollupOptions: {
       input: {
-        main: path.resolve(__dirname, './index.html'),
-        dir: path.resolve('c:/MAJ-25/frontend/index.html')
+        main: path.resolve(__dirname, 'index.html')
       },
       output: {
-        assetFileNames: 'assets/[name]-[hash][extname]',
-        manualChunks: {
-          'vendor': [
-            'react',
-            'react-dom',
-            'react-router-dom'
-          ],
-          'fonts': [
-            // Font awesome imports
-            '@fortawesome/fontawesome-free'
-          ]
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: (assetInfo) => {
+          const info = assetInfo.name.split('.');
+          const ext = info[info.length - 1];
+          if (/woff|woff2/.test(ext)) {
+            return `fonts/[name][extname]`;
+          }
+          return `assets/[name]-[hash][extname]`;
+        },
+        manualChunks: (id) => {
+          if (id.includes('node_modules')) {
+            if (id.includes('react')) return 'vendor-react';
+            if (id.includes('@fortawesome')) return 'vendor-fontawesome';
+            return 'vendor';
+          }
         }
       }
     },
-    chunkSizeWarningLimit: 1000 // Increase warning limit to 1000kb if needed
+    chunkSizeWarningLimit: 2000
   },
   publicDir: 'public',
   server: {
