@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './Components/Header';
 import Footer from './Components/Footer'; 
@@ -18,6 +18,7 @@ import PassActivity from './Pages/Activity/PassActivity';
 import AActivity from './Pages/AdminPages/AActivity';
 import AActivityPasser from './Pages/AdminPages/AActivityPasser';
 import AprofileQr from './Pages/AdminPages/AprofileQr';
+import { AGallery } from './Pages/AdminPages/AGallery';
 
 function App() {
   return (
@@ -25,6 +26,10 @@ function App() {
       {/** Header imported */}
       <div style={{ backgroundColor: '#262626', minHeight: '100vh', padding: '0', margin: '0' }}>
         <Header />
+        <Suspense fallback={<div>Loading...</div>}>
+          {/* Remove VideoPlayer and CampBadge components */}
+          {/* Add your Routes here */}
+        </Suspense>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/pass-activity" element={<PassActivity />} />
@@ -45,6 +50,7 @@ function App() {
           <Route path="/aactivity" element={<AActivity />} />
           <Route path="/aactivitypasser" element={<AActivityPasser />} />
           <Route path="/aprofileqr" element={<AprofileQr />} />
+          <Route path="/agallery" element={<AGallery />} />
           
         </Routes>
         <Footer /> {/** Footer added */}

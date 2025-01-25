@@ -52,7 +52,7 @@ export default function Footer() {
             Email: <a href="mailto:ofcl.maliyadeva.asg@gmail.com" className="hover:text-white">ofcl.maliyadeva.asg@gmail.com</a>
           </p>
           <p className="text-gray-400 text-sm">
-            Phone: <a href="tel:+1234567890" className="hover:text-white">+1 (234) 567-890</a>
+            Phone: <a href="tel:+94703114796" className="hover:text-white">+94 70 311 4796</a>
           </p>
 
           {/* Social Media Icons */}
