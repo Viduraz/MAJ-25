@@ -17,12 +17,14 @@ export default defineConfig({
     assetsDir: 'assets',
     assetsInclude: ['**/*.woff', '**/*.woff2'],
     rollupOptions: {
-      input: path.resolve(__dirname, 'index.html'),
+      input: {
+        main: path.resolve(__dirname, './index.html'),
+        dir: path.resolve('c:/MAJ-25/frontend/index.html')
+      },
       output: {
         assetFileNames: 'assets/[name]-[hash][extname]',
         manualChunks: {
           'vendor': [
-            // Third party dependencies
             'react',
             'react-dom',
             'react-router-dom'
