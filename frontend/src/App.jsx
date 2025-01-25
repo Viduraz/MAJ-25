@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './Components/Header';
 import Footer from './Components/Footer'; 
@@ -26,6 +26,10 @@ function App() {
       {/** Header imported */}
       <div style={{ backgroundColor: '#262626', minHeight: '100vh', padding: '0', margin: '0' }}>
         <Header />
+        <Suspense fallback={<div>Loading...</div>}>
+          {/* Remove VideoPlayer and CampBadge components */}
+          {/* Add your Routes here */}
+        </Suspense>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/pass-activity" element={<PassActivity />} />
