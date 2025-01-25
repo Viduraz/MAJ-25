@@ -36,7 +36,8 @@ export default defineConfig({
             return 'vendor';
           }
         }
-      }
+      },
+      external: ['react-redux', '@reduxjs/toolkit', 'redux-persist']
     },
     chunkSizeWarningLimit: 2000
   },
