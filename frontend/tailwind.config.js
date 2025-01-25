@@ -1,7 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ["class"],
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./index.html",
+  ],
   theme: {
     extend: {
       borderRadius: {
@@ -9,7 +12,9 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
-      colors: {},
+      colors: {
+        // Add your custom colors here if needed
+      },
     },
   },
   plugins: [
@@ -26,4 +31,8 @@ export default {
       });
     },
   ],
+  "css.validate": false,
+  "tailwindCSS.includeLanguages": {
+    "plaintext": "html"
+  }
 };
