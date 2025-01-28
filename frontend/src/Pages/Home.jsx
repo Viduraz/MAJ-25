@@ -3,6 +3,17 @@ import v1 from "../Assests/v1.mp4";
 import axios from "axios";
 import { motion } from "framer-motion";
 import AnimationContainer from "@/Components/AnimationContainer";
+import map from "../Assests/MAP.png";
+import gamagesir from "../Assests/gamagesir.png";
+import sahan from "../Assests/sahan.png";
+import inokamis from "../Assests/inokamis.png";
+import manorimis from "../Assests/manorimis.png";
+import googlec from "../Assests/googlec.png";
+import google from "../Assests/google.png";
+import meta from "../Assests/meta.png";
+import mobitel from "../Assests/mobitel.jpeg";
+import ethink from "../Assests/ethink.png";
+
 
 export default function Home() {
   // Scroll to section function
@@ -144,9 +155,9 @@ export default function Home() {
           </h2>
           <div className="flex justify-center">
             <img
-              src="https://via.placeholder.com/400"
+              src={map}
               alt="Campsite Map"
-              className="rounded-lg shadow-lg cursor-pointer hover:opacity-90"
+              className="w-full max-w-3xl rounded-lg shadow-lg cursor-pointer transition-all duration-300 hover:opacity-90 hover:scale-[1.02]"
               onClick={() => setIsModalOpen(true)}
             />
           </div>
@@ -155,18 +166,18 @@ export default function Home() {
 
       {/* Modal for larger image */}
       {isModalOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75"
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
           onClick={() => setIsModalOpen(false)}
         >
-          <div className="relative">
+          <div className="relative max-w-7xl mx-auto" onClick={e => e.stopPropagation()}>
             <img
-              src="https://via.placeholder.com/800"
+              src={map}
               alt="Campsite Map Enlarged"
-              className="max-w-full max-h-screen rounded-lg"
+              className="w-full h-auto max-h-[90vh] rounded-lg shadow-2xl"
             />
             <button
-              className="absolute px-3 py-1 text-sm font-bold text-black bg-white rounded-full top-2 right-2 hover:bg-gray-300"
+              className="absolute top-4 right-4 px-4 py-2 text-sm font-bold text-black transition-colors bg-white rounded-full hover:bg-gray-200"
               onClick={() => setIsModalOpen(false)}
             >
               Close
@@ -190,85 +201,102 @@ export default function Home() {
               {/* Member 1 */}
               <div className="flex flex-col items-center max-w-xs">
                 <img
-                  src="https://via.placeholder.com/150"
+                  src={gamagesir}
                   alt="Member 1"
                   className="object-cover w-40 h-40 border-4 border-gray-300 rounded-full shadow-md"
                 />
                 <p className="mt-4 text-xl font-semibold text-gray-700">
-                  Member 1
+                  A S GAMAGE
                 </p>
-                <p className="mb-2 text-sm text-gray-500">Event Manager</p>
-                <p className="text-sm text-gray-600">
-                  mama thama all event activities wadda .
-                </p>
+                <p className="mb-2 text-sm text-gray-500">GROUP SCOUT MASTER</p>
+               
               </div>
 
               {/* Member 2 */}
               <div className="flex flex-col items-center max-w-xs">
                 <img
-                  src="https://via.placeholder.com/150"
+                  src={inokamis}
                   alt="Member 2"
                   className="object-cover w-40 h-40 border-4 border-gray-300 rounded-full shadow-md"
                 />
                 <p className="mt-4 text-xl font-semibold text-gray-700">
-                  member 2
+                  D M I N RATHNASIRI
                 </p>
-                <p className="mb-2 text-sm text-gray-500">Logistics Head</p>
-                <p className="text-sm text-gray-600">
-                  mama thama logistics waddda.
-                </p>
+                <p className="mb-2 text-sm text-gray-500">SCOUT MASTER (GIRL SCOUT)</p>
+                
               </div>
 
               {/* Member 3 */}
               <div className="flex flex-col items-center max-w-xs">
                 <img
-                  src="https://via.placeholder.com/150"
+                  src={manorimis}
                   alt="Member 3"
                   className="object-cover w-40 h-40 border-4 border-gray-300 rounded-full shadow-md"
                 />
                 <p className="mt-4 text-xl font-semibold text-gray-700">
-                  member 3
+                  MANORI GUNATHILAKE
                 </p>
-                <p className="mb-2 text-sm text-gray-500">Coordinator</p>
-                <p className="text-sm text-gray-600">
-                  mama thama cordintor wadda
-                </p>
+                <p className="mb-2 text-sm text-gray-500">SCOUT MASTER</p>
+                
               </div>
 
               {/* Member 4 */}
               <div className="flex flex-col items-center max-w-xs">
                 <img
-                  src="https://via.placeholder.com/150"
+                  src={sahan}
                   alt="Member 4"
                   className="object-cover w-40 h-40 border-4 border-gray-300 rounded-full shadow-md"
                 />
                 <p className="mt-4 text-xl font-semibold text-gray-700">
-                  Member 4
+                  SAHAN SERASINGHE
                 </p>
-                <p className="mb-2 text-sm text-gray-500">Finance Lead</p>
-                <p className="text-sm text-gray-600">mama thama budget wadda</p>
+                <p className="mb-2 text-sm text-gray-500">SCOUT MASTER</p>
               </div>
             </div>
           </div>
         </div>
       </AnimationContainer>
 
-      {/* Logo Marquee */}
+      {/* Our Sponsors Section */}
       <AnimationContainer>
-        <section className="py-16 mb-5 overflow-hidden bg-gray-50">
-          <div className="flex space-x-12 animate-marquee">
-            {logos.concat(logos).map((logo, index) => (
-              <img
-                key={index}
-                src={logo}
-                alt="Partner logo"
-                width={120}
-                height={40}
-                className="h-[clamp(30px,4vw,50px)] w-auto object-contain"
-              />
-            ))}
+        <div className="py-16 bg-white">
+          <div className="container px-4 mx-auto">
+            <h2 className="mb-12 text-4xl font-bold text-center text-gray-800">
+              Our Sponsors
+            </h2>
+            
+            {/* Logo Marquee */}
+            <div className="relative overflow-hidden">
+              <div className="flex space-x-16 animate-marquee">
+                <img
+                  src={googlec}
+                  alt="Sponsor 1"
+                  className="h-20 w-auto"
+                />
+                <img
+                  src={google}
+                  alt="Sponsor 2"
+                  className="h-20 w-auto"
+                />
+                <img
+                  src={meta}
+                  alt="Sponsor 3"
+                  className="h-20 w-auto"
+                />
+                <img
+                  src={mobitel}
+                  alt="Sponsor 4"
+                  className="h-20 w-auto"
+                />
+                 <img
+                  src={ethink}
+                  alt="Sponsor 4"
+                  className="h-20 w-auto"
+                />
+              </div>
+            </div>
           </div>
-        </section>
+        </div>
       </AnimationContainer>
 
       {/* Countdown Section */}
@@ -288,14 +316,6 @@ export default function Home() {
     </div>
   );
 }
-
-const logos = [
-  "https://upload.wikimedia.org/wikipedia/commons/a/ab/Meta-Logo.png",
-  "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
-  "https://upload.wikimedia.org/wikipedia/commons/e/e3/Microsoft_Azure_Logo.svg",
-  "https://upload.wikimedia.org/wikipedia/commons/9/96/Slack_Icon.png",
-  "https://upload.wikimedia.org/wikipedia/commons/b/b9/Slack_Technologies_Logo.svg",
-];
 
 const AnimatedCounter = ({ targetCount }) => {
   const [count, setCount] = useState(0);

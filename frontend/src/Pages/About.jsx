@@ -1,5 +1,6 @@
 import React from "react";
 import AnimationContainer from "@/Components/AnimationContainer";
+import aboutus from "../Assests/Aboutus.jpg";
 
 export default function About() {
   const organizingTeam = [
@@ -48,9 +49,9 @@ export default function About() {
   return (
     <div className="bg-gray-50">
       {/* Hero Section */}
-      <div className="relative h-[400px]">
+      <div className="relative h-[250px] md:h-[300px] lg:h-[600px]">
         <img
-          src="https://via.placeholder.com/1920x1080" // Replace with actual background image
+          src={aboutus} 
           alt="Scout Group"
           className="object-cover w-full h-full"
         />

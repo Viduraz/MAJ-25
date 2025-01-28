@@ -36,14 +36,14 @@ export default defineConfig({
             return 'vendor';
           }
         }
-      },
-      external: [
-        'react-redux', 
-        '@reduxjs/toolkit', 
-        'redux-persist',
-        'react-router-dom' // Add this line
-      ]
+      }
     },
+    external: [
+      'react-redux', 
+      '@reduxjs/toolkit', 
+      'redux-persist',
+      'react-router-dom'
+    ],
     chunkSizeWarningLimit: 2000
   },
   server: {
@@ -57,5 +57,8 @@ export default defineConfig({
         changeOrigin: true
       }
     }
+  },
+  optimizeDeps: {
+    exclude: ['chunk-F2GNF72Y.js']
   }
 });
