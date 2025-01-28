@@ -1,32 +1,64 @@
 import React from "react";
 import AnimationContainer from "@/Components/AnimationContainer";
 import aboutus from "../Assests/Aboutus.jpg";
+import yasas from "../Assests/yasas.jpg";
+import savindu from "../Assests/savindu.jpg";
+import sanjula from "../Assests/sanjula.jpg";
+import wohansa from "../Assests/wohansa.jpg";
+import pahanmi from "../Assests/pahnmi.jpg";
+import niketha from "../Assests/niketha.jpg";
+import praveen from "../Assests/praveen.jpg";
+import kassapa from "../Assests/kassapa.jpg";
 
 export default function About() {
   const organizingTeam = [
     {
-      name: "Vidura Prabath",
-      role: "Team Lead",
+      name: "Yasas Hearath",
+      role: "Vice President",
       description: "Leading the team to success with dedication and passion.",
-      image: "https://via.placeholder.com/150",
+      image: yasas,
     },
     {
-      name: "Jinadari Silva",
-      role: "Coordinator",
+      name: "Wohansa Karunarathne",
+      role: "secretary",
       description: "Ensures smooth communication and planning within the team.",
-      image: "https://via.placeholder.com/150",
+      image: wohansa,
     },
     {
-      name: "Chamathka Fernando",
-      role: "Logistics Manager",
+      name: "savindu Sathsara",
+      role: "Junior Tresurer",
+      description: "Ensures smooth communication and planning within the team.",
+      image: savindu,
+    },
+    {
+      name: "Praveen Randima",
+      role: "Quarter Master",
+      description: "Ensures smooth communication and planning within the team.",
+      image: praveen,
+    },
+    {
+      name: "sanjula indheera",
+      role: "IT Media & Marketing Coordinator",
+      description: "Ensures smooth communication and planning within the team.",
+      image: sanjula,
+    },
+    {
+      name: "Pahanmi Karunanayake",
+      role: "Finance Coordinator",
+      description: "Ensures smooth communication and planning within the team.",
+      image: pahanmi,
+    },
+    {
+      name: "Niketha Weerasinghe",
+      role: "Admin Coordinator",
       description: "Manages all event resources and logistics efficiently.",
-      image: "https://via.placeholder.com/150",
+      image: niketha,
     },
     {
-      name: "Navodya Perera",
-      role: "Treasurer",
+      name: "Kassapa Malalasekara",
+      role: "Safety &Security Coordinator",
       description: "Handles financial management and budget planning.",
-      image: "https://via.placeholder.com/150",
+      image: kassapa,
     },
   ];
 
