@@ -8,33 +8,57 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
-    }
+    },
   },
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+    assetsDir: 'assets',
+    assetsInclude: ['**/*.woff', '**/*.woff2'],
     rollupOptions: {
-      external: [
-        'react-redux',
-        '@reduxjs/toolkit',
-        'redux-persist',
-        'react-router-dom',
-        'axios', // Add axios
-        'react-switch', // Add react-switch
-        'react-hot-toast',
-        'firebase/app',
-        'firebase/auth',
-        'firebase/storage'
-      ]
-    }
+      input: {
+        main: path.resolve(__dirname, 'index.html')
+      },
+      output: {
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: (assetInfo) => {
+          const info = assetInfo.name.split('.');
+          const ext = info[info.length - 1];
+          if (/woff|woff2/.test(ext)) {
+            return `fonts/[name][extname]`;
+          }
+          return `assets/[name]-[hash][extname]`;
+        },
+        manualChunks: (id) => {
+          if (id.includes('node_modules')) {
+            if (id.includes('react')) return 'vendor-react';
+            if (id.includes('@fortawesome')) return 'vendor-fontawesome';
+            return 'vendor';
+          }
+        }
+      }
+    },
+    external: [
+      'react-redux', 
+      '@reduxjs/toolkit', 
+      'redux-persist',
+      'react-router-dom'
+    ],
+    chunkSizeWarningLimit: 2000
   },
   server: {
     port: 5173,
+    fs: {
+      allow: ['.', 'node_modules']
+    },
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
         changeOrigin: true
       }
     }
+  },
+  optimizeDeps: {
+    exclude: ['chunk-F2GNF72Y.js']
   }
 });
