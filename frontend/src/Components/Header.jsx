@@ -43,7 +43,7 @@ export default function Header() {
               </span>
             </li>
           </Link>
-          <Link to='/pass-activity'>
+          {/* <Link to='/pass-activity'>
             <li
               className={`relative group transition-all duration-300 ease-in-out ${
                 location.pathname === '/pass-activity' ? 'border-b-4 border-yellow-500 scale-110 font-bold' : ''
@@ -53,7 +53,7 @@ export default function Header() {
                 Pass Activity
               </span>
             </li>
-          </Link>
+          </Link> */}
           
           <Link to="/gallery">
             <li

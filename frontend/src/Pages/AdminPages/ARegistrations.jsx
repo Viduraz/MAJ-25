@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import ProtectedRoute from '../../Components/ProtectedRoute';
 
 export default function AdminRegistrations() {
   const [registrations, setRegistrations] = useState([]);
@@ -9,8 +11,14 @@ export default function AdminRegistrations() {
   const [searchQuery, setSearchQuery] = useState('');
   const [editData, setEditData] = useState(null);
   const [totalAmount, setTotalAmount] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/admin'); // Redirect to login if no token
+    }
+
     const fetchRegistrations = async () => {
       try {
         const response = await axios.get('http://localhost:3000/api/registration');
@@ -35,7 +43,7 @@ export default function AdminRegistrations() {
     };
 
     fetchRegistrations();
-  }, []);
+  }, [navigate]);
 
   const calculateAnalytics = () => {
     const totalRegistrations = registrations.length;
@@ -86,6 +94,7 @@ export default function AdminRegistrations() {
   const { totalRegistrations, genderDistribution, schoolDistribution, leaderCount, scoutCount } = calculateAnalytics();
 
   return (
+    <ProtectedRoute allowedPage="ARegistrations">
     <div className="min-h-screen bg-gray-100 p-6">
       <h1 className="text-4xl font-bold mb-6">Admin Panel - Registrations</h1>
       <div className="mb-6">
@@ -265,5 +274,6 @@ export default function AdminRegistrations() {
         </div>
       )}
     </div>
+    </ProtectedRoute>
   );
 }

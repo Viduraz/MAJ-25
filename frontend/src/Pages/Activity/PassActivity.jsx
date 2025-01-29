@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import ProtectedRoute from '../../Components/ProtectedRoute';
 
 const baseUrl = 'http://localhost:3000';
 var scoutDetails = {};
@@ -19,6 +21,7 @@ function PassActivity() {
     const [activitiesStats, setActivitiesStats] = useState({ completed: 0, pending: 0 });
 
     const scanner = useRef(null);
+    const navigate = useNavigate();
 
     const categoryColors = [
         { border: "border-blue-400", bg: "bg-blue-100", lightBg: "bg-blue-50" },
@@ -103,6 +106,10 @@ function PassActivity() {
     };
 
     useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/admin');
+        }
         axios.get(baseUrl + '/api/activity')
             .then((response) => {
                 const activities = response.data.map((activity) => ({
@@ -139,7 +146,7 @@ function PassActivity() {
             .catch((error) => {
                 console.error('Error fetching activities:', error);
             });
-    }, []);
+    }, [navigate]);
 
 
 
@@ -194,6 +201,7 @@ function PassActivity() {
     }, [filteredOptions]);
 
     return (
+        <ProtectedRoute allowedPage="pass-activity">
         <div className="bg-gray-50">
 
             {/* Hero Section */}
@@ -446,6 +454,7 @@ function PassActivity() {
             )}
             <div id="reader" className="max-w-xl mx-auto">  </div>
         </div>
+        </ProtectedRoute>
     );
 }
 
