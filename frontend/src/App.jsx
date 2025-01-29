@@ -57,8 +57,7 @@ function App() {
           <Route path="/aprofileqr" element={<AprofileQr />} />
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
-          <Route path="/addadmin" element={<AddAdmin />} />
-          <Route path="/alladmin" element={<AllAdmin />} /> 
+          <Route path="/addadmin" element={<AddAdmin />} /> 
           <Route path="/AGallery" element={
             <ProtectedRoute allowedPage="/AGallery">
               <AGallery />
