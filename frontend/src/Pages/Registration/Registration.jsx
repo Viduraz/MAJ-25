@@ -257,7 +257,7 @@ export default function Registration() {
               id="leaderCount"
               value={leaderCount}
               onChange={handleLeaderCountChange}
-              className=""
+              className="w-full"
             />
           </div>
           <div className=" max-h-[28rem] overflow-y-auto scrollbar-hide">
@@ -328,7 +328,7 @@ export default function Registration() {
                             handleLeaderChange(globalIndex, "gender", value)
                           }
                         >
-                          <SelectTrigger className="w-[280px]">
+                          <SelectTrigger className="w-full">
                             <SelectValue
                               defaultValue={"Male"}
                               placeholder="Select Gender"

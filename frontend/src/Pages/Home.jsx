@@ -32,6 +32,9 @@ export default function Home() {
   // State for modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Add state for registered users
+  const [registeredUsers, setRegisteredUsers] = useState([]);
+
   // Update count on component mount
   useEffect(() => {
     const fetchRegisteredCount = async () => {
@@ -39,9 +42,15 @@ export default function Home() {
         const response = await axios.get(
           "http://localhost:3000/api/registration"
         );
-        console.log("err", response);
+        console.log("Registered Count Response:", {
+          data: response.data,
+          status: response.status,
+          statusText: response.statusText,
+        });
         setCount(response.data.length);
         localStorage.setItem("registeredCount", response.data.length);
+        // Set the registered users data to state
+        setRegisteredUsers(response.data);
       } catch (error) {
         console.error("Error fetching registered count:", error);
       }
@@ -83,7 +92,7 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className="container mx-auto px-4">
       {/* Hero Section */}
       <div className="relative w-full h-screen overflow-hidden">
         <video
@@ -313,6 +322,21 @@ export default function Home() {
           </p>
         </div>
       </AnimationContainer>
+
+      {/* Display Registered Users
+      <div className="px-4 py-16 text-center bg-gray-100">
+        <h2 className="mb-8 text-4xl font-bold text-gray-800">
+          Registered Users
+        </h2>
+        <div className="flex flex-col items-center">
+          {registeredUsers.map((user) => (
+            <div key={user._id} className="mb-4">
+              <p className="text-xl font-semibold text-gray-700">{user.fullName}</p>
+              <p className="text-sm text-gray-500">{user.email}</p>
+            </div>
+          ))}
+        </div>
+      </div> */}
     </div>
   );
 }

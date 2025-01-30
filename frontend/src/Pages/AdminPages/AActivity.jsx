@@ -81,7 +81,7 @@ const AActivity = () => {
 
         <div className="bg-white p-4 rounded shadow mb-6">
           <h2 className="text-lg font-semibold mb-2">Add New Activity</h2>
-          <div className="flex gap-4">
+          <div className="flex flex-col md:flex-row gap-4">
             <input
               type="text"
               placeholder="ID"

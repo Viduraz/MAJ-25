@@ -23,6 +23,7 @@ import AdminLogin from './Pages/AdminPages/AdminLogin';
 import AddAdmin from './Pages/AdminPages/AddAdmin';
 import ProtectedRoute from './components/ProtectedRoute';
 import Unauthorized from "./Pages/AdminPages/Unauthorized";
+import AllPages from "./Pages/AdminPages/allpages";
 
 
 function App() {
@@ -58,43 +59,52 @@ function App() {
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="/addadmin" element={<AddAdmin />} /> 
+          <Route path="/allpages" element={
+            <ProtectedRoute allowedPages={['/allpages']}>
+              <AllPages />
+            </ProtectedRoute>
+          } />
           <Route path="/AGallery" element={
-            <ProtectedRoute allowedPage="/AGallery">
+            <ProtectedRoute allowedPage="AGallery">
               <AGallery />
             </ProtectedRoute>
           } />
           <Route path="/AActivity" element={
-            <ProtectedRoute allowedPage="/AActivity">
+            <ProtectedRoute allowedPages={['/AActivity']}>
               <AActivity />
             </ProtectedRoute>
           } />
           <Route path="/AActivityPasser" element={
-            <ProtectedRoute allowedPage="/AActivityPasser">
+            <ProtectedRoute allowedPages={['/AActivityPasser']}>
               <AActivityPasser />
             </ProtectedRoute>
           } />
           <Route path="/ARegistrations" element={
-            <ProtectedRoute allowedPage="/ARegistrations">
+            <ProtectedRoute allowedPage="ARegistrations">
               <ARegistrations />
             </ProtectedRoute>
           } />
           <Route path="/AProfileQR" element={
-            <ProtectedRoute allowedPage="/AProfileQR">
+            <ProtectedRoute allowedPage="AProfileQR">
               <AprofileQr />
             </ProtectedRoute>
           } />
           <Route path="/AddAdmin" element={
-            <ProtectedRoute allowedPage="/AddAdmin">
+            <ProtectedRoute allowedPages={['/addAdmin']}>
               <AddAdmin />
             </ProtectedRoute>
           } />
           <Route path="/pass-activity" element={
-            <ProtectedRoute allowedPage="/pass-activity">
+            <ProtectedRoute allowedPage="pass-activity">
               <PassActivity />
             </ProtectedRoute>
           } />
-          
-          
+
+          <Route path="/addAdmin" element={
+            <ProtectedRoute allowedPages={['/addAdmin']}>
+              <AddAdmin />
+            </ProtectedRoute>
+          } />
 
         </Routes>
         <Footer /> {/** Footer added */}

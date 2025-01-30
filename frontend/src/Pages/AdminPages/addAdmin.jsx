@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast, Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import ProtectedRoute from '../../Components/ProtectedRoute';
 
 const AdminManagement = () => {
   const [search, setSearch] = useState('');
@@ -13,6 +15,14 @@ const AdminManagement = () => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [adminToUpdate, setAdminToUpdate] = useState(null);
   const [admins, setAdmins] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/admin'); // Redirect to login if no token
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const fetchAdmins = async () => {
@@ -112,6 +122,7 @@ const AdminManagement = () => {
   };
 
   return (
+    <ProtectedRoute allowedPage="addAdmin">
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         
@@ -192,6 +203,7 @@ const AdminManagement = () => {
                 <option value="/AprofileQR">AprofileQR</option>
                 <option value="/ARegistrations">ARegistrations</option>
                 <option value="/pass-activity">PassActivity</option>
+                <option value="/allpages">Main Admin</option>
               </select>
             </div>
             <div className="flex justify-end space-x-3">
@@ -259,6 +271,7 @@ const AdminManagement = () => {
         <Toaster position="top-right" />
       </div>
     </div>
+    </ProtectedRoute>
   );
 };
 

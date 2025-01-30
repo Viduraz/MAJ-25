@@ -29,13 +29,13 @@ export default function AdminLogin() {
         },
         body: JSON.stringify(formData),
       });
-
+  
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('token', data.token);
         toast.success('Login successful!');
         const decodedToken = JSON.parse(atob(data.token.split('.')[1]));
-        const redirectPage = decodedToken.redirectPage;
+        const redirectPage = decodedToken.redirectPage || formData.redirectPage; // Ensure redirectPage is set
         console.log('Redirecting to:', redirectPage);
         navigate(redirectPage);
       } else {
@@ -104,6 +104,7 @@ export default function AdminLogin() {
               <option value="/AprofileQR">AprofileQR</option>
               <option value="/ARegistrations">ARegistrations</option>
               <option value="/pass-activity">PassActivity</option>
+              <option value="/allpages">Main Admin</option>
             </select>
           </div>
 

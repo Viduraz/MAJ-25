@@ -23,15 +23,15 @@ export default function Header() {
 
   return (
     <header className={`header ${bgColor} text-white`}>
-      <div className="flex justify-between items-center max-w-6xl mx-auto px-6 py-4 transition-all duration-300 ease-in-out">
+      <div className="flex flex-col md:flex-row justify-between items-center max-w-6xl mx-auto px-6 py-4 transition-all duration-300 ease-in-out">
         {/* Logo */}
-        <Link to="/" className="flex items-center">
+        <Link to="/" className="flex items-center mb-4 md:mb-0">
           <img src={campbadge} alt="Logo" className="logo" style={{ width: '50px', height: '50px', marginRight: '10px' }} />
           <h1 className="font-bold text-lg tracking-wide">MAJ'25</h1>
         </Link>
 
         {/* Navigation Links */}
-        <ul className="flex gap-8 text-base font-medium">
+        <ul className="flex flex-col md:flex-row gap-4 md:gap-8 text-base font-medium">
           <Link to="/">
             <li
               className={`relative group transition-all duration-300 ease-in-out ${
@@ -43,18 +43,6 @@ export default function Header() {
               </span>
             </li>
           </Link>
-          {/* <Link to='/pass-activity'>
-            <li
-              className={`relative group transition-all duration-300 ease-in-out ${
-                location.pathname === '/pass-activity' ? 'border-b-4 border-yellow-500 scale-110 font-bold' : ''
-              }`}
-            >
-              <span className="block px-2 py-1 hover:bg-gray-600 rounded transition-colors duration-300 ease-in-out">
-                Pass Activity
-              </span>
-            </li>
-          </Link> */}
-          
           <Link to="/gallery">
             <li
               className={`relative group transition-all duration-300 ease-in-out ${
@@ -77,7 +65,6 @@ export default function Header() {
               </span>
             </li>
           </Link>
-          
           <Link to="/registration">
             {currentUser ? (
               <li
@@ -94,7 +81,7 @@ export default function Header() {
         </ul>
 
         {/* User Profile / Sign In */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 mt-4 md:mt-0">
           {currentUser ? (
             <>
               <img
