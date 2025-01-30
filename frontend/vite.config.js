@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
@@ -60,5 +61,21 @@ export default defineConfig({
   },
   optimizeDeps: {
     exclude: ['chunk-F2GNF72Y.js']
+=======
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    fs: {
+      allow: [
+        // Allow serving files from the project root and the Font Awesome directory
+        path.resolve(__dirname),
+        path.resolve(__dirname, 'node_modules/@fortawesome/fontawesome-free/webfonts')
+      ]
+    }
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
   }
 });

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import v1 from "../Assests/v1.mp4";
+<<<<<<< HEAD
 import axios from "axios";
 import { motion } from "framer-motion";
 import AnimationContainer from "@/Components/AnimationContainer";
@@ -14,6 +15,8 @@ import meta from "../Assests/meta.png";
 import mobitel from "../Assests/mobitel.jpeg";
 import ethink from "../Assests/ethink.png";
 
+=======
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
 
 export default function Home() {
   // Scroll to section function
@@ -32,6 +35,7 @@ export default function Home() {
   // State for modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+<<<<<<< HEAD
   // Add state for registered users
   const [registeredUsers, setRegisteredUsers] = useState([]);
 
@@ -57,6 +61,14 @@ export default function Home() {
     };
 
     fetchRegisteredCount();
+=======
+  // Update count on component mount
+  useEffect(() => {
+    const storedCount = parseInt(localStorage.getItem("registeredCount")) || 0;
+    const newCount = storedCount + Math.floor(Math.random() * 2) + 4;
+    setCount(newCount);
+    localStorage.setItem("registeredCount", newCount);
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
   }, []);
 
   // Update countdown every second
@@ -86,6 +98,7 @@ export default function Home() {
 
   // Function to format time left
   const formatTimeLeft = () => {
+<<<<<<< HEAD
     return `${timeLeft.days || 0}d ${timeLeft.hours || 0}h ${
       timeLeft.minutes || 0
     }m ${timeLeft.seconds || 0}s`;
@@ -95,6 +108,15 @@ export default function Home() {
     <div className="w-full min-h-screen"> {/* Changed from container mx-auto */}
       {/* Hero Section */}
       <div className="relative w-full h-[100vh] max-h-screen"> {/* Updated height handling */}
+=======
+    return `${timeLeft.days || 0}d ${timeLeft.hours || 0}h ${timeLeft.minutes || 0}m ${timeLeft.seconds || 0}s`;
+  };
+
+  return (
+    <div>
+      {/* Hero Section */}
+      <div className="relative w-full h-screen overflow-hidden">
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
         <video
           autoPlay
           muted
@@ -106,6 +128,7 @@ export default function Home() {
 
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
 
+<<<<<<< HEAD
         <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center text-white">
           <p className="mb-4 text-xl tracking-wide uppercase">
             Welcome To Unbelievable Camping Experience
@@ -114,19 +137,37 @@ export default function Home() {
             Maliyadeva <span className="text-gray-400">Adarsha</span> Jambareeta
           </h1>
           <button className="px-6 py-3 font-semibold text-gray-900 transition duration-300 bg-white rounded-full hover:bg-gray-300">
+=======
+        <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
+          <p className="text-xl tracking-wide uppercase mb-4">
+            Welcome To Unbelievable Camping Experience
+          </p>
+          <h1 className="text-6xl font-bold leading-tight mb-6">
+            Maliyadeva <span className="text-gray-400">Adarsha</span> Jumboreeta
+          </h1>
+          <button className="bg-white text-gray-900 px-6 py-3 font-semibold rounded-full hover:bg-gray-300 transition duration-300">
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
             LEARN MORE
           </button>
         </div>
 
         <div
+<<<<<<< HEAD
           className="absolute transform -translate-x-1/2 cursor-pointer bottom-4 left-1/2"
           onClick={scrollToSection}
         >
           <div className="flex items-center justify-center w-8 h-8 border-2 border-white rounded-full">
+=======
+          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 cursor-pointer"
+          onClick={scrollToSection}
+        >
+          <div className="w-8 h-8 border-2 border-white rounded-full flex items-center justify-center">
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
             <div className="w-1 h-4 bg-white animate-bounce"></div>
           </div>
         </div>
 
+<<<<<<< HEAD
         <AnimatedCounter targetCount={count} />
 
         <div className="absolute top-4 left-4">
@@ -187,6 +228,46 @@ export default function Home() {
             />
             <button
               className="absolute top-4 right-4 px-4 py-2 text-sm font-bold text-black transition-colors bg-white rounded-full hover:bg-gray-200"
+=======
+        <div className="absolute top-4 right-4 p-4 bg-white bg-opacity-75 rounded-lg shadow-lg hover:bg-opacity-100 transition duration-300 ease-in-out cursor-pointer">
+          <div className="text-sm text-gray-700">Number of Registered Scouts</div>
+          <div className="text-4xl font-bold text-gray-900">{count}</div>
+          <div className="hidden group-hover:block text-xs text-gray-500 mt-2">
+            Hovered over the count!
+          </div>
+        </div>
+
+        <div style={styles.countdown}>{formatTimeLeft()}</div>
+      </div>
+
+      {/* CampSite MAP Section */}
+      <div className="bg-gray-100 py-16 px-4 text-center">
+        <h2 className="text-4xl font-bold text-gray-800 mb-8">CampSite MAP</h2>
+        <div className="flex justify-center">
+          <img
+            src="https://via.placeholder.com/400"
+            alt="Campsite Map"
+            className="cursor-pointer rounded-lg shadow-lg hover:opacity-90"
+            onClick={() => setIsModalOpen(true)}
+          />
+        </div>
+      </div>
+
+      {/* Modal for larger image */}
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div className="relative">
+            <img
+              src="https://via.placeholder.com/800"
+              alt="Campsite Map Enlarged"
+              className="max-w-full max-h-screen rounded-lg"
+            />
+            <button
+              className="absolute top-2 right-2 bg-white text-black px-3 py-1 rounded-full text-sm font-bold hover:bg-gray-300"
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
               onClick={() => setIsModalOpen(false)}
             >
               Close
@@ -196,6 +277,7 @@ export default function Home() {
       )}
 
       {/* Organizing Committee Section */}
+<<<<<<< HEAD
       <AnimationContainer>
         <div
           id="organizing-committee"
@@ -337,10 +419,89 @@ export default function Home() {
           ))}
         </div>
       </div> */}
+=======
+      <div
+        id="organizing-committee"
+        className="bg-gray-100 py-16 px-4 text-center"
+      >
+        <h2 className="text-4xl font-bold text-gray-800 mb-12">
+          Our Organizing Committee
+        </h2>
+        <div className="flex flex-wrap justify-center gap-8">
+          {/* Committee Members */}
+        <div className="flex flex-wrap justify-center gap-8">
+          {/* Member 1 */}
+          <div className="flex flex-col items-center max-w-xs">
+            <img
+              src="https://via.placeholder.com/150"
+              alt="Member 1"
+              className="w-40 h-40 rounded-full object-cover border-4 border-gray-300 shadow-md"
+            />
+            <p className="text-xl font-semibold text-gray-700 mt-4">
+              Member 1
+            </p>
+            <p className="text-sm text-gray-500 mb-2">Event Manager</p>
+            <p className="text-sm text-gray-600">
+              mama thama all event activities wadda .
+            </p>
+          </div>
+
+          {/* Member 2 */}
+          <div className="flex flex-col items-center max-w-xs">
+            <img
+              src="https://via.placeholder.com/150"
+              alt="Member 2"
+              className="w-40 h-40 rounded-full object-cover border-4 border-gray-300 shadow-md"
+            />
+            <p className="text-xl font-semibold text-gray-700 mt-4">
+              member 2
+            </p>
+            <p className="text-sm text-gray-500 mb-2">Logistics Head</p>
+            <p className="text-sm text-gray-600">
+              mama thama logistics waddda.
+            </p>
+          </div>
+
+          {/* Member 3 */}
+          <div className="flex flex-col items-center max-w-xs">
+            <img
+              src="https://via.placeholder.com/150"
+              alt="Member 3"
+              className="w-40 h-40 rounded-full object-cover border-4 border-gray-300 shadow-md"
+            />
+            <p className="text-xl font-semibold text-gray-700 mt-4">
+              member 3
+            </p>
+            <p className="text-sm text-gray-500 mb-2">Coordinator</p>
+            <p className="text-sm text-gray-600">
+              mama thama cordintor wadda
+            </p>
+          </div>
+
+          {/* Member 4 */}
+          <div className="flex flex-col items-center max-w-xs">
+            <img
+              src="https://via.placeholder.com/150"
+              alt="Member 4"
+              className="w-40 h-40 rounded-full object-cover border-4 border-gray-300 shadow-md"
+            />
+            <p className="text-xl font-semibold text-gray-700 mt-4">
+              Member 4
+            </p>
+            <p className="text-sm text-gray-500 mb-2">Finance Lead</p>
+            <p className="text-sm text-gray-600">
+              mama thama budget wadda
+            </p>
+          </div>
+        </div>
+        </div>
+      </div>
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
     </div>
   );
 }
 
+<<<<<<< HEAD
 const AnimatedCounter = ({ targetCount }) => {
   const [count, setCount] = useState(0);
 
@@ -372,4 +533,18 @@ const AnimatedCounter = ({ targetCount }) => {
       </motion.div>
     </div>
   );
+=======
+const styles = {
+  countdown: {
+    position: "absolute",
+    top: "10px",
+    left: "10px",
+    padding: "10px",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    color: "white",
+    borderRadius: "5px",
+    fontSize: "20px",
+    fontWeight: "bold",
+  },
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
 };

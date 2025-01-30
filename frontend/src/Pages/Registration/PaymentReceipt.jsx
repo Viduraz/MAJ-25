@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -22,6 +23,17 @@ export default function PaymentReceipt({
   onPrevious,
 }) {
   const registrationURL = "http://localhost:3000/api/registration";
+=======
+import React, { useState } from 'react';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import firebaseApp from '../../../Firebase';
+
+export default function PaymentReceipt({ school, leaders, scouts, amount, paymentDate, receiptImage, setAmount, setPaymentDate, setReceiptImage, onPrevious }) {
+
+  const registrationURL = 'http://localhost:3000/api/registration';
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
 
   const [uploading, setUploading] = useState(false);
 
@@ -32,6 +44,7 @@ export default function PaymentReceipt({
   // HANDLE SENDING REQUEST TO SAVE REGISTRATIONS
 
   const sendRequest = async () => {
+<<<<<<< HEAD
     // Validation: Check for empty fields
     if (!amount || !paymentDate || !receiptImage) {
       toast.error("Please fill in all required fields.");
@@ -41,6 +54,11 @@ export default function PaymentReceipt({
     try {
       // save leaders one by one
       for (const leader of leaders) {
+=======
+    try {
+      // save leaders one by one
+      for(const leader of leaders) {
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
         await axios.post(registrationURL, {
           fullName: leader.fullName,
           gender: leader.gender,
@@ -51,12 +69,20 @@ export default function PaymentReceipt({
           paymentDate: paymentDate,
           amount: amount,
           receiptImage: receiptImage,
+<<<<<<< HEAD
           type: "Leader",
+=======
+          type: 'Leader'
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
         });
       }
 
       // save scouts one by one
+<<<<<<< HEAD
       for (const scout of scouts) {
+=======
+      for(const scout of scouts) {
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
         await axios.post(registrationURL, {
           fullName: scout.fullName,
           gender: scout.gender,
@@ -67,21 +93,30 @@ export default function PaymentReceipt({
           paymentDate: paymentDate,
           amount: amount,
           receiptImage: receiptImage,
+<<<<<<< HEAD
           type: "Scout",
+=======
+          type: 'Scout'
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
         });
       }
 
       toast.success("All registrations saved successfully!");
+<<<<<<< HEAD
       generateExcel();
 
       // Navigate to home page after a short delay to allow the download to start
       setTimeout(() => {
         window.location.href = "/"; // Change this to your home page route
       }, 2000); // Adjust the delay as needed
+=======
+
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
     } catch (error) {
       console.error("Error saving registrations:", error);
       toast("An error occurred while saving the registrations.");
     }
+<<<<<<< HEAD
   };
 
   // Function to generate Excel
@@ -128,11 +163,18 @@ export default function PaymentReceipt({
     // Save the Excel file
     XLSX.writeFile(wb, "registration_details.xlsx");
   };
+=======
+  }
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
 
   // HANDLE RECEIPT IMAGE UPLOAD
 
   const updloadReceipt = async (image) => {
+<<<<<<< HEAD
     if (image) {
+=======
+    if(image) {
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
       try {
         setUploading(true);
         const storage = getStorage(firebaseApp);
@@ -147,6 +189,7 @@ export default function PaymentReceipt({
         setUploading(false);
       }
     }
+<<<<<<< HEAD
   };
   // Function to validate amount
   const validateAmount = (amount) => {
@@ -179,10 +222,34 @@ export default function PaymentReceipt({
           <div className=" flex flex-col gap-2.5">
             <Label>Amount</Label>
             {/*  <input
+=======
+  }
+
+  return (
+    <div className="bg-white p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
+      <div className="bg-white p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
+        <h2 className="text-2xl font-bold text-center mb-5">Add Your Payment Receipt</h2>
+        
+        <div className="mb-5">
+          <label htmlFor="amount" className="block text-lg font-medium text-gray-700">Amount</label>
+          <input
+            type="text"
+            id="amount"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            placeholder="Enter Amount"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        <div className="mb-5">
+          <label htmlFor="paymentDate" className="block text-lg font-medium text-gray-700">Payment Date</label>
+          <input
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
             type="date"
             id="paymentDate"
             value={paymentDate}
             onChange={(e) => setPaymentDate(e.target.value)}
+<<<<<<< HEAD
             className="block w-full mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
           /> */}
             <ScoutDatePicker
@@ -256,6 +323,35 @@ export default function PaymentReceipt({
           >
             {uploading ? "Uploading" : "Submit"}
           </Button>
+=======
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        <div className="mb-5">
+          <label htmlFor="receiptImage" className="block text-lg font-medium text-gray-700">Upload Receipt Photo</label>
+          <input
+            type="file"
+            id="receiptImage"
+            accept="image/*"
+            onChange={(e) => updloadReceipt(e.target.files[0])}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        <div className="flex justify-between">
+          <button
+            onClick={onPrevious}
+            className="mt-5 bg-gray-500 text-white px-4 py-2 rounded-md"
+          >
+            Previous
+          </button>
+          <button
+            onClick={sendRequest}
+            disabled={uploading}
+            className="mt-5 bg-blue-500 text-white px-4 py-2 rounded-md"
+          >
+            {uploading ? "Uploading" : "Submit"}
+          </button>
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
         </div>
       </div>
     </div>

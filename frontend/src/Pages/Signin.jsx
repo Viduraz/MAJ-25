@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
 import { signInStart, signInSuccess, signInFailure } from '../redux/User/userSlice';
+=======
+import { signInStart, signInSuccess, signInFailure } from '../redux/User/userSlice'
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
 import { useDispatch, useSelector } from 'react-redux';
 import OAuth from '../Components/OAuth';
 import toast from 'react-hot-toast';
@@ -9,6 +13,7 @@ import axios from 'axios';
 
 export default function Signin() {
   const [formData, setFormData] = useState({});
+<<<<<<< HEAD
   const { loading } = useSelector((state) => state.user);
   const [message, setMessage] = useState('');
   const [isSwitchOn, setIsSwitchOn] = useState(false);
@@ -20,6 +25,18 @@ export default function Signin() {
     setIsSwitchOn(!isSwitchOn);
   };
 
+=======
+  const { loading, error } = useSelector((state) => state.user);
+  const [message, setMessage] = useState('');
+  const [isSwitchOn, setIsSwitchOn] = useState(false);
+
+  const handleToggleSwitch = () => {
+    setIsSwitchOn(!isSwitchOn);
+  }
+  
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -27,7 +44,13 @@ export default function Signin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+<<<<<<< HEAD
     if (isSwitchOn) {
+=======
+    if(isSwitchOn) {
+
+      // scout user registration
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
       const URL = 'http://localhost:3000/api/registration/single';
 
       try {
@@ -38,6 +61,7 @@ export default function Signin() {
         });
         dispatch(signInSuccess(registration));
         localStorage.setItem('registration', JSON.stringify(registration.data));
+<<<<<<< HEAD
         toast.success('Welcome back! You have successfully signed in.');
         navigate('/sprofiles');
       } catch (error) {
@@ -45,6 +69,22 @@ export default function Signin() {
         toast.error('Invalid credentials. Please try again.');
       }
     } else {
+=======
+        console.log('Registration:', registration.data);
+        
+        toast.success('Welcome back! You have successfully signed in.', setTimeout(2000));
+        navigate('/sprofiles');
+        
+      } catch (error) {
+        dispatch(signInFailure({ message: error.message }));
+        toast.error('Invalid credentials. Please try again.');
+        console.error('Error signing in:', error);
+      }
+
+    } else {
+
+      // default user registration
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
       try {
         dispatch(signInStart());
         const res = await fetch('/api/auth/signin', {
@@ -55,14 +95,22 @@ export default function Signin() {
           body: JSON.stringify(formData),
         });
         const data = await res.json();
+<<<<<<< HEAD
 
         if (!data.success) {
+=======
+        
+        if (data.success === false) {
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
           dispatch(signInFailure(data));
           setMessage(data.message || 'Sign in failed.');
           toast.error(data.message || 'Invalid credentials. Please try again.');
           return;
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
         dispatch(signInSuccess(data));
         setMessage('Sign in successful!');
         toast.success('Welcome back! You have successfully signed in.');
@@ -76,6 +124,7 @@ export default function Signin() {
   };
 
   return (
+<<<<<<< HEAD
     <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
       <div className="w-full max-w-md p-8 space-y-6 bg-gray-800 rounded-lg shadow-lg">
         <h1 className="text-3xl font-bold text-center">Welcome Back</h1>
@@ -127,5 +176,55 @@ export default function Signin() {
         {message && <p className="text-red-500 text-center mt-4">{message}</p>}
       </div>
     </div>
+=======
+    <>
+      <div className='p-3 max-w-lg mx-auto'>
+        <h1 className='text-3xl text-center font-semibold my-7'>Sign In</h1>
+        <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+          
+          <input
+            type='email'
+            placeholder='Email'
+            id='email'
+            className='bg-slate-100 p-3 rounded-lg'
+            onChange={handleChange}
+          />
+
+          <input
+            type='password'
+            placeholder='Password'
+            id='password'
+            className='bg-slate-100 p-3 rounded-lg'
+            onChange={handleChange}
+          />
+
+          <div className="flex justify-end items-center mt-2">
+            <label htmlFor="scoutRegister" className="mr-4 text-gray-200">
+              Scout Register
+            </label>
+            <div className="relative">
+              <Switch onChange={handleToggleSwitch} checked={isSwitchOn} />
+            </div>
+          </div>
+
+          <button
+            // disabled={loading}
+            className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
+          >
+            {loading ? 'Loading...' : 'Sign In'}
+          </button>
+
+          <OAuth />
+        </form>
+        <div className='flex gap-2 mt-5'>
+          <p>Dont Have an account?</p>
+          <Link to='/signup'>
+            <span className='text-blue-500'>Sign up</span>
+          </Link>
+        </div>
+        <p className='text-red-700 mt-5'>{message}</p>
+      </div>
+    </>
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
   );
 }

@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+<<<<<<< HEAD
   darkMode: ["class"],
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
@@ -36,3 +37,14 @@ export default {
     "plaintext": "html"
   }
 };
+=======
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c

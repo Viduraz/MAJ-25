@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 import { activitySchema } from "./activity.model.js";
 
+=======
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
 import mongoose from "mongoose";
 
 const registrationSchema = new mongoose.Schema({
@@ -12,6 +15,7 @@ const registrationSchema = new mongoose.Schema({
     paymentDate: { type: Date },
     amount: { type: Number },
     receiptImage: { type: String },
+<<<<<<< HEAD
     type: { type: String },
     activities: [{
         id: { type: String},
@@ -19,6 +23,9 @@ const registrationSchema = new mongoose.Schema({
         default: [],
 
     }],
+=======
+    type: { type: String }
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
 }, { timestamps: true });
 
 const Registration = mongoose.model("Registration", registrationSchema);

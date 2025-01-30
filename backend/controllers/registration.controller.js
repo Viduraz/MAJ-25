@@ -24,6 +24,7 @@ export const getRegistration = async (req, res) => {
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
+<<<<<<< HEAD
 };
 
 
@@ -76,4 +77,6 @@ export const deleteRegistration = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
+=======
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
 };

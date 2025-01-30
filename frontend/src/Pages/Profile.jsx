@@ -23,7 +23,10 @@ export default function Profile() {
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [loadingPicture, setLoadingPicture] = useState(true);
   const [profilePicture, setProfilePicture] = useState(null);
+<<<<<<< HEAD
   const [profilePictureLoaded, setProfilePictureLoaded] = useState(false);
+=======
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
 
   const { currentUser, loading, error } = useSelector((state) => state.user);
 
@@ -35,6 +38,7 @@ export default function Profile() {
 
   useEffect(() => {
     const loadProfilePicture = async () => {
+<<<<<<< HEAD
       const picture = currentUser.profilePicture;
       if (picture) {
         setProfilePicture(picture);
@@ -42,6 +46,11 @@ export default function Profile() {
       } else {
         setProfilePictureLoaded(false);
       }
+=======
+      // Simulate loading profile picture
+      const picture = currentUser.profilePicture;
+      setProfilePicture(picture);
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
       setLoadingPicture(false);
     };
 
@@ -147,7 +156,11 @@ export default function Profile() {
             onChange={(e) => setImage(e.target.files[0])}
           />
           <img
+<<<<<<< HEAD
             src={formData.profilePicture || profilePicture || 'path/to/default/image.jpg'}
+=======
+            src={formData.profilePicture || profilePicture}
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
             alt='profile'
             className='h-24 w-24 self-center cursor-pointer rounded-full object-cover mt-2'
             onClick={() => fileRef.current.click()}

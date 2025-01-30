@@ -1,8 +1,14 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import OAuth from '../Components/OAuth';
+=======
+import OAuth from '../Components/OAuth';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
@@ -10,7 +16,10 @@ export default function SignUp() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
+<<<<<<< HEAD
 
+=======
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -20,8 +29,20 @@ export default function SignUp() {
     try {
       setLoading(true);
       setError(false);
+<<<<<<< HEAD
       const res = await axios.post('http://localhost:3000/api/auth/signup', formData);
       const data = res.data;
+=======
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log(data);
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
       setLoading(false);
       if (data.success === false) {
         setError(true);
@@ -37,6 +58,7 @@ export default function SignUp() {
       toast.error('An error occurred. Please try again.');
     }
   };
+<<<<<<< HEAD
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
@@ -96,5 +118,51 @@ export default function SignUp() {
         {message && <p className="text-red-500 text-center mt-4">{message}</p>}
       </div>
     </div>
+=======
+  return (
+    <>
+      <ToastContainer />
+      <div className='p-3 max-w-lg mx-auto'>
+        <h1 className='text-3xl text-center font-semibold my-7'>Sign Up</h1>
+        <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+          <input
+            type='text'
+            placeholder='Username'
+            id='username'
+            className='bg-slate-100 p-3 rounded-lg'
+            onChange={handleChange}
+          />
+          <input
+            type='email'
+            placeholder='Email'
+            id='email'
+            className='bg-slate-100 p-3 rounded-lg'
+            onChange={handleChange}
+          />
+          <input
+            type='password'
+            placeholder='Password'
+            id='password'
+            className='bg-slate-100 p-3 rounded-lg'
+            onChange={handleChange}
+          />
+          <button
+            disabled={loading}
+            className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
+          >
+            {loading ? 'Loading...' : 'Sign Up'}
+          </button>
+          <OAuth />
+        </form>
+        <div className='flex gap-2 mt-5'>
+          <p>Have an account?</p>
+          <Link to='/signin'>
+            <span className='text-blue-500'>Sign in</span>
+          </Link>
+        </div>
+        <p className='text-red-700 mt-5'>{message}</p>
+      </div>
+    </>
+>>>>>>> ca897cea8e8ce0edd0761379ecfad1f5c221189c
   );
 }
