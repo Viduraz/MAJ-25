@@ -92,14 +92,14 @@ export default function Home() {
   };
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="w-full min-h-screen"> {/* Changed from container mx-auto */}
       {/* Hero Section */}
-      <div className="relative w-full h-screen overflow-hidden">
+      <div className="relative w-full h-[100vh] max-h-screen"> {/* Updated height handling */}
         <video
           autoPlay
           muted
           loop
-          className="absolute top-0 left-0 object-cover w-full h-full"
+          className="absolute top-0 left-0 w-full h-full object-cover"
         >
           <source src={v1} type="video/mp4" />
         </video>
@@ -158,7 +158,7 @@ export default function Home() {
 
       {/* CampSite MAP Section */}
       <AnimationContainer>
-        <div className="px-4 py-16 text-center bg-gray-100">
+        <div className="px-0 py-16 text-center bg-gray-100">
           <h2 className="mb-8 text-4xl font-bold text-gray-800">
             CampSite MAP
           </h2>

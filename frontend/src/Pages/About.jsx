@@ -51,13 +51,13 @@ export default function About() {
       {/* Hero Section */}
       <div className="relative h-[250px] md:h-[300px] lg:h-[600px]">
         <img
-          src={aboutus} 
+          src={aboutus}
           alt="Scout Group"
-          className="object-cover w-full h-full"
+          className="object-cover w-full h-full rounded-lg shadow-lg"
         />
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="absolute inset-0 flex items-center justify-center">
-          <h1 className="text-5xl font-bold tracking-wider text-white uppercase md:text-6xl drop-shadow-lg">
+          <h1 className="text-6xl font-extrabold tracking-wider text-white uppercase md:text-7xl drop-shadow-lg">
             About Us
           </h1>
         </div>
@@ -66,10 +66,10 @@ export default function About() {
       {/* Introduction Section */}
       <AnimationContainer>
         <div className="container px-6 py-12 mx-auto text-center">
-          <h2 className="mb-4 text-3xl font-semibold text-gray-800">
-            A Legacy of Excellence: Maliyadeva Adarsha Maha Vidyalaya
-          </h2>
-          <p className="text-lg leading-relaxed text-gray-600">
+          <h1 className="mb-6 text-5xl font-extrabold text-blue-600">
+            A Legacy of Excellence Maliyadeva Adarsha Maha Vidyalaya
+          </h1>
+          <p className="text-lg leading-relaxed text-gray-800">
             Established in 1978 as Maliyadeva Adarsha Prathamika Vidyalaya, the
             school has a rich history of fostering leadership, teamwork, and
             academic excellence. Through the years, it has grown to become a
@@ -78,55 +78,64 @@ export default function About() {
         </div>
       </AnimationContainer>
 
-      {/* History Section */}
+      {/* Mission Section */}
       <AnimationContainer>
-        <div className="py-12 bg-gray-100">
-          <div className="container px-6 mx-auto">
-            <h2 className="mb-6 text-4xl font-semibold text-center text-gray-800">
-              Our Journey
-            </h2>
-            <p className="mb-8 leading-relaxed text-gray-600">
-              From its modest beginnings with 123 students, under the leadership
-              of Mr. T.B. Siriwardhana and the support of key figures like MP
-              Piyadasa Wijesinghe, the school rapidly grew into an institution
-              of academic and extracurricular excellence. By 1988, it had
-              evolved into Maliyadeva Adarsha Maha Vidyalaya, offering A/L
-              classes across various streams.
-            </p>
-            <p className="mb-8 leading-relaxed text-gray-600">
-              Scouting has been a vibrant part of the school since 1985, with
-              Cub Scouts, Boy Scouts, Girl Scouts, and more divisions achieving
-              excellence nationally and internationally. The school takes pride
-              in its tradition of creating leaders who excel in various fields.
-            </p>
-          </div>
+        <div className="container px-6 py-12 mx-auto text-center bg-white shadow-lg rounded-lg">
+          <h1 className="mb-6 text-4xl font-extrabold text-green-600">
+            Our Mission
+             Helping Millions of Organizations Grow Better
+          </h1>
+          <p className="text-lg leading-relaxed text-gray-700">
+            We believe not just in growing bigger, but in growing better. And
+            growing better means aligning the success of your own business with
+            the success of your customers. Win-win!
+          </p>
         </div>
       </AnimationContainer>
 
-      {/* jambareeta Section */}
+      {/* Story Section */}
       <AnimationContainer>
-        <div className="container px-6 py-12 mx-auto">
-          <h2 className="mb-6 text-4xl font-semibold text-center text-gray-800">
-            Maliyadeva Adarsha jambareeta
+        <div className="container px-6 py-12 mx-auto text-center bg-gray-200 shadow-lg rounded-lg">
+          <h1 className="mb-6 text-4xl font-extrabold text-purple-600">
+            Our Story
+          </h1>
+          <p className="text-lg leading-relaxed text-gray-800">
+            In 2004, fellow MIT graduate students Brian Halligan and Dharmesh
+            Shah noticed a shift in the way people shop and purchase products.
+            Buyers didn't want to be interrupted by ads; they wanted helpful
+            information. In 2006, they founded HubSpot to help companies use
+            inbound marketing.
+          </p>
+        </div>
+      </AnimationContainer>
+
+      {/* HubSpot By The Numbers Section */}
+      <AnimationContainer>
+        <div className="container px-6 py-12 mx-auto text-center bg-white shadow-lg rounded-lg">
+          <h2 className="mb-6 text-3xl font-semibold text-gray-800">
+            HubSpot By The Numbers
           </h2>
-          <p className="mb-8 leading-relaxed text-gray-600">
-            The Maliyadeva Adarsha jambareeta, first held in 2015, is a biennial
-            gathering that fosters community, innovation, and lifelong learning.
-            This event has grown significantly over the years, with successful
-            editions in 2015, 2020, and now, in 2025.
-          </p>
-          <p className="mb-8 leading-relaxed text-gray-600">
-            MAJ 2025 promises to be the most impactful yet, with over 2,500
-            participants expected to join this 5-day event. With a focus on
-            leadership, service, and global citizenship, MAJ 2025 aims to
-            inspire future generations to reach their fullest potential.
-          </p>
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
+            <div className="p-6 bg-blue-100 rounded-lg shadow-md">
+              <h3 className="text-2xl font-bold text-blue-600">12</h3>
+              <p className="text-gray-600">Global Offices</p>
+            </div>
+            <div className="p-6 bg-green-100 rounded-lg shadow-md">
+              <h3 className="text-2xl font-bold text-green-600">7,600+</h3>
+              <p className="text-gray-600">Employees</p>
+            </div>
+            <div className="p-6 bg-yellow-100 rounded-lg shadow-md">
+              <h3 className="text-2xl font-bold text-yellow-600">205,000+</h3>
+              <p className="text-gray-600">Customers</p>
+            </div>
+          </div>
+          <p className="mt-4 text-gray-500">Voted #1 in 318 categories</p>
         </div>
       </AnimationContainer>
 
       {/* Organizing Team Section */}
       <AnimationContainer>
-        <div className="py-12 bg-gray-200">
+        <div className="py-12 bg-gray-200 rounded-lg shadow-lg">
           <h2 className="mb-10 text-4xl font-semibold text-center text-gray-800">
             Meet Our Organizing Team
           </h2>
@@ -160,9 +169,9 @@ export default function About() {
         </div>
       </AnimationContainer>
 
-      {/* Old Scout Team */}
+      {/* Old Scout Team Section */}
       <AnimationContainer>
-        <div className="py-12 bg-white">
+        <div className="py-12 bg-white rounded-lg shadow-lg">
           <h2 className="mb-10 text-4xl font-semibold text-center text-gray-800">
             Meet Our Old Scout Team
           </h2>
