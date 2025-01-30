@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import Header from './Components/Header';
 import Footer from './Components/Footer'; 
 import Home from './Pages/Home';
@@ -28,7 +28,7 @@ import AllPages from "./Pages/AdminPages/allpages";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       {/** Header imported */}
       <div style={{ backgroundColor: '#262626', minHeight: '100vh', padding: '0', margin: '0' }}>
         <Header />
@@ -109,7 +109,7 @@ function App() {
         </Routes>
         <Footer /> {/** Footer added */}
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
