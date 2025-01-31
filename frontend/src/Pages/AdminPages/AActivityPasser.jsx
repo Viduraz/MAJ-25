@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import ProtectedRoute from '../../Components/ProtectedRoute';
 
 function AActivityPasser() {
   const [email, setEmail] = useState('');
   const [userActivities, setUserActivities] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/admin'); // Redirect to login if no token
+    }
+  }, [navigate]);
 
   const fetchUserActivities = async () => {
     try {
@@ -48,6 +58,7 @@ function AActivityPasser() {
   };
 
   return (
+    <ProtectedRoute allowedPage="aactivitypasser"> 
     <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
       <Toaster />
 
@@ -99,6 +110,7 @@ function AActivityPasser() {
         )}
       </ul>
     </div>
+    </ProtectedRoute>
   );
 }
 

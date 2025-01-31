@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import QRCode from "react-qr-code";
 import { Toaster, toast } from "react-hot-toast";
 import html2canvas from "html2canvas";
-import ID from "../../Assests/ID2.jpg"; // Ensure the path to ID.jpg is correct
+import ID from "../../Assests/ID2.jpg"; 
+import { useNavigate } from 'react-router-dom';
+import ProtectedRoute from '../../Components/ProtectedRoute';
 
 function AprofileQr() {
   const [searchEmail, setSearchEmail] = useState("");
   const [userData, setUserData] = useState(null);
   const [toastDisplayed, setToastDisplayed] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/admin'); // Redirect to login if no token
+    }
+  }, [navigate]);
 
   const showToast = (message, type = "default") => {
     if (!toastDisplayed) {
@@ -51,6 +61,7 @@ function AprofileQr() {
   
 
   return (
+    <ProtectedRoute allowedPage="AprofileQr">
     <div className="min-h-screen bg-gradient-to-b from-blue-100 to-white flex items-center justify-center p-10">
       <Toaster />
       <div className="bg-white shadow-lg rounded-lg p-0 max-w-3xl w-full">
@@ -133,6 +144,7 @@ function AprofileQr() {
         )}
       </div>
     </div>
+    </ProtectedRoute>
   );
 }
 

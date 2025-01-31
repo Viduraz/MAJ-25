@@ -4,11 +4,13 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
+  base: './',  // ✅ Ensures assets are served correctly
   root: path.resolve(__dirname, './'),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
     },
+    dedupe: ["react", "react-dom"] // Added dedupe configuration
   },
   build: {
     outDir: 'dist',

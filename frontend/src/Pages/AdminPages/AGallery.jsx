@@ -2,11 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { getStorage, ref, uploadBytes, getDownloadURL, listAll, deleteObject } from 'firebase/storage';
 import firebaseApp from '../../../Firebase';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 export const AGallery = () => {
   const [images, setImages] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/admin'); // Redirect to login if no token
+    }
+  }, [navigate]);
 
   // Function to upload image
   const handleImageUpload = async (e) => {

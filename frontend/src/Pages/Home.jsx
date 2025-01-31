@@ -34,6 +34,9 @@ export default function Home() {
   // State for modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Add state for registered users
+  const [registeredUsers, setRegisteredUsers] = useState([]);
+
   // Update count on component mount
   useEffect(() => {
     const fetchRegisteredCount = async () => {
@@ -41,9 +44,15 @@ export default function Home() {
         const response = await axios.get(
           "http://localhost:3000/api/registration"
         );
-        console.log("err", response);
+        console.log("Registered Count Response:", {
+          data: response.data,
+          status: response.status,
+          statusText: response.statusText,
+        });
         setCount(response.data.length);
         localStorage.setItem("registeredCount", response.data.length);
+        // Set the registered users data to state
+        setRegisteredUsers(response.data);
       } catch (error) {
         console.error("Error fetching registered count:", error);
       }
@@ -85,14 +94,14 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className="w-full min-h-screen"> {/* Changed from container mx-auto */}
       {/* Hero Section */}
-      <div className="relative w-full h-screen overflow-hidden">
+      <div className="relative w-full h-[100vh] max-h-screen"> {/* Updated height handling */}
         <video
           autoPlay
           muted
           loop
-          className="absolute top-0 left-0 object-cover w-full h-full"
+          className="absolute top-0 left-0 w-full h-full object-cover"
         >
           <source src={v1} type="video/mp4" />
         </video>
@@ -151,7 +160,7 @@ export default function Home() {
 
       {/* CampSite MAP Section */}
       <AnimationContainer>
-        <div className="px-4 py-16 text-center bg-gray-100">
+        <div className="px-0 py-16 text-center bg-gray-100">
           <h2 className="mb-8 text-4xl font-bold text-gray-800">
             CampSite MAP
           </h2>
@@ -325,6 +334,21 @@ export default function Home() {
           </p>
         </div>
       </AnimationContainer>
+
+      {/* Display Registered Users
+      <div className="px-4 py-16 text-center bg-gray-100">
+        <h2 className="mb-8 text-4xl font-bold text-gray-800">
+          Registered Users
+        </h2>
+        <div className="flex flex-col items-center">
+          {registeredUsers.map((user) => (
+            <div key={user._id} className="mb-4">
+              <p className="text-xl font-semibold text-gray-700">{user.fullName}</p>
+              <p className="text-sm text-gray-500">{user.email}</p>
+            </div>
+          ))}
+        </div>
+      </div> */}
     </div>
   );
 }

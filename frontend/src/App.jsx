@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import Header from './Components/Header';
 import Footer from './Components/Footer'; 
 import Home from './Pages/Home';
@@ -19,10 +19,16 @@ import AActivity from './Pages/AdminPages/AActivity';
 import AActivityPasser from './Pages/AdminPages/AActivityPasser';
 import AprofileQr from './Pages/AdminPages/AprofileQr';
 import { AGallery } from './Pages/AdminPages/AGallery';
+import AdminLogin from './Pages/AdminPages/AdminLogin';
+import AddAdmin from './Pages/AdminPages/AddAdmin';
+import ProtectedRoute from './components/ProtectedRoute';
+import Unauthorized from "./Pages/AdminPages/Unauthorized";
+import AllPages from "./Pages/AdminPages/allpages";
+
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       {/** Header imported */}
       <div style={{ backgroundColor: '#262626', minHeight: '100vh', padding: '0', margin: '0' }}>
         <Header />
@@ -50,12 +56,60 @@ function App() {
           <Route path="/aactivity" element={<AActivity />} />
           <Route path="/aactivitypasser" element={<AActivityPasser />} />
           <Route path="/aprofileqr" element={<AprofileQr />} />
-          <Route path="/agallery" element={<AGallery />} />
-          
+          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="/addadmin" element={<AddAdmin />} /> 
+          <Route path="/allpages" element={
+            <ProtectedRoute allowedPages={['/allpages']}>
+              <AllPages />
+            </ProtectedRoute>
+          } />
+          <Route path="/AGallery" element={
+            <ProtectedRoute allowedPage="AGallery">
+              <AGallery />
+            </ProtectedRoute>
+          } />
+          <Route path="/AActivity" element={
+            <ProtectedRoute allowedPages={['/AActivity']}>
+              <AActivity />
+            </ProtectedRoute>
+          } />
+          <Route path="/AActivityPasser" element={
+            <ProtectedRoute allowedPages={['/AActivityPasser']}>
+              <AActivityPasser />
+            </ProtectedRoute>
+          } />
+          <Route path="/ARegistrations" element={
+            <ProtectedRoute allowedPage="ARegistrations">
+              <ARegistrations />
+            </ProtectedRoute>
+          } />
+          <Route path="/AProfileQR" element={
+            <ProtectedRoute allowedPage="AProfileQR">
+              <AprofileQr />
+            </ProtectedRoute>
+          } />
+          <Route path="/AddAdmin" element={
+            <ProtectedRoute allowedPages={['/addAdmin']}>
+              <AddAdmin />
+            </ProtectedRoute>
+          } />
+          <Route path="/pass-activity" element={
+            <ProtectedRoute allowedPage="pass-activity">
+              <PassActivity />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/addAdmin" element={
+            <ProtectedRoute allowedPages={['/addAdmin']}>
+              <AddAdmin />
+            </ProtectedRoute>
+          } />
+
         </Routes>
         <Footer /> {/** Footer added */}
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
