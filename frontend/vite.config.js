@@ -33,7 +33,6 @@ export default defineConfig({
         },
         manualChunks: (id) => {
           if (id.includes('node_modules')) {
-            if (id.includes('react')) return 'vendor-react';
             if (id.includes('@fortawesome')) return 'vendor-fontawesome';
             return 'vendor';
           }
