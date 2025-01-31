@@ -12,7 +12,7 @@ import {
 import { ScoutDatePicker } from "./Components/ScoutDatePicker";
 import { Label } from "@/Components/ui/label";
 
-import { Button } from "@/Components/ui/Button";
+import { Button } from "@/Components/ui/button";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 
 export default function Scouts({

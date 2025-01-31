@@ -7,7 +7,7 @@ import * as XLSX from "xlsx";
 import { Input } from "@/Components/ui/input";
 import { ScoutDatePicker } from "./Components/ScoutDatePicker";
 import { Label } from "@/Components/ui/label";
-import { Button } from "@/Components/ui/Button";
+import { Button } from "@/Components/ui/button";
 
 export default function PaymentReceipt({
   school,
