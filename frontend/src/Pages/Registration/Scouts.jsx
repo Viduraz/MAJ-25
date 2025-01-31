@@ -8,7 +8,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/Components/ui/select";
 import { ScoutDatePicker } from "./Components/ScoutDatePicker";
 import { Label } from "@/Components/ui/label";
 
