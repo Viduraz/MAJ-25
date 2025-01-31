@@ -1,11 +1,11 @@
 import express from 'express';
-import { addAdmin, updateAdmin, deleteAdmin, getAdmins, loginAdmin } from '../controllers/adminadd.controller.js';
+import { AdminManagement, updateAdmin, deleteAdmin, getAdmins, loginAdmin } from '../controllers/adminadd.controller.js';
 import { verifyToken } from '../middleware/auth.js';
 
 const router = express.Router();
 
 router.get('/', getAdmins);
-router.post('/add', addAdmin);
+router.post('/add', AdminManagement);
 router.put('/update/:id', updateAdmin);
 router.delete('/delete/:id', deleteAdmin);
 router.post('/login', loginAdmin);

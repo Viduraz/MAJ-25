@@ -27,7 +27,7 @@ const ProtectedRoute = ({ children, allowedPage }) => {
   const allowedPages = [
     '/AActivity',
     '/AActivityPasser', 
-    '/AddAdmin',
+    '/AdminManagement',
     '/AGallery',
     '/AProfileQR',
     '/ARegistrations',

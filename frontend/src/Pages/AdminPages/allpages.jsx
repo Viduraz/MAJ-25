@@ -6,7 +6,7 @@ const AllPages = () => {
   const navLinks = [
     { title: 'Activities', path: '/AActivity' },
     { title: 'Activity Passer', path: '/AActivityPasser' },
-    { title: 'Add Admin', path: '/AddAdmin' },
+    { title: 'Add Admin', path: '/AdminManagement' },
     { title: 'Gallery', path: '/AGallery' },
     { title: 'Profile QR', path: '/AProfileQR' },
     { title: 'Registrations', path: '/ARegistrations' },

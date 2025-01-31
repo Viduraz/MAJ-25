@@ -20,7 +20,7 @@ import AActivityPasser from './Pages/AdminPages/AActivityPasser';
 import AprofileQr from './Pages/AdminPages/AprofileQr';
 import { AGallery } from './Pages/AdminPages/AGallery';
 import AdminLogin from './Pages/AdminPages/AdminLogin';
-import AddAdmin from './Pages/AdminPages/AddAdmin';
+import AdminManagement from './Pages/AdminPages/AdminManagement';
 import ProtectedRoute from './Components/ProtectedRoute';
 import Unauthorized from "./Pages/AdminPages/Unauthorized";
 import AllPages from "./Pages/AdminPages/allpages";
@@ -80,7 +80,7 @@ function App() {
           <Route path="/aprofileqr" element={<AprofileQr />} />
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
-          <Route path="/addadmin" element={<AddAdmin />} /> 
+          <Route path="/AdminManagement" element={<AdminManagement />} /> 
           <Route path="/allpages" element={
             <ProtectedRoute allowedPages={['/allpages']}>
               <AllPages />
@@ -111,9 +111,9 @@ function App() {
               <AprofileQr />
             </ProtectedRoute>
           } />
-          <Route path="/AddAdmin" element={
-            <ProtectedRoute allowedPages={['/addAdmin']}>
-              <AddAdmin />
+          <Route path="/AdminManagement" element={
+            <ProtectedRoute allowedPages={['/AdminManagement']}>
+              <AdminManagement />
             </ProtectedRoute>
           } />
           <Route path="/pass-activity" element={

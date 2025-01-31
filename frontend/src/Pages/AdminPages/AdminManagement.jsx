@@ -122,7 +122,7 @@ const AdminManagement = () => {
   };
 
   return (
-    <ProtectedRoute allowedPage="addAdmin">
+    <ProtectedRoute allowedPage="AdminManagement">
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         
@@ -198,7 +198,7 @@ const AdminManagement = () => {
                 <option value="">Select a page</option>
                 <option value="/AActivity">AActivity</option>
                 <option value="/AActivityPasser">AActivityPasser</option>
-                <option value="/addAdmin">Add Admin</option>
+                <option value="/AdminManagement">Add Admin</option>
                 <option value="/AGallery">AGallery</option>
                 <option value="/AprofileQR">AprofileQR</option>
                 <option value="/ARegistrations">ARegistrations</option>

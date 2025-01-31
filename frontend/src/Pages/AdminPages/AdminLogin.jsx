@@ -99,7 +99,7 @@ export default function AdminLogin() {
               <option value="">Select a page</option>
               <option value="/AActivity">AActivity</option>
               <option value="/AActivityPasser">AActivityPasser</option>
-              <option value="/addAdmin">Add Admin</option>
+              <option value="/AdminManagement">Add Admin</option>
               <option value="/AGallery">AGallery</option>
               <option value="/AprofileQR">AprofileQR</option>
               <option value="/ARegistrations">ARegistrations</option>

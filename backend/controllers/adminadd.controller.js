@@ -3,7 +3,7 @@ import bcryptjs from 'bcryptjs';
 import { errorHandler } from '../Utils/error.js';
 import jwt from 'jsonwebtoken';
 
-export const addAdmin = async (req, res) => {
+export const AdminManagement = async (req, res) => {
   try {
     const { username, email, password, redirectPage } = req.body;
     const hashedPassword = bcryptjs.hashSync(password, 10);
