@@ -33,6 +33,7 @@
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { useSyncExternalStore } from 'react';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -48,5 +49,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+console.log('Firebase API Key:', import.meta.env.VITE_FIREBASE_API_KEY);
 
 export default app;

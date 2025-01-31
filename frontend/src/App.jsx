@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import Header from './Components/Header';
 import Footer from './Components/Footer'; 
@@ -24,9 +24,37 @@ import AddAdmin from './Pages/AdminPages/AddAdmin';
 import ProtectedRoute from './components/ProtectedRoute';
 import Unauthorized from "./Pages/AdminPages/Unauthorized";
 import AllPages from "./Pages/AdminPages/allpages";
-
+import { useSelector } from 'react-redux'; // Add this import
+import { useSyncExternalStore } from 'react'; // Ensure this import is correct
 
 function App() {
+  const currentUser = useSelector((state) => state.user.currentUser);
+  
+  console.log('Current User:', currentUser);
+  console.log('Store Value:', storeValue);
+
+  // Example usage of useSyncExternalStore with caching
+  const [store, setStore] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = subscribe(() => {
+      setStore(getSnapshot());
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const subscribe = (callback) => {
+    // Your subscription logic here
+    return () => {};
+  };
+
+  const getSnapshot = () => {
+    // Your snapshot logic here
+    return store;
+  };
+
+  const storeValue = useSyncExternalStore(subscribe, getSnapshot);
+
   return (
     <HashRouter>
       {/** Header imported */}
