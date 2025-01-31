@@ -1,3 +1,4 @@
+import { useSyncExternalStore } from 'react'; // Ensure this import is correct
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import Header from './Components/Header';
@@ -25,7 +26,7 @@ import ProtectedRoute from './Components/ProtectedRoute';
 import Unauthorized from "./Pages/AdminPages/Unauthorized";
 import AllPages from "./Pages/AdminPages/allpages";
 import { useSelector } from 'react-redux'; // Add this import
-import { useSyncExternalStore } from 'react'; // Ensure this import is correct
+
 
 function App() {
   const currentUser = useSelector((state) => state.user.currentUser);
