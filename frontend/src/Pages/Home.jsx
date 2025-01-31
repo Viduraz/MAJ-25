@@ -16,7 +16,6 @@ import ethink from "../Assests/ethink.png";
 import nestle from "../Assests/nestle.jpg";
 import dji from "../Assests/dji.jpg";
 
-
 export default function Home() {
   // Scroll to section function
   const scrollToSection = () => {
