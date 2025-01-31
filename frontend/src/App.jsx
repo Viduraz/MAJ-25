@@ -1,4 +1,4 @@
-import { useSyncExternalStore } from 'react'; // Ensure this import is correct
+
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import Header from './Components/Header';
@@ -25,31 +25,11 @@ import AdminManagement from './Pages/AdminPages/AdminManagement';
 import ProtectedRoute from './Components/ProtectedRoute';
 import Unauthorized from "./Pages/AdminPages/Unauthorized";
 import AllPages from "./Pages/AdminPages/allpages";
-import { useSelector } from 'react-redux'; // Add this import
+
 
 
 function App() {
-  const currentUser = useSelector((state) => state.user.currentUser);
   
-  // Example usage of useSyncExternalStore with caching
-  const [store, setStore] = useState(null);
-
-  const subscribe = (callback) => {
-    // Your subscription logic here
-    return () => {};
-  };
-
-  const getSnapshot = () => {
-    // Your snapshot logic here
-    return store;
-  };
-
-  const storeValue = useSyncExternalStore(subscribe, getSnapshot);
-
-  // Move console logs after storeValue is defined
-  console.log('Current User:', currentUser);
-  console.log('Store Value:', storeValue);
-
   return (
     <HashRouter>
       {/** Header imported */}
