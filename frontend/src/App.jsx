@@ -122,12 +122,6 @@ function App() {
             </ProtectedRoute>
           } />
 
-          <Route path="/addAdmin" element={
-            <ProtectedRoute allowedPages={['/addAdmin']}>
-              <AddAdmin />
-            </ProtectedRoute>
-          } />
-
         </Routes>
         <Footer /> {/** Footer added */}
       </div>
