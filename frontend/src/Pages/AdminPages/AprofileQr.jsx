@@ -34,7 +34,7 @@ function AprofileQr() {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/registration/${searchEmail}` // Replace with the correct API endpoint
+        `https://maj-25-backend.onrender.com/api/registration/${searchEmail}` // Replace with the correct API endpoint
       );
       if (response.data) {
         setUserData(response.data);

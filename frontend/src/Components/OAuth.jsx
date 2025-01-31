@@ -14,7 +14,7 @@ export default function OAuth () {
             const provider = new GoogleAuthProvider();
             const auth = getAuth(firebaseApp);
             const result = await signInWithPopup(auth, provider);
-            const res = await fetch('http://localhost:3000/api/auth/google', {
+            const res = await fetch('https://maj-25-backend.onrender.com/api/auth/google', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

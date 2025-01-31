@@ -40,7 +40,7 @@ export default function Home() {
     const fetchRegisteredCount = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/registration"
+          "https://maj-25-backend.onrender.com/api/registration"
         );
         console.log("Registered Count Response:", {
           data: response.data,

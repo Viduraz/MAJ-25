@@ -28,7 +28,7 @@ export default function Signin() {
     e.preventDefault();
 
     if (isSwitchOn) {
-      const URL = 'http://localhost:3000/api/registration/single';
+      const URL = 'https://maj-25-backend.onrender.com/api/registration/single';
 
       try {
         dispatch(signInStart());

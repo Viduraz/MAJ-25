@@ -18,7 +18,7 @@ function AActivityPasser() {
 
   const fetchUserActivities = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/activity`);
+      const response = await axios.get(`https://maj-25-backend.onrender.com/api/activity`);
       setUserActivities(response.data);
       toast.success('User activities loaded successfully!');
     } catch (error) {
@@ -29,7 +29,7 @@ function AActivityPasser() {
 
   const handleMarkAsDone = async (activityId, activityName) => {
     try {
-      await axios.post('http://localhost:3000/api/activity/pass', {
+      await axios.post('https://maj-25-backend.onrender.com/api/activity/pass', {
         email,
         activityId,
         activityName,
@@ -44,7 +44,7 @@ function AActivityPasser() {
 
   const handleMarkAsNotDone = async (activityId, activityName) => {
     try {
-      await axios.post('http://localhost:3000/api/activity/markAsNotDone', {
+      await axios.post('https://maj-25-backend.onrender.com/api/activity/markAsNotDone', {
         email,
         activityId,
         activityName,

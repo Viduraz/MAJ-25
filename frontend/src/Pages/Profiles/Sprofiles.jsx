@@ -47,7 +47,7 @@ export default function Sprofiles() {
 
   const fetchUserActivities = async (email) => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/activity/user/${email}`);
+      const response = await axios.get(`https://maj-25-backend.onrender.com/api/activity/user/${email}`);
       setActivities(response.data);
     } catch (error) {
       console.error('Error fetching user activities:', error);
