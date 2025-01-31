@@ -2,7 +2,7 @@ import AnimationContainer from "@/Components/AnimationContainer";
 import React, { useState, useEffect } from "react";
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 import firebaseApp from '../../Firebase';
-import gallery from '../Assests/gallery.jpg';
+import Gallerybanner from "../Assests/Gallerybanner.jpg";
 
 
 export default function Gallery() {
@@ -40,7 +40,7 @@ export default function Gallery() {
       } catch (error) {
         console.error('Error loading banner:', error);
         // Fallback to default banner
-        setBannerUrl( gallery );
+        setBannerUrl( Gallerybanner );
       }
     };
     
