@@ -14,8 +14,7 @@ import meta from "../Assests/meta.png";
 import mobitel from "../Assests/mobitel.jpeg";
 import ethink from "../Assests/ethink.png";
 import nestle from "../Assests/nestle.jpg";
-import dji from "../Assests/dji.jpg";
-
+import ddji1 from "../Assests/ddji1.jpg";
 export default function Home() {
   // Scroll to section function
   const scrollToSection = () => {
@@ -309,7 +308,7 @@ export default function Home() {
                   className="h-20 w-auto"
                 />
                 <img
-                  src={dji}
+                  src={ddji1}
                   alt="Sponsor 4"
                   className="h-20 w-auto"
                 />
