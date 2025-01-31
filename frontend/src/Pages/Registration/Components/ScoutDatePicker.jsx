@@ -8,7 +8,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/Components/ui/popover";
-import { Button } from "@/Components/ui/button";
+import { Button } from "@/Components/ui/Button";
 
 export const ScoutDatePicker = ({
   date,

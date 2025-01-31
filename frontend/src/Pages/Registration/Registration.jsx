@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/Components/ui/select";
-import { Button } from "@/Components/ui/button";
+import { Button } from "@/Components/ui/Button";
 import { SchoolSelect } from "./Components/ScoolSelect";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 
