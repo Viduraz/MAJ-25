@@ -1,6 +1,5 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useRef, useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import {
   updateUserStart,
   updateUserSuccess,
@@ -24,8 +23,10 @@ export default function Profile() {
   const [loadingPicture, setLoadingPicture] = useState(true);
   const [profilePicture, setProfilePicture] = useState(null);
   const [profilePictureLoaded, setProfilePictureLoaded] = useState(false);
+  const [imagePreview, setImagePreview] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const { currentUser, loading, error } = useSelector((state) => state.user);
+  const { currentUser, loading: userLoading, error } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (image) {
@@ -47,6 +48,16 @@ export default function Profile() {
 
     loadProfilePicture();
   }, [currentUser]);
+
+  useEffect(() => {
+    if (image) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(image);
+    }
+  }, [image]);
 
   const handleFileUpload = async (image) => {
     const formData = new FormData();
@@ -79,22 +90,44 @@ export default function Profile() {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
+      const formDataObj = new FormData();
+      
+      // Append text fields
+      Object.keys(formData).forEach(key => {
+        formDataObj.append(key, formData[key]);
+      });
+
+      // Append image if exists
+      if (image) {
+        formDataObj.append('profilePicture', image);
+      }
+
       const res = await fetch(`/api/user/update/${currentUser._id}`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        body: formDataObj, // Send as FormData instead of JSON
       });
+
       const data = await res.json();
       if (data.success === false) {
         dispatch(updateUserFailure(data));
+        toast.error(data.message || 'Update failed');
         return;
       }
-      dispatch(updateUserSuccess(data));
+
+      // Update profile picture URL immediately
+      if (data.profilePicture) {
+        setProfilePicture(data.profilePicture);
+        dispatch(updateUserSuccess({
+          ...currentUser,
+          profilePicture: data.profilePicture
+        }));
+      }
+
+      toast.success('Profile updated successfully!');
       setUpdateSuccess(true);
     } catch (error) {
       dispatch(updateUserFailure(error));
+      toast.error('An error occurred while updating');
     }
   };
 
@@ -133,6 +166,18 @@ export default function Profile() {
     return <div>Loading profile picture...</div>;
   }
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(file);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <>
       <ToastContainer />
@@ -144,14 +189,32 @@ export default function Profile() {
             ref={fileRef}
             hidden
             accept='image/*'
-            onChange={(e) => setImage(e.target.files[0])}
+            onChange={handleImageChange}
           />
-          <img
-            src={formData.profilePicture || profilePicture || 'path/to/default/image.jpg'}
-            alt='profile'
-            className='h-24 w-24 self-center cursor-pointer rounded-full object-cover mt-2'
-            onClick={() => fileRef.current.click()}
-          />
+          <div className="flex flex-col gap-4">
+            <input
+              type="file"
+              ref={fileRef}
+              hidden
+              accept="image/*"
+              onChange={handleImageChange}
+            />
+            {loading ? (
+              <div className="h-24 w-24 rounded-full bg-slate-200 animate-pulse self-center" />
+            ) : (
+              <img
+                src={imagePreview || currentUser.profilePicture || "https://via.placeholder.com/150"}
+                alt="profile"
+                className="h-24 w-24 rounded-full object-cover cursor-pointer self-center"
+                onClick={() => fileRef.current.click()}
+              />
+            )}
+            {imagePercent > 0 && imagePercent < 100 && (
+              <div className="text-sm text-center">
+                Uploading: {imagePercent}%
+              </div>
+            )}
+          </div>
           <p className='text-sm self-center'>
             {imageError ? (
               <span className='text-red-700'>
@@ -188,7 +251,10 @@ export default function Profile() {
             className='bg-slate-100 rounded-lg p-3'
             onChange={handleChange}
           />
-          <button className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>
+          <button 
+            disabled={loading} 
+            className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
+          >
             {loading ? 'Loading...' : 'Update'}
           </button>
         </form>
