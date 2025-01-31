@@ -13,6 +13,8 @@ import google from "../Assests/google.png";
 import meta from "../Assests/meta.png";
 import mobitel from "../Assests/mobitel.jpeg";
 import ethink from "../Assests/ethink.png";
+import nestle from "../Assests/nestle.jpg";
+import dji from "../Assests/dji.jpg";
 
 
 export default function Home() {
@@ -69,7 +71,7 @@ export default function Home() {
 
   // Function to calculate time left until 20th February 2026
   function calculateTimeLeft() {
-    const difference = +new Date("2025-02-20") - +new Date();
+    const difference = +new Date("2025-02-26") - +new Date();
     let timeLeft = {};
 
     if (difference > 0) {
@@ -299,6 +301,16 @@ export default function Home() {
                 />
                  <img
                   src={ethink}
+                  alt="Sponsor 4"
+                  className="h-20 w-auto"
+                />
+                 <img
+                  src={nestle}
+                  alt="Sponsor 4"
+                  className="h-20 w-auto"
+                />
+                <img
+                  src={dji}
                   alt="Sponsor 4"
                   className="h-20 w-auto"
                 />
