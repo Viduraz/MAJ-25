@@ -30,18 +30,8 @@ import { useSyncExternalStore } from 'react'; // Ensure this import is correct
 function App() {
   const currentUser = useSelector((state) => state.user.currentUser);
   
-  console.log('Current User:', currentUser);
-  console.log('Store Value:', storeValue);
-
   // Example usage of useSyncExternalStore with caching
   const [store, setStore] = useState(null);
-
-  useEffect(() => {
-    const unsubscribe = subscribe(() => {
-      setStore(getSnapshot());
-    });
-    return () => unsubscribe();
-  }, []);
 
   const subscribe = (callback) => {
     // Your subscription logic here
@@ -54,6 +44,10 @@ function App() {
   };
 
   const storeValue = useSyncExternalStore(subscribe, getSnapshot);
+
+  // Move console logs after storeValue is defined
+  console.log('Current User:', currentUser);
+  console.log('Store Value:', storeValue);
 
   return (
     <HashRouter>
