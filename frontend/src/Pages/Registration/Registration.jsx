@@ -12,7 +12,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/Components/ui/select";
 import { Button } from "@/Components/ui/button";
 import { SchoolSelect } from "./Components/ScoolSelect";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
