@@ -22,7 +22,7 @@ export default function AdminLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/admin/login', {
+      const response = await fetch('https://maj-25-backend.onrender.com/api/admin/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,15 +34,17 @@ export default function AdminLogin() {
         const data = await response.json();
         localStorage.setItem('token', data.token);
         toast.success('Login successful!');
+        
+        // Get redirect page from JWT token
         const decodedToken = JSON.parse(atob(data.token.split('.')[1]));
-        const redirectPage = decodedToken.redirectPage || formData.redirectPage; // Ensure redirectPage is set
-        console.log('Redirecting to:', redirectPage);
+        const redirectPage = decodedToken.redirectPage || formData.redirectPage;
+        
         navigate(redirectPage);
       } else {
         toast.error('Login failed. Please check your credentials.');
       }
     } catch (error) {
-      toast.error('Error during login: ' + error.message);
+      toast.error('Error during login: ' + error.message); 
     }
   };
 
