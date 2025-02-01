@@ -9,8 +9,8 @@ import sahan from "../Assests/sahan.png";
 import inokamis from "../Assests/inokamis.png";
 import manorimis from "../Assests/manorimis.png";
 import googlec from "../Assests/googlec.png";
-import google from "../Assests/google.png";
-import meta from "../Assests/meta.png";
+// import google from "../Assests/google.png";
+// import meta from "../Assests/meta.png";
 import mobitel from "../Assests/mobitel.jpeg";
 import ethink from "../Assests/ethink.png";
 import nestle from "../Assests/nestle.jpg";
@@ -283,16 +283,16 @@ export default function Home() {
                   alt="Sponsor 1"
                   className="h-20 w-auto"
                 />
-                <img
+                {/* <img
                   src={google}
                   alt="Sponsor 2"
                   className="h-20 w-auto"
-                />
-                <img
+                /> */}
+                {/* <img
                   src={meta}
                   alt="Sponsor 3"
                   className="h-20 w-auto"
-                />
+                /> */}
                 <img
                   src={mobitel}
                   alt="Sponsor 4"
