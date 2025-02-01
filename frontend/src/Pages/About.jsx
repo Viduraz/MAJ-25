@@ -224,7 +224,7 @@ export default function About() {
       </AnimationContainer>
 
       {/* Old Scout Team Section */}
-      <AnimationContainer>
+      {/* <AnimationContainer>
         <div className="py-16 bg-white">
           <h2 className="mb-12 text-4xl font-semibold text-center text-gray-800">
             Meet Our Old Scout Team
@@ -253,7 +253,7 @@ export default function About() {
             ))}
           </div>
         </div>
-      </AnimationContainer>
+      </AnimationContainer> */}
     </div>
   );
 }
