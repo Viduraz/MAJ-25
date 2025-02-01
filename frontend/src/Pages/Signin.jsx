@@ -32,45 +32,42 @@ export default function Signin() {
 
       try {
         dispatch(signInStart());
-        const registration = await axios.post(URL, {
+        const response = await axios.post(URL, {
           email: formData.email,
           password: formData.password,
         });
-        dispatch(signInSuccess(registration));
-        localStorage.setItem('registration', JSON.stringify(registration.data));
-        toast.success('Welcome back! You have successfully signed in.');
-        navigate('/sprofiles');
+
+        if (response.data) {
+          dispatch(signInSuccess(response.data));
+          localStorage.setItem('registration', JSON.stringify(response.data));
+          localStorage.setItem('token', response.data.token);
+          toast.success('Welcome back! You have successfully signed in.');
+          navigate('/sprofiles');
+        } else {
+          dispatch(signInFailure("Invalid credentials"));
+          toast.error('Invalid credentials. Please try again.');
+        }
       } catch (error) {
-        dispatch(signInFailure({ message: error.message }));
-        toast.error('Invalid credentials. Please try again.');
+        dispatch(signInFailure(error.message));
+        toast.error('Login failed. Please try again.');
       }
     } else {
       try {
         dispatch(signInStart());
-        const res = await fetch('/api/auth/signin', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        });
-        const data = await res.json();
+        const response = await axios.post('https://maj-25-backend.onrender.com/api/auth/signin', formData);
 
-        if (!data.success) {
-          dispatch(signInFailure(data));
-          setMessage(data.message || 'Sign in failed.');
-          toast.error(data.message || 'Invalid credentials. Please try again.');
-          return;
+        if (response.data) {
+          dispatch(signInSuccess(response.data));
+          localStorage.setItem('token', response.data.token);
+          toast.success('Welcome back! You have successfully signed in.');
+          navigate('/');
+        } else {
+          dispatch(signInFailure("Invalid credentials"));
+          toast.error('Invalid credentials. Please try again.');
         }
-
-        dispatch(signInSuccess(data));
-        setMessage('Sign in successful!');
-        toast.success('Welcome back! You have successfully signed in.');
-        navigate('/');
       } catch (error) {
-        dispatch(signInFailure({ message: error.message }));
-        setMessage('An error occurred. Please try again.');
-        toast.error('An error occurred. Please try again.');
+        dispatch(signInFailure(error.message));
+        toast.error('Login failed. Please try again.');
       }
     }
   };
