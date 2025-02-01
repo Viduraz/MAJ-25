@@ -15,6 +15,7 @@ import mobitel from "../Assests/mobitel.jpeg";
 import ethink from "../Assests/ethink.png";
 import nestle from "../Assests/nestle.jpg";
 import ddji1 from "../Assests/ddji1.jpg";
+import ictfrombs from "../Assests/ictfromabc_logo.png";
 export default function Home() {
   // Scroll to section function
   const scrollToSection = () => {
@@ -309,6 +310,11 @@ export default function Home() {
                 />
                 <img
                   src={ddji1}
+                  alt="Sponsor 4"
+                  className="h-20 w-auto"
+                />
+                <img
+                  src={ictfrombs}
                   alt="Sponsor 4"
                   className="h-20 w-auto"
                 />
