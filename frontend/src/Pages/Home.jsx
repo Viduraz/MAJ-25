@@ -216,7 +216,7 @@ export default function Home() {
                   className="object-cover w-40 h-40 border-4 border-gray-300 rounded-full shadow-md"
                 />
                 <p className="mt-4 text-xl font-semibold text-gray-700">
-                  A S GAMAGE
+                  AMILA GAMAGE
                 </p>
                 <p className="mb-2 text-sm text-gray-500">GROUP SCOUT MASTER</p>
                
@@ -230,9 +230,9 @@ export default function Home() {
                   className="object-cover w-40 h-40 border-4 border-gray-300 rounded-full shadow-md"
                 />
                 <p className="mt-4 text-xl font-semibold text-gray-700">
-                  D M I N RATHNASIRI
+                  INOKA RATHNASIRI
                 </p>
-                <p className="mb-2 text-sm text-gray-500">SCOUT MASTER (GIRL SCOUT)</p>
+                <p className="mb-2 text-sm text-gray-500">SCOUT MASTER</p>
                 
               </div>
 

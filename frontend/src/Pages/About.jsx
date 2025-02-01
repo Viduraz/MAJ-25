@@ -64,15 +64,15 @@ export default function About() {
 
   const oldScoutAssociation = [
     {
-      name: "John Doe",
+      name: "Hasitha Senadheera",
       role: "Former Scout Leader",
       description: "Led the scout team with exemplary leadership.",
       image: "https://via.placeholder.com/150",
     },
     {
-      name: "Jane Smith",
-      role: "Former Scout Member",
-      description: "Contributed significantly to the scout activities.",
+      name: "Champaka Rathnayaka",
+      role: "Former Scout Leader",
+      description: "Contributed significantly to the scout activities",
       image: "https://via.placeholder.com/150",
     },
     // Add more members as needed
