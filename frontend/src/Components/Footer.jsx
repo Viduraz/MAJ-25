@@ -109,7 +109,7 @@ export default function Footer() {
 
       {/* Footer Bottom */}
       <div className="border-t border-gray-700 py-4 text-center text-sm text-gray-500">
-        &copy; {new Date().getFullYear()} Maliyadeva Adarsha Jumboreeta. All Rights Reserved.
+        &copy; {new Date().getFullYear()} Maliyadeva Adarsha Jambareeta. All Rights Reserved.
       </div>
     </footer>
   );
