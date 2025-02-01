@@ -22,7 +22,7 @@ export default function AdminLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/admin/login', {
+      const response = await fetch('/api/admin/admin/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
