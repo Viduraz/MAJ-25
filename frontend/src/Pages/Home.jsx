@@ -203,7 +203,7 @@ export default function Home() {
           className="px-4 py-16 text-center bg-gray-100 "
         >
           <h2 className="mb-12 text-4xl font-bold text-gray-800">
-            Our Organizing Committee
+            OUR LEAGACY PIONEERS
           </h2>
           <div className="flex flex-wrap justify-center gap-8">
             {/* Committee Members */}

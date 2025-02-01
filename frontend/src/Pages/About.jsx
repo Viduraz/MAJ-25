@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from 'react';
 import AnimationContainer from "@/Components/AnimationContainer";
 import aboutus from "../Assests/Aboutus.jpg";
 import yasas from "../Assests/yasas.jpg";
@@ -11,6 +11,17 @@ import praveen from "../Assests/praveen.jpg";
 import kassapa from "../Assests/kassapa.jpg";
 
 export default function About() {
+  const [showFullContent, setShowFullContent] = useState(false);
+  const [showFullMission, setShowFullMission] = useState(false);
+
+  const toggleContent = () => {
+    setShowFullContent(!showFullContent);
+  };
+
+  const toggleMissionContent = () => {
+    setShowFullMission(!showFullMission);
+  };
+
   const organizingTeam = [
     {
       name: "Yasas Hearath",
@@ -70,7 +81,7 @@ export default function About() {
       image: "https://via.placeholder.com/150",
     },
     {
-      name: "Champaka Rathnayaka",
+      name: "Champika Rathnayaka",
       role: "Former Scout Leader",
       description: "Contributed significantly to the scout activities",
       image: "https://via.placeholder.com/150",
@@ -102,10 +113,8 @@ export default function About() {
       A Legacy of Excellence
     </h1>
     <p className="max-w-3xl mx-auto text-xl leading-relaxed text-gray-700">
-      Established in 1978 as Maliyadeva Adarsha Prathamika Vidyalaya, the school
-      has a rich history of fostering leadership, teamwork, and academic
-      excellence. Through the years, it has grown to become a cornerstone of
-      education and scouting in the region.
+    Our dedication to developing well-rounded individuals found expression in 1985 with the establishment of our first Cub Scout Troop. This initiative blossomed into a comprehensive scouting program encompassing Boy Scouts, Girl Scouts, and Cub Scouts. Our scouts have not only excelled in national and international arenas but have gone on to assume leadership roles across various sectors of society.
+
     </p>
     <div className="mt-10">
       <button className="px-8 py-3 text-lg font-semibold text-white transition duration-300 bg-blue-600 rounded-lg hover:bg-blue-700 hover:shadow-lg">
@@ -125,12 +134,19 @@ export default function About() {
       </h1>
       <p className="max-w-3xl mx-auto text-xl leading-relaxed text-blue-100">
       Our mission is to provide a unique outdoor experience that fosters personal growth, leadership, and teamwork among students. Through engaging activities and challenges, we aim to instill important values such as responsibility, respect for nature, and the spirit of adventure.
-
-Our goal is to create an environment where students can develop essential life skills, build lasting friendships, and deepen their appreciation for the outdoors. With a focus on cooperation, resilience, and learning, the camp serves as a platform for students to discover their potential, all while having fun and creating unforgettable memories.
+      {showFullMission && (
+        <>
+          <br />
+          Our goal is to create an environment where students can develop essential life skills, build lasting friendships, and deepen their appreciation for the outdoors. With a focus on cooperation, resilience, and learning, the camp serves as a platform for students to discover their potential, all while having fun and creating unforgettable memories.
+        </>
+      )}
       </p>
       <div className="mt-10">
-        <button className="px-8 py-3 text-lg font-semibold text-blue-600 transition duration-300 bg-white rounded-lg hover:bg-gray-100 hover:shadow-lg">
-          Discover More
+        <button
+          className="px-8 py-3 text-lg font-semibold text-blue-600 transition duration-300 bg-white rounded-lg hover:bg-gray-100 hover:shadow-lg"
+          onClick={toggleMissionContent}
+        >
+          {showFullMission ? 'Show Less' : 'Discover More'}
         </button>
       </div>
     </div>
@@ -144,18 +160,37 @@ Our goal is to create an environment where students can develop essential life s
       Our Story
     </h1>
     <p className="max-w-3xl mx-auto text-xl leading-relaxed text-gray-700">
-      In 2004, fellow MIT graduate students Brian Halligan and Dharmesh Shah
-      noticed a shift in the way people shop and purchase products. Buyers didn't
-      want to be interrupted by ads; they wanted helpful information. In 2006,
-      they founded HubSpot to help companies use inbound marketing.
+      Maliyadeva Adarsha Jambareeta (MAJ)
+      Since its inception in 2015, the Maliyadeva Adarsha Jambareeta has evolved into a cornerstone event in our school's calendar. This triennial gathering brings together Scouts, Scout Leaders, Cub Scouts, Girl Guides, and parents in a celebration of learning and growth.
+      {showFullContent && (
+        <>
+          <br />
+          <strong>The Journey So Far</strong>
+          <br />
+          2015: The inaugural event set new standards for youth development programs
+          <br />
+          2020: Expanded horizons with innovative workshops and leadership initiatives
+          <br />
+          2025: The upcoming third edition promises to be our most ambitious yet
+          <br />
+          <strong>MAJ 2025: Shaping Tomorrow's Leaders</strong>
+          <br />
+          The upcoming Maliyadeva Adarsha Jambareeta 2025 (MAJ 2025) represents the culmination of our commitment to youth development. This five-day extravaganza will welcome over 2,500 participants.
+          As we continue our journey of excellence, Maliyadeva Adarsha Maha Vidyalaya remains committed to nurturing future generations of leaders. Through our comprehensive educational programs and signature events like MAJ 2025, we continue to shape young minds and inspire them to become responsible global citizens.
+        </>
+      )}
     </p>
     <div className="mt-10">
-      <button className="px-8 py-3 text-lg font-semibold text-white transition duration-300 bg-purple-600 rounded-lg hover:bg-purple-700 hover:shadow-lg">
-        Read More
+      <button
+        className="px-8 py-3 text-lg font-semibold text-white transition duration-300 bg-purple-600 rounded-lg hover:bg-purple-700 hover:shadow-lg"
+        onClick={toggleContent}
+      >
+        {showFullContent ? 'Show Less' : 'Read More'}
       </button>
     </div>
   </div>
 </AnimationContainer>
+
       {/* Organizing Team Section */}
       <AnimationContainer>
         <div className="py-16 bg-gray-100">

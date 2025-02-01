@@ -27,7 +27,7 @@ export default function Header() {
         {/* Logo */}
         <Link to="/" className="flex items-center mb-4 md:mb-0">
           <img src={campbadge} alt="Logo" className="logo" style={{ width: '50px', height: '50px', marginRight: '10px' }} />
-          <h1 className="font-bold text-lg tracking-wide">MAJ'25</h1>
+          <h1 className="font-bold text-lg tracking-wide">MAJ 2025</h1>
         </Link>
 
         {/* Navigation Links */}
