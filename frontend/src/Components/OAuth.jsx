@@ -1,17 +1,15 @@
-import React from 'react';
+import { GoogleAuthProvider, signInWithPopup, getAuth } from 'firebase/auth';
+import firebaseApp from '../../Firebase';
 import { useDispatch } from 'react-redux';
 import { signInSuccess } from '../redux/User/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { firebaseApp } from '../firebaseConfig'; // Ensure you have this file and it exports your initialized Firebase app
 
-export default function OAuth() {
+export default function OAuth () {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const handleGoogleClick = async () => {
+    const handleGoogleClick = async () => { 
         try {
             const provider = new GoogleAuthProvider();
             const auth = getAuth(firebaseApp);
@@ -21,23 +19,32 @@ export default function OAuth() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ token: result.user.accessToken }),
+                body: JSON.stringify({
+                    name: result.user.displayName,
+                    email: result.user.email,
+                    photo: result.user.photoURL,
+                }),
             });
+
+            if (!res.ok) {
+                throw new Error('Network response was not ok');
+            }
+
             const data = await res.json();
             dispatch(signInSuccess(data));
             navigate('/');
-        } catch (error) {
-            console.log('could not login with google', error);
+        }  
+        catch (error) {
+            console.log('could not login with google', error)
         }
-    };
-
-    return (
-        <button
-            type='button'
-            onClick={handleGoogleClick}
-            className='bg-red-700 text-white rounded-lg p-3 uppercase hover:opacity-95 flex items-center justify-center'>
-            <FontAwesomeIcon icon={faGoogle} className="mr-2" />
-            Continue with Google
-        </button>
-    );
+    }
+  return (
+    <button
+    type='button'
+    onClick={handleGoogleClick}
+    className='bg-red-700 text-white rounded-lg p-3 uppercase hover:opacity-95 flex items-center justify-center'>
+    <FontAwesomeIcon icon={faGoogle} className="mr-2" />
+    Continue with Google
+  </button>
+  )
 }
