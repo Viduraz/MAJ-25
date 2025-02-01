@@ -124,9 +124,9 @@ export default function About() {
         Our Mission
       </h1>
       <p className="max-w-3xl mx-auto text-xl leading-relaxed text-blue-100">
-        We believe not just in growing bigger, but in growing better. And growing
-        better means aligning the success of your own business with the success
-        of your customers. Win-win!
+      Our mission is to provide a unique outdoor experience that fosters personal growth, leadership, and teamwork among students. Through engaging activities and challenges, we aim to instill important values such as responsibility, respect for nature, and the spirit of adventure.
+
+Our goal is to create an environment where students can develop essential life skills, build lasting friendships, and deepen their appreciation for the outdoors. With a focus on cooperation, resilience, and learning, the camp serves as a platform for students to discover their potential, all while having fun and creating unforgettable memories.
       </p>
       <div className="mt-10">
         <button className="px-8 py-3 text-lg font-semibold text-blue-600 transition duration-300 bg-white rounded-lg hover:bg-gray-100 hover:shadow-lg">
