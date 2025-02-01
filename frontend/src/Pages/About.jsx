@@ -20,32 +20,32 @@ export default function About() {
     },
     {
       name: "Wohansa Karunarathne",
-      role: "secretary",
+      role: "Secretary",
       description: "Ensures smooth communication and planning within the team.",
       image: wohansa,
     },
     {
-      name: "savindu Sathsara",
-      role: "Junior Tresurer",
-      description: "Ensures smooth communication and planning within the team.",
+      name: "Savindu Sathsara",
+      role: "Junior Treasurer",
+      description: "Manages financial resources with precision.",
       image: savindu,
     },
     {
       name: "Praveen Randima",
       role: "Quarter Master",
-      description: "Ensures smooth communication and planning within the team.",
+      description: "Oversees logistics and resource allocation.",
       image: praveen,
     },
     {
-      name: "sanjula indheera",
+      name: "Sanjula Indheera",
       role: "IT Media & Marketing Coordinator",
-      description: "Ensures smooth communication and planning within the team.",
+      description: "Drives digital presence and outreach strategies.",
       image: sanjula,
     },
     {
       name: "Pahanmi Karunanayake",
       role: "Finance Coordinator",
-      description: "Ensures smooth communication and planning within the team.",
+      description: "Ensures financial stability and growth.",
       image: pahanmi,
     },
     {
@@ -56,8 +56,8 @@ export default function About() {
     },
     {
       name: "Kassapa Malalasekara",
-      role: "Safety &Security Coordinator",
-      description: "Handles financial management and budget planning.",
+      role: "Safety & Security Coordinator",
+      description: "Ensures a safe environment for all activities.",
       image: kassapa,
     },
   ];
@@ -81,7 +81,7 @@ export default function About() {
   return (
     <div className="bg-gray-50">
       {/* Hero Section */}
-      <div className="relative h-[250px] md:h-[300px] lg:h-[600px]">
+      <div className="relative h-[300px] md:h-[400px] lg:h-[600px]">
         <img
           src={aboutus}
           alt="Scout Group"
@@ -89,105 +89,92 @@ export default function About() {
         />
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="absolute inset-0 flex items-center justify-center">
-          <h1 className="text-6xl font-extrabold tracking-wider text-white uppercase md:text-7xl drop-shadow-lg">
+          <h1 className="text-6xl font-extrabold tracking-wider text-white uppercase md:text-8xl drop-shadow-lg">
             About Us
           </h1>
         </div>
       </div>
 
-      {/* Introduction Section */}
-      <AnimationContainer>
-        <div className="container px-6 py-12 mx-auto text-center">
-          <h1 className="mb-6 text-5xl font-extrabold text-blue-600">
-            A Legacy of Excellence Maliyadeva Adarsha Maha Vidyalaya
-          </h1>
-          <p className="text-lg leading-relaxed text-gray-800">
-            Established in 1978 as Maliyadeva Adarsha Prathamika Vidyalaya, the
-            school has a rich history of fostering leadership, teamwork, and
-            academic excellence. Through the years, it has grown to become a
-            cornerstone of education and scouting in the region.
-          </p>
-        </div>
-      </AnimationContainer>
+     {/* Introduction Section */}
+<AnimationContainer>
+  <div className="container px-6 py-20 mx-auto text-center">
+    <h1 className="mb-8 text-5xl font-bold text-blue-800 md:text-6xl">
+      A Legacy of Excellence
+    </h1>
+    <p className="max-w-3xl mx-auto text-xl leading-relaxed text-gray-700">
+      Established in 1978 as Maliyadeva Adarsha Prathamika Vidyalaya, the school
+      has a rich history of fostering leadership, teamwork, and academic
+      excellence. Through the years, it has grown to become a cornerstone of
+      education and scouting in the region.
+    </p>
+    <div className="mt-10">
+      <button className="px-8 py-3 text-lg font-semibold text-white transition duration-300 bg-blue-600 rounded-lg hover:bg-blue-700 hover:shadow-lg">
+        Learn More
+      </button>
+    </div>
+  </div>
+</AnimationContainer>
 
-      {/* Mission Section */}
-      <AnimationContainer>
-        <div className="container px-6 py-12 mx-auto text-center bg-white shadow-lg rounded-lg">
-          <h1 className="mb-6 text-4xl font-extrabold text-green-600">
-            Our Mission
-             Helping Millions of Organizations Grow Better
-          </h1>
-          <p className="text-lg leading-relaxed text-gray-700">
-            We believe not just in growing bigger, but in growing better. And
-            growing better means aligning the success of your own business with
-            the success of your customers. Win-win!
-          </p>
-        </div>
-      </AnimationContainer>
+{/* Mission Section */}
+<AnimationContainer>
+  <div className="relative py-20 overflow-hidden bg-gradient-to-r from-blue-600 to-blue-700">
+    <div className="absolute inset-0 bg-opacity-25 bg-pattern"></div>
+    <div className="container relative px-6 mx-auto text-center">
+      <h1 className="mb-8 text-4xl font-bold text-white md:text-5xl">
+        Our Mission
+      </h1>
+      <p className="max-w-3xl mx-auto text-xl leading-relaxed text-blue-100">
+        We believe not just in growing bigger, but in growing better. And growing
+        better means aligning the success of your own business with the success
+        of your customers. Win-win!
+      </p>
+      <div className="mt-10">
+        <button className="px-8 py-3 text-lg font-semibold text-blue-600 transition duration-300 bg-white rounded-lg hover:bg-gray-100 hover:shadow-lg">
+          Discover More
+        </button>
+      </div>
+    </div>
+  </div>
+</AnimationContainer>
 
-      {/* Story Section */}
-      <AnimationContainer>
-        <div className="container px-6 py-12 mx-auto text-center bg-gray-200 shadow-lg rounded-lg">
-          <h1 className="mb-6 text-4xl font-extrabold text-purple-600">
-            Our Story
-          </h1>
-          <p className="text-lg leading-relaxed text-gray-800">
-            In 2004, fellow MIT graduate students Brian Halligan and Dharmesh
-            Shah noticed a shift in the way people shop and purchase products.
-            Buyers didn't want to be interrupted by ads; they wanted helpful
-            information. In 2006, they founded HubSpot to help companies use
-            inbound marketing.
-          </p>
-        </div>
-      </AnimationContainer>
-
-      {/* HubSpot By The Numbers Section */}
-      <AnimationContainer>
-        <div className="container px-6 py-12 mx-auto text-center bg-white shadow-lg rounded-lg">
-          <h2 className="mb-6 text-3xl font-semibold text-gray-800">
-            HubSpot By The Numbers
-          </h2>
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
-            <div className="p-6 bg-blue-100 rounded-lg shadow-md">
-              <h3 className="text-2xl font-bold text-blue-600">12</h3>
-              <p className="text-gray-600">Global Offices</p>
-            </div>
-            <div className="p-6 bg-green-100 rounded-lg shadow-md">
-              <h3 className="text-2xl font-bold text-green-600">7,600+</h3>
-              <p className="text-gray-600">Employees</p>
-            </div>
-            <div className="p-6 bg-yellow-100 rounded-lg shadow-md">
-              <h3 className="text-2xl font-bold text-yellow-600">205,000+</h3>
-              <p className="text-gray-600">Customers</p>
-            </div>
-          </div>
-          <p className="mt-4 text-gray-500">Voted #1 in 318 categories</p>
-        </div>
-      </AnimationContainer>
-
+{/* Story Section */}
+<AnimationContainer>
+  <div className="container px-6 py-20 mx-auto text-center">
+    <h1 className="mb-8 text-4xl font-bold text-purple-800 md:text-5xl">
+      Our Story
+    </h1>
+    <p className="max-w-3xl mx-auto text-xl leading-relaxed text-gray-700">
+      In 2004, fellow MIT graduate students Brian Halligan and Dharmesh Shah
+      noticed a shift in the way people shop and purchase products. Buyers didn't
+      want to be interrupted by ads; they wanted helpful information. In 2006,
+      they founded HubSpot to help companies use inbound marketing.
+    </p>
+    <div className="mt-10">
+      <button className="px-8 py-3 text-lg font-semibold text-white transition duration-300 bg-purple-600 rounded-lg hover:bg-purple-700 hover:shadow-lg">
+        Read More
+      </button>
+    </div>
+  </div>
+</AnimationContainer>
       {/* Organizing Team Section */}
       <AnimationContainer>
-        <div className="py-12 bg-gray-200 rounded-lg shadow-lg">
-          <h2 className="mb-10 text-4xl font-semibold text-center text-gray-800">
+        <div className="py-16 bg-gray-100">
+          <h2 className="mb-12 text-4xl font-semibold text-center text-gray-800">
             Meet Our Organizing Team
           </h2>
-          <div className="container grid grid-cols-1 gap-8 px-6 mx-auto sm:grid-cols-2 md:grid-cols-4">
+          <div className="container grid grid-cols-1 gap-8 px-6 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {organizingTeam.map((member, index) => (
               <div
                 key={index}
-                className="relative transition duration-300 transform group hover:scale-105"
+                className="relative overflow-hidden transition duration-300 transform bg-white rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-2"
               >
                 <img
                   src={member.image}
                   alt={member.name}
-                  className="object-cover w-full h-56 rounded-lg shadow-lg"
+                  className="object-cover w-full h-64"
                 />
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-white transition duration-300 bg-black rounded-lg opacity-0 bg-opacity-70 group-hover:opacity-100">
-                  <h3 className="text-lg font-semibold">{member.name}</h3>
-                  <p className="text-sm">{member.role}</p>
-                </div>
-                <div className="mt-4 text-center">
-                  <h3 className="text-xl font-medium text-gray-800">
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-gray-800">
                     {member.name}
                   </h3>
                   <p className="text-sm text-gray-600">{member.role}</p>
@@ -203,27 +190,23 @@ export default function About() {
 
       {/* Old Scout Team Section */}
       <AnimationContainer>
-        <div className="py-12 bg-white rounded-lg shadow-lg">
-          <h2 className="mb-10 text-4xl font-semibold text-center text-gray-800">
+        <div className="py-16 bg-white">
+          <h2 className="mb-12 text-4xl font-semibold text-center text-gray-800">
             Meet Our Old Scout Team
           </h2>
-          <div className="container grid grid-cols-1 gap-8 px-6 mx-auto sm:grid-cols-2 md:grid-cols-4">
+          <div className="container grid grid-cols-1 gap-8 px-6 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {oldScoutAssociation.map((member, index) => (
               <div
                 key={index}
-                className="relative transition duration-300 transform group hover:scale-105"
+                className="relative overflow-hidden transition duration-300 transform bg-white rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-2"
               >
                 <img
                   src={member.image}
                   alt={member.name}
-                  className="object-cover w-full h-56 rounded-lg shadow-lg"
+                  className="object-cover w-full h-64"
                 />
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-white transition duration-300 bg-black rounded-lg opacity-0 bg-opacity-70 group-hover:opacity-100">
-                  <h3 className="text-lg font-semibold">{member.name}</h3>
-                  <p className="text-sm">{member.role}</p>
-                </div>
-                <div className="mt-4 text-center">
-                  <h3 className="text-xl font-medium text-gray-800">
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-gray-800">
                     {member.name}
                   </h3>
                   <p className="text-sm text-gray-600">{member.role}</p>

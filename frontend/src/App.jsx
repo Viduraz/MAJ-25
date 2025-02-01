@@ -25,7 +25,7 @@ import AdminManagement from './Pages/AdminPages/AdminManagement';
 import ProtectedRoute from './Components/ProtectedRoute';
 import Unauthorized from "./Pages/AdminPages/Unauthorized";
 import AllPages from "./Pages/AdminPages/allpages";
-
+import Sponsors from './Pages/Sponsors';
 
 
 function App() {
@@ -43,6 +43,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/pass-activity" element={<PassActivity />} />
           <Route path="/about" element={<About />} />
+          <Route path="/sponsors" element={<Sponsors />} />
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
           </Route>

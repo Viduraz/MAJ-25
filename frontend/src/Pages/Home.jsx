@@ -333,20 +333,7 @@ export default function Home() {
         </div>
       </AnimationContainer>
 
-      {/* Display Registered Users
-      <div className="px-4 py-16 text-center bg-gray-100">
-        <h2 className="mb-8 text-4xl font-bold text-gray-800">
-          Registered Users
-        </h2>
-        <div className="flex flex-col items-center">
-          {registeredUsers.map((user) => (
-            <div key={user._id} className="mb-4">
-              <p className="text-xl font-semibold text-gray-700">{user.fullName}</p>
-              <p className="text-sm text-gray-500">{user.email}</p>
-            </div>
-          ))}
-        </div>
-      </div> */}
+      
     </div>
   );
 }
