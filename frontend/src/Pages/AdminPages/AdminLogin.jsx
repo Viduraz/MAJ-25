@@ -86,7 +86,7 @@ export default function AdminLogin() {
             />
           </div>
 
-          <div>
+          {/* <div>
             <label htmlFor="redirectPage" className="block text-sm font-medium text-gray-700">
               Redirect Page
             </label>
@@ -108,7 +108,7 @@ export default function AdminLogin() {
               <option value="/pass-activity">PassActivity</option>
               <option value="/allpages">Main Admin</option>
             </select>
-          </div>
+          </div> */}
 
           <button
             type="submit"
