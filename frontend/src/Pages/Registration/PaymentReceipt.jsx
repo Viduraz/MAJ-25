@@ -39,36 +39,48 @@ export default function PaymentReceipt({
     }
 
     try {
-      // save leaders one by one
+      // Fetch existing registrations
+      const existingRegistrations = await axios.get(registrationURL);
+      const existingEmails = existingRegistrations.data.map(reg => reg.email);
+
+      // Save leaders one by one
       for (const leader of leaders) {
-        await axios.post(registrationURL, {
-          fullName: leader.fullName,
-          gender: leader.gender,
-          phoneNumber: leader.phoneNumber,
-          email: leader.email,
-          school: school,
-          idNumber: leader.idNumber,
-          paymentDate: paymentDate,
-          amount: amount,
-          receiptImage: receiptImage,
-          type: "Leader",
-        });
+        if (!existingEmails.includes(leader.email)) {
+          await axios.post(registrationURL, {
+            fullName: leader.fullName,
+            gender: leader.gender,
+            phoneNumber: leader.phoneNumber,
+            email: leader.email,
+            school: school,
+            idNumber: leader.idNumber,
+            paymentDate: paymentDate,
+            amount: amount,
+            receiptImage: receiptImage,
+            type: "Leader",
+          });
+        } else {
+          toast.error(`Leader with email ${leader.email} already exists.`);
+        }
       }
 
-      // save scouts one by one
+      // Save scouts one by one
       for (const scout of scouts) {
-        await axios.post(registrationURL, {
-          fullName: scout.fullName,
-          gender: scout.gender,
-          phoneNumber: scout.phoneNumber,
-          email: scout.email,
-          school: school,
-          idNumber: 0,
-          paymentDate: paymentDate,
-          amount: amount,
-          receiptImage: receiptImage,
-          type: "Scout",
-        });
+        if (!existingEmails.includes(scout.email)) {
+          await axios.post(registrationURL, {
+            fullName: scout.fullName,
+            gender: scout.gender,
+            phoneNumber: scout.phoneNumber,
+            email: scout.email,
+            school: school,
+            idNumber: 0,
+            paymentDate: paymentDate,
+            amount: amount,
+            receiptImage: receiptImage,
+            type: "Scout",
+          });
+        } else {
+          toast.error(`Scout with email ${scout.email} already exists.`);
+        }
       }
 
       toast.success("All registrations saved successfully!");
