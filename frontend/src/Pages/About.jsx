@@ -8,13 +8,13 @@ import wohansa from "../Assests/Wohansa1.jpg";
 import pahanmi from "../Assests/Pahanmi.jpg";
 import niketha from "../Assests/Niketha1.jpg";
 import praveen from "../Assests/Praveen1.jpg";
-import kassapa from "../Assests/Kassapa.jpg";
-import dimuthu from "../Assests/Dimuthu.jpg";
-import ashinsa from "../Assests/Ashinsa.jpg";
+import kassapa from "../Assests/Kassapa1.jpg";
+import dimuthu from "../Assests/Dimuthu1.jpg";
+import ashinsa from "../Assests/Ashinsa1.jpg";
 import henuka from "../Assests/Henuka.jpg";
 import sachintha from "../Assests/Sachintha1.jpg";
-import sandeepa from "../Assests/Sandeepa.jpg";
-import manodya from "../Assests/Manodya.jpg";
+import sandeepa from "../Assests/Sandeepa1.jpg";
+import manodya from "../Assests/Manodya1.jpg";
 import ransa from "../Assests/Ransa1.jpg";
 
 export default function About() {
