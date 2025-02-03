@@ -37,7 +37,7 @@ export default function About() {
       image: sachintha,
     },
     {
-      name: "Yasas Hearath",
+      name: "Yasas Herath",
       role: "Vice President",
       description: "Assists the President and oversees the execution of projects and events.",
       image: yasas,
