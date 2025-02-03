@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AnimationContainer from "@/Components/AnimationContainer";
 import aboutus from "../Assests/Aboutus.jpg";
 import yasas from "../Assests/Yasas1.jpg";
-import savindu from "../Assests/Savindu.jpg";
+import savindu from "../Assests/Savindu1.jpg";
 import sanjula from "../Assests/Sanjula.jpg";
 import wohansa from "../Assests/Wohansa.jpg";
 import pahanmi from "../Assests/Pahanmi.jpg";
