@@ -65,7 +65,7 @@ export default function Header() {
               </span>
             </li>
           </Link>
-          <Link to="/sponsors">
+          {/* <Link to="/sponsors">
             <li
               className={`relative group transition-all duration-300 ease-in-out ${
                 location.pathname === '/sponsors' ? 'border-b-4 border-yellow-500 scale-110 font-bold' : ''
@@ -75,7 +75,7 @@ export default function Header() {
               Sponsors
               </span>
             </li>
-          </Link>
+          </Link> */}
           <Link to="/registration">
             {currentUser ? (
               <li
