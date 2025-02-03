@@ -15,6 +15,7 @@ import mobitel from "../Assests/mobitel.jpeg";
 import ethink from "../Assests/ethink.png";
 import nestle from "../Assests/nestle.jpg";
 import ddji1 from "../Assests/ddji1.jpg";
+import ajithsir from "../Assests/AjithSIR.png";
 import ictfrombs from "../Assests/ictfromabc_logo.png";
 import { useNavigate } from 'react-router-dom';
 
@@ -214,7 +215,7 @@ export default function Home() {
           className="px-4 py-16 text-center bg-gray-100 "
         >
           <h2 className="mb-12 text-4xl font-bold text-gray-800">
-            OUR LEGACY PIONEERS
+          FRONTIER GUIDES - MAJ 2025
           </h2>
           <div className="flex flex-wrap justify-center gap-8">
             {/* Committee Members */}
@@ -260,6 +261,7 @@ export default function Home() {
                 <p className="mb-2 text-sm text-gray-500">SCOUT MASTER</p>
                 
               </div>
+             
 
               {/* Member 4 */}
               <div className="flex flex-col items-center max-w-xs">
@@ -273,6 +275,20 @@ export default function Home() {
                 </p>
                 <p className="mb-2 text-sm text-gray-500">SCOUT MASTER</p>
               </div>
+
+              <div className="flex flex-col items-center max-w-xs">
+                <img
+                  src={ajithsir}
+                  alt="Member 3"
+                  className="object-cover w-40 h-40 border-4 border-gray-300 rounded-full shadow-md"
+                />
+                <p className="mt-4 text-xl font-semibold text-gray-700">
+                  AJITH KUMARA
+                </p>
+                <p className="mb-2 text-sm text-gray-500">JAMBAREE COORDINATOR</p>
+              </div>
+
+              
             </div>
           </div>
         </div>
