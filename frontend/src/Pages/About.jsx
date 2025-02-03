@@ -111,13 +111,13 @@ export default function About() {
     {
       name: "Ashinsa Thennakoon",
       role: "Jambaree Editor",
-      description: "Edits and manages content for the Jamboree.",
+      description: "Edits and manages content for the Jambaree.",
       image: ashinsa,
     },
     {
       name: "Sandeepa Edirisinghe",
       role: "Jambaree Editor",
-      description: "Collaborates on editing and managing content for the Jamboree.",
+      description: "Collaborates on editing and managing content for the Jambaree.",
       image: sandeepa,
     },
   ];
