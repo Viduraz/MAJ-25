@@ -6,7 +6,7 @@ import savindu from "../Assests/Savindu1.jpg";
 import sanjula from "../Assests/Sanjula1.jpg";
 import wohansa from "../Assests/Wohansa1.jpg";
 import pahanmi from "../Assests/Pahanmi.jpg";
-import niketha from "../Assests/Niketha.jpg";
+import niketha from "../Assests/Niketha1.jpg";
 import praveen from "../Assests/Praveen.jpg";
 import kassapa from "../Assests/Kassapa.jpg";
 import dimuthu from "../Assests/Dimuthu.jpg";
