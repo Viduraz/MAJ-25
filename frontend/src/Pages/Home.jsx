@@ -16,7 +16,15 @@ import ethink from "../Assests/ethink.png";
 import nestle from "../Assests/nestle.jpg";
 import ddji1 from "../Assests/ddji1.jpg";
 import ictfrombs from "../Assests/ictfromabc_logo.png";
+import { useNavigate } from 'react-router-dom';
+
 export default function Home() {
+  const navigate = useNavigate();
+
+  const handleRegisterClick = () => {
+    navigate('/signin');
+  };
+
   // Scroll to section function
   const scrollToSection = () => {
     document.getElementById("organizing-committee").scrollIntoView({
@@ -114,8 +122,11 @@ export default function Home() {
           <h1 className="mb-6 text-6xl font-bold leading-tight">
             Maliyadeva <span className="text-gray-400">Adarsha</span> Jambareeta
           </h1>
-          <button className="px-6 py-3 font-semibold text-gray-900 transition duration-300 bg-white rounded-full hover:bg-gray-300">
-            LEARN MORE
+          <button
+            className="px-6 py-3 font-semibold text-gray-900 transition duration-300 bg-white rounded-full hover:bg-gray-300"
+            onClick={handleRegisterClick}
+          >
+            REGISTER NOW
           </button>
         </div>
 
