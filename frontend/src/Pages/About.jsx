@@ -33,35 +33,33 @@ export default function About() {
     {
       name: "Sachintha Senadheera",
       role: "President",
-      description: "Ensures a safe environment for all activities.",
+      description: "Leads the team with strategic vision and ensures all activities are conducted in a safe and efficient manner.",
       image: sachintha,
-    }, 
-    
+    },
     {
       name: "Yasas Hearath",
       role: "Vice President",
-      description: "Leading the team to success with dedication and passion.",
+      description: "Assists the President and oversees the execution of projects and events.",
       image: yasas,
     },
     {
       name: "Ransa Bandara",
       role: "Vice President",
-      description: "Ensures a safe environment for all activities.",
+      description: "Supports the Vice President in leading the team and managing projects.",
       image: ransa,
     },
     {
       name: "Wohansa Karunarathne",
       role: "Secretary",
-      description: "Ensures smooth communication and planning within the team.",
+      description: "Manages documentation, meeting minutes, and correspondence for the team.",
       image: wohansa,
     },
     {
       name: "Savindu Sathsara",
       role: "Junior Treasurer",
-      description: "Manages financial resources with precision.",
+      description: "Assists the Treasurer in managing financial resources with precision.",
       image: savindu,
     },
-     
     {
       name: "Praveen Randima",
       role: "Quarter Master",
@@ -89,40 +87,39 @@ export default function About() {
     {
       name: "Manodya Nawarathne",
       role: "HR Coordinator",
-      description: "Ensures a safe environment for all activities.",
+      description: "Oversees human resources and ensures team well-being.",
       image: manodya,
-    }, 
+    },
     {
       name: "Kassapa Malalasekara",
       role: "Safety & Security Coordinator",
-      description: "Ensures a safe environment for all activities.",
+      description: "Ensures a safe and secure environment for all activities.",
       image: kassapa,
-    }, 
+    },
     {
       name: "Dimuthu Dasun",
       role: "Programme Coordinator",
-      description: "Ensures a safe environment for all activities.",
+      description: "Plans and coordinates programs and events.",
       image: dimuthu,
-    }, 
+    },
     {
       name: "Henuka Wasala",
       role: "Activity Coordinator",
-      description: "Ensures a safe environment for all activities.",
+      description: "Organizes and manages activities and events.",
       image: henuka,
-    }, 
+    },
     {
       name: "Ashinsa Thennakoon",
       role: "Jambaree Editor",
-      description: "Ensures a safe environment for all activities.",
+      description: "Edits and manages content for the Jamboree.",
       image: ashinsa,
-    }, 
+    },
     {
       name: "Sandeepa Edirisinghe",
       role: "Jambaree Editor",
-      description: "Ensures a safe environment for all activities.",
+      description: "Collaborates on editing and managing content for the Jamboree.",
       image: sandeepa,
-    }, 
-
+    },
   ];
 
   const oldScoutAssociation = [
