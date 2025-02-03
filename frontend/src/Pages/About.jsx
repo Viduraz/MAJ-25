@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import AnimationContainer from "@/Components/AnimationContainer";
 import aboutus from "../Assests/Aboutus.jpg";
-import yasas from "../Assests/yasas.jpg";
-import savindu from "../Assests/savindu.jpg";
-import sanjula from "../Assests/sanjula.jpg";
-import wohansa from "../Assests/wohansa.jpg";
-import pahanmi from "../Assests/pahnmi.jpg";
-import niketha from "../Assests/niketha.jpg";
-import praveen from "../Assests/praveen.jpg";
-import kassapa from "../Assests/kassapa.jpg";
+import yasas from "../Assests/Yasas.jpg";
+import savindu from "../Assests/Savindu.jpg";
+import sanjula from "../Assests/Sanjula.jpg";
+import wohansa from "../Assests/Wohansa.jpg";
+import pahanmi from "../Assests/Pahanmi.jpg";
+import niketha from "../Assests/Niketha.jpg";
+import praveen from "../Assests/Praveen.jpg";
+import kassapa from "../Assests/Kassapa.jpg";
+import dimuthu from "../Assests/Dimuthu.jpg";
+import ashinsa from "../Assests/Ashinsa.jpg";
+import henuka from "../Assests/Henuka.jpg";
+import sachintha from "../Assests/Sachintha.jpg";
+import sandeepa from "../Assests/Sandeepa.jpg";
+import manodya from "../Assests/Manodya.jpg";
+import ransa from "../Assests/Ransa.jpg";
 
 export default function About() {
   const [showFullContent, setShowFullContent] = useState(false);
@@ -24,10 +31,23 @@ export default function About() {
 
   const organizingTeam = [
     {
+      name: "Sachintha Senadheera",
+      role: "President",
+      description: "Ensures a safe environment for all activities.",
+      image: sachintha,
+    }, 
+    
+    {
       name: "Yasas Hearath",
       role: "Vice President",
       description: "Leading the team to success with dedication and passion.",
       image: yasas,
+    },
+    {
+      name: "Ransa Bandara",
+      role: "Vice President",
+      description: "Ensures a safe environment for all activities.",
+      image: ransa,
     },
     {
       name: "Wohansa Karunarathne",
@@ -41,6 +61,7 @@ export default function About() {
       description: "Manages financial resources with precision.",
       image: savindu,
     },
+     
     {
       name: "Praveen Randima",
       role: "Quarter Master",
@@ -66,11 +87,42 @@ export default function About() {
       image: niketha,
     },
     {
+      name: "Manodya Nawarathne",
+      role: "HR Coordinator",
+      description: "Ensures a safe environment for all activities.",
+      image: manodya,
+    }, 
+    {
       name: "Kassapa Malalasekara",
       role: "Safety & Security Coordinator",
       description: "Ensures a safe environment for all activities.",
       image: kassapa,
-    },
+    }, 
+    {
+      name: "Dimuthu Dasun",
+      role: "Programme Coordinator",
+      description: "Ensures a safe environment for all activities.",
+      image: dimuthu,
+    }, 
+    {
+      name: "Henuka Wasala",
+      role: "Activity Coordinator",
+      description: "Ensures a safe environment for all activities.",
+      image: henuka,
+    }, 
+    {
+      name: "Ashinsa Thennakoon",
+      role: "Jambaree Editor",
+      description: "Ensures a safe environment for all activities.",
+      image: ashinsa,
+    }, 
+    {
+      name: "Sandeepa Edirisinghe",
+      role: "Jambaree Editor",
+      description: "Ensures a safe environment for all activities.",
+      image: sandeepa,
+    }, 
+
   ];
 
   const oldScoutAssociation = [
