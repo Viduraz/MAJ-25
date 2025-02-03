@@ -7,15 +7,15 @@ import sanjula from "../Assests/Sanjula1.jpg";
 import wohansa from "../Assests/Wohansa1.jpg";
 import pahanmi from "../Assests/Pahanmi.jpg";
 import niketha from "../Assests/Niketha1.jpg";
-import praveen from "../Assests/Praveen.jpg";
+import praveen from "../Assests/Praveen1.jpg";
 import kassapa from "../Assests/Kassapa.jpg";
 import dimuthu from "../Assests/Dimuthu.jpg";
 import ashinsa from "../Assests/Ashinsa.jpg";
 import henuka from "../Assests/Henuka.jpg";
-import sachintha from "../Assests/Sachintha.jpg";
+import sachintha from "../Assests/Sachintha1.jpg";
 import sandeepa from "../Assests/Sandeepa.jpg";
 import manodya from "../Assests/Manodya.jpg";
-import ransa from "../Assests/Ransa.jpg";
+import ransa from "../Assests/Ransa1.jpg";
 
 export default function About() {
   const [showFullContent, setShowFullContent] = useState(false);
