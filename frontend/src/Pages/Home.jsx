@@ -23,7 +23,7 @@ export default function Home() {
   const navigate = useNavigate();
 
   const handleRegisterClick = () => {
-    navigate('/signin');
+    navigate('/registration');
   };
 
   // Scroll to section function
