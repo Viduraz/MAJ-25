@@ -1,4 +1,5 @@
 import React from 'react';
+import oldscout from "../Assests/OldSCOUTS.png"
 
 export default function Sponsors() {
   return (
@@ -31,14 +32,14 @@ export default function Sponsors() {
           <h2 className="text-3xl font-bold text-purple-800 mb-6">Official Mentorship Partner</h2>
           <div className="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8">
             <img
-              src="https://via.placeholder.com/150" // Replace with actual image URL
+              src={oldscout}// Replace with actual image URL
               alt="Mallyadeva Adarsha Old Scout's Association"
               className="w-32 h-32 rounded-full border-4 border-purple-200"
             />
             <div className="text-center md:text-left">
               <h3 className="text-2xl font-bold text-gray-800">Mallyadeva Adarsha Old Scout's Association</h3>
               <p className="mt-4 text-gray-600">
-                The Mallyadeva Adarsha Old Scouts' Association is a community of over 200 President's Scouts and Senior Scouts who continue to uphold the values of Scouting beyond their school years. This transition serves as a platform to encourage collaboration and contribute towards the community.
+                The Mallyadeva Adarsha Old Scouts' Association is a community of over 50+ President's Scouts and Senior Scouts who continue to uphold the values of Scouting beyond their school years. This transition serves as a platform to encourage collaboration and contribute towards the community.
               </p>
             </div>
           </div>
