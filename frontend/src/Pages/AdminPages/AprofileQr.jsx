@@ -105,7 +105,7 @@ function AprofileQr() {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      gap: "0.5rem",
+      gap: "1rem",
       backgroundColor: "white",
       padding: "1rem",
       borderRadius: "0.5rem"
@@ -116,7 +116,7 @@ function AprofileQr() {
       <QRCode
         value={JSON.stringify(userData)}
         size={280}
-        className="bg-white p-1"
+        className="bg-white p-2"
       />
     )}
   </div>
