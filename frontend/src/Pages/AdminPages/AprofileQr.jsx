@@ -99,21 +99,26 @@ function AprofileQr() {
   <div
     className="absolute"
     style={{
-      top: "45%",
+      top: "45%", // Adjust positioning
       left: "50%",
       transform: "translate(-50%, -50%)",
-      width: "300px",
-      height: "250px",
       display: "flex",
-      justifyContent: "center",
+      flexDirection: "column",
       alignItems: "center",
+      gap: "0.5rem",
+      backgroundColor: "white",
+      padding: "1rem",
+      borderRadius: "0.5rem"
     }}
   >
-    <QRCode
-      value={JSON.stringify(userData)}
-      size={280} // Slightly smaller than the container to ensure proper padding
-      className="bg-white p-0.3"
-    />
+    <h3 className="text-xl font-semibold text-gray-800">MY QR Code</h3>
+    {userData && (
+      <QRCode
+        value={JSON.stringify(userData)}
+        size={280}
+        className="bg-white p-1"
+      />
+    )}
   </div>
   
   {/* User details */}
