@@ -204,20 +204,6 @@ function PassActivity() {
         <ProtectedRoute allowedPage="pass-activity">
         <div className="bg-gray-50">
 
-            {/* Hero Section */}
-            <div className="relative h-[400px]">
-                <img
-                    src="https://via.placeholder.com/1920x1080" // Replace with actual background image
-                    alt="Scout Group"
-                    className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-black opacity-50"></div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                    <h1 className="text-5xl md:text-6xl text-white font-bold uppercase tracking-wider drop-shadow-lg">
-                        Pass Activity
-                    </h1>
-                </div>
-            </div>
 
             <div className="flex justify-center space-x-4 my-5">
                 {/* Category Dropdown */}
