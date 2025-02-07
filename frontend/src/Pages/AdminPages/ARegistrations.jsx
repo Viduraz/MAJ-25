@@ -84,8 +84,31 @@ export default function AdminRegistrations() {
     }
   };
 
-  const handleSaveEdit = () => {
-    // Implement the save edit functionality here
+  const handleSaveEdit = async () => {
+    try {
+      await axios.put(`https://maj-25-backend.onrender.com/api/registration/${editData._id}`, {
+        fullName: editData.fullName,
+        gender: editData.gender,
+        phoneNumber: editData.phoneNumber,
+        email: editData.email,
+        school: editData.school,
+        idNumber: editData.idNumber,
+        paymentDate: editData.paymentDate,
+        amount: editData.amount,
+        type: editData.type
+      });
+  
+      // Update the local state with edited data
+      setRegistrations(registrations.map(registration => 
+        registration._id === editData._id ? editData : registration
+      ));
+  
+      // Clear edit mode and show success message
+      setEditData(null);
+      toast.success('Registration updated successfully');
+    } catch (error) {
+      toast.error('Error updating registration: ' + (error.response?.data?.message || error.message));
+    }
   };
 
   if (loading) return <div>Loading...</div>;
@@ -241,6 +264,7 @@ export default function AdminRegistrations() {
               value={new Date(editData.paymentDate).toISOString().split('T')[0]}
               onChange={(e) => setEditData({ ...editData, paymentDate: e.target.value })}
               className="mt-2 block w-full border border-gray-400 rounded-lg shadow-md focus:ring-green-600 focus:border-green-600"
+              readOnly
             />
             <input
               type="text"
@@ -248,6 +272,7 @@ export default function AdminRegistrations() {
               value={editData.amount}
               onChange={(e) => setEditData({ ...editData, amount: e.target.value })}
               className="mt-2 block w-full border border-gray-400 rounded-lg shadow-md focus:ring-green-600 focus:border-green-600"
+              readOnly
             />
             <input
               type="text"
