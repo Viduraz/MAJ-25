@@ -280,6 +280,7 @@ export default function AdminRegistrations() {
               value={editData.type}
               onChange={(e) => setEditData({ ...editData, type: e.target.value })}
               className="mt-2 block w-full border border-gray-400 rounded-lg shadow-md focus:ring-green-600 focus:border-green-600"
+              readOnly
             />
             <div className="flex justify-end mt-4">
               <button
