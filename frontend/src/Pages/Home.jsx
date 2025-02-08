@@ -221,13 +221,13 @@ export default function Home() {
       <AnimationContainer>
         <div className="px-4 py-16 bg-gray-200"> {/* Changed background color to ash */}
           <h2 className="mb-8 text-4xl font-bold text-center text-gray-800">
-           Our Latest News
+            Our Latest News
           </h2>
           <div className="relative h-96 overflow-hidden flex justify-center">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentNewsIndex}
-                className="absolute w-3/4 md:w-1/2 lg:w-1/3 p-6 bg-white rounded-lg shadow-lg"
+                className="absolute w-full sm:w-3/4 md:w-1/2 lg:w-1/3 p-6 bg-white rounded-lg shadow-lg"
                 initial={{ x: "100%" }}
                 animate={{ x: 0 }}
                 exit={{ x: "-100%" }}
