@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import v1 from "../Assests/v1.mp4";
 import axios from "axios";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import AnimationContainer from "@/Components/AnimationContainer";
 import map from "../Assests/MAP.png";
 import gamagesir from "../Assests/gamagesir.png";
@@ -16,6 +16,7 @@ import ethink from "../Assests/ethink.png";
 import nestle from "../Assests/nestle.jpg";
 import ddji1 from "../Assests/ddji1.jpg";
 import ajithsir from "../Assests/AjithSIR.png";
+import reGiOpen from "../Assests/Registration_Open.jpg"
 import ictfrombs from "../Assests/ictfromabc_logo.png";
 import { useNavigate } from 'react-router-dom';
 
@@ -45,6 +46,28 @@ export default function Home() {
   // Add state for registered users
   const [registeredUsers, setRegisteredUsers] = useState([]);
 
+  // State for news feed
+  const [news, setNews] = useState([
+    {
+      title: "MAJ 2025 Registration Now Open",
+      description: "Join us for the biggest scouting event of the year! Early bird registration is now available for Your Troop registrations.",
+      image: reGiOpen
+    },
+    {
+      title: "New Activities Announced",
+      description: "Exciting new activities including rope courses, wilderness survival workshops, and environmental conservation projects have been added to the event schedule.",
+      image: "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?q=80&w=1000&auto=format&fit=crop"
+    },
+    {
+      title: "Volunteer Opportunities",
+      description: "We're looking for experienced scouts and Rovers to volunteer as activity coordinators and team leaders during the jamboree.",
+      image: "https://images.unsplash.com/photo-1526976668912-1a811878dd37?q=80&w=1000&auto=format&fit=crop"
+    }
+  ]);
+
+  // Add this state near your other state declarations
+  const [currentNewsIndex, setCurrentNewsIndex] = useState(0);
+
   // Update count on component mount
   useEffect(() => {
     const fetchRegisteredCount = async () => {
@@ -68,6 +91,31 @@ export default function Home() {
 
     fetchRegisteredCount();
   }, []);
+
+  // Fetch news feed on component mount
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const response = await axios.get(
+          "https://maj-25-backend.onrender.com/api/news"
+        );
+        setNews(response.data);
+      } catch (error) {
+        console.error("Error fetching news:", error);
+      }
+    };
+
+    fetchNews();
+  }, []);
+
+  // Add this effect after your other useEffect hooks
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentNewsIndex((prevIndex) => (prevIndex + 1) % news.length);
+    }, 10000); // 30 seconds
+
+    return () => clearInterval(timer);
+  }, [news.length]);
 
   // Update countdown every second
   useEffect(() => {
@@ -168,6 +216,53 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* News Feed Section */}
+      <AnimationContainer>
+        <div className="px-4 py-16 bg-gray-200"> {/* Changed background color to ash */}
+          <h2 className="mb-8 text-4xl font-bold text-center text-gray-800">
+           Our Latest News
+          </h2>
+          <div className="relative h-96 overflow-hidden flex justify-center">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentNewsIndex}
+                className="absolute w-3/4 md:w-1/2 lg:w-1/3 p-6 bg-white rounded-lg shadow-lg"
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "-100%" }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+              >
+                <div className="flex flex-col items-center">
+                  <img
+                    src={news[currentNewsIndex]?.image}
+                    alt={news[currentNewsIndex]?.title}
+                    className="w-full h-56 object-cover rounded-lg mb-4"
+                  />
+                  <h3 className="mb-2 text-2xl font-semibold text-gray-800">
+                    {news[currentNewsIndex]?.title}
+                  </h3>
+                  <p className="text-gray-600 text-center">
+                    {news[currentNewsIndex]?.description}
+                  </p>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          {/* Add navigation dots */}
+          <div className="flex justify-center gap-2 mt-4">
+            {news.map((_, index) => (
+              <button
+                key={index}
+                className={`w-4 h-4 rounded-full transition-colors duration-300 ${
+                  index === currentNewsIndex ? 'bg-blue-500' : 'bg-gray-300'
+                }`}
+                onClick={() => setCurrentNewsIndex(index)}
+              />
+            ))}
+          </div>
+        </div>
+      </AnimationContainer>
 
       {/* CampSite MAP Section */}
       <AnimationContainer>
