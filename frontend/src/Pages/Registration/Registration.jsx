@@ -37,6 +37,7 @@ export default function Registration() {
     "Ku/Athugalpura Prince College",
     "Ku/Athugalpura Vidyadeepa College",
     "Ku/Boyagane Maha Vidyalaya",
+    "Ku/Dutugemunu Central collage",
     "Ku/D.B. Welagedara M.V.",
     "Ku/D.P. Wickramasinghe College",
     "Ku/D.S. Senanayaka National School",
