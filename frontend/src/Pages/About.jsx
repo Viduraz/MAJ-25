@@ -16,6 +16,9 @@ import sachintha from "../Assests/Sachintha1.jpg";
 import sandeepa from "../Assests/Sandeepa1.jpg";
 import manodya from "../Assests/Manodya1.jpg";
 import ransa from "../Assests/Ransa1.jpg";
+import deeshana from "../Assests/Deeshana1.jpg"
+import lochana from "../Assests/Lochana1.jpg"
+
 
 export default function About() {
   const [showFullContent, setShowFullContent] = useState(false);
@@ -79,6 +82,12 @@ export default function About() {
       image: pahanmi,
     },
     {
+      name: "Lochana Karunarathne",
+      role: "Activity Coordinator",
+      description: "Handle All The Activities In the Jambaree.",
+      image: lochana,
+    },
+    {
       name: "Niketha Weerasinghe",
       role: "Admin Coordinator",
       description: "Manages all event resources and logistics efficiently.",
@@ -95,6 +104,12 @@ export default function About() {
       role: "Safety & Security Coordinator",
       description: "Ensures a safe and secure environment for all activities.",
       image: kassapa,
+    },
+    {
+      name: "Deeshana Kavindi",
+      role: "Safety & Security Coordinator",
+      description: "Ensures a safe and secure environment for all activities.",
+      image: deeshana,
     },
     {
       name: "Dimuthu Dasun",
