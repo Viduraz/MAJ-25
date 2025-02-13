@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import AnimationContainer from "@/Components/AnimationContainer";
 import map from "../Assests/MAP.png";
 import gamagesir from "../Assests/gamagesir.png";
-import sahan from "../Assests/sahan.png";
+import sahan from "../Assests/sahan1.jpg";
 import inokamis from "../Assests/inokamis.png";
 import manorimis from "../Assests/manorimis.png";
 import googlec from "../Assests/googlec.png";
