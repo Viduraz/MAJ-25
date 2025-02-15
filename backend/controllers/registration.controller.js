@@ -1,15 +1,25 @@
 import Registration from "../models/registration.model.js";
 
 export const createRegistration = async (req, res) => {
-    const { fullName, gender, phoneNumber, email, school, idNumber, receiptImage, amount, paymentDate, type } = req.body;
-
-    const newScout = new Registration({ fullName, gender, phoneNumber, email, school, idNumber, receiptImage, amount, paymentDate, type });
-    try {
-        await newScout.save();
-        res.status(200).json(newScout);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+  try {
+    const { email } = req.body;
+    
+    // Check if registration already exists
+    const existingRegistration = await Registration.findOne({ email });
+    if (existingRegistration) {
+      return res.status(400).json({ 
+        message: "A registration with this email already exists" 
+      });
     }
+
+    // Proceed with creating new registration
+    const newRegistration = new Registration(req.body);
+    await newRegistration.save();
+    res.status(201).json(newRegistration);
+    
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 export const getRegistration = async (req, res) => {
@@ -25,9 +35,6 @@ export const getRegistration = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 };
-
-
-
 
 export const getUserByEmail = async (req, res) => {
     const { email } = req.params; // Get the activity ID from URL params

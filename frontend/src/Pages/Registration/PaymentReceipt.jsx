@@ -32,67 +32,40 @@ export default function PaymentReceipt({
   // HANDLE SENDING REQUEST TO SAVE REGISTRATIONS
 
   const sendRequest = async () => {
-    // Validation: Check for empty fields
-    if (!amount || !paymentDate || !receiptImage) {
-      toast.error("Please fill in all required fields.");
-      return; // Exit the function if validation fails
-    }
-
     try {
       // Fetch existing registrations
       const existingRegistrations = await axios.get(registrationURL);
       const existingEmails = existingRegistrations.data.map(reg => reg.email);
 
-      // Save leaders one by one
-      for (const leader of leaders) {
-        if (!existingEmails.includes(leader.email)) {
-          await axios.post(registrationURL, {
-            fullName: leader.fullName,
-            gender: leader.gender,
-            phoneNumber: leader.phoneNumber,
-            email: leader.email,
-            school: school,
-            idNumber: leader.idNumber,
-            paymentDate: paymentDate,
-            amount: amount,
-            receiptImage: receiptImage,
-            type: "Leader",
-          });
-        } else {
-          toast.error(`Leader with email ${leader.email} already exists.`);
+      // Check for duplicates before saving
+      for (const scout of scouts) {
+        if (existingEmails.includes(scout.email)) {
+          toast.error(`Scout with email ${scout.email} is already registered.`);
+          return; // Stop the registration process
         }
       }
 
-      // Save scouts one by one
+      // If no duplicates found, proceed with registration
       for (const scout of scouts) {
-        if (!existingEmails.includes(scout.email)) {
-          await axios.post(registrationURL, {
-            fullName: scout.fullName,
-            gender: scout.gender,
-            phoneNumber: scout.phoneNumber,
-            email: scout.email,
-            school: school,
-            idNumber: 0,
-            paymentDate: paymentDate,
-            amount: amount,
-            receiptImage: receiptImage,
-            type: "Scout",
-          });
-        } else {
-          toast.error(`Scout with email ${scout.email} already exists.`);
-        }
+        await axios.post(registrationURL, {
+          fullName: scout.fullName,
+          gender: scout.gender,
+          phoneNumber: scout.phoneNumber,
+          email: scout.email,
+          school: school,
+          idNumber: 0,
+          paymentDate: paymentDate,
+          amount: amount,
+          receiptImage: receiptImage,
+          type: "Scout",
+        });
       }
 
       toast.success("All registrations saved successfully!");
-      generateExcel();
-
-      // Navigate to home page after a short delay to allow the download to start
-      setTimeout(() => {
-        window.location.href = "/"; // Change this to your home page route
-      }, 2000); // Adjust the delay as needed
+      
     } catch (error) {
       console.error("Error saving registrations:", error);
-      toast("An error occurred while saving the registrations.");
+      toast.error("An error occurred while saving the registrations.");
     }
   };
 

@@ -37,13 +37,22 @@ export default function Scouts({
     return name.trim() !== ""; // Ensure full name is not empty
   };
 
-  // ... existing code ...
   const handleNext = () => {
-    const minDate = new Date(2006, 1, 1); // February 1, 2006 (months are 0-indexed)
-
+    const minDate = new Date(2006, 1, 1);
+    
+    // Check for duplicate emails in current form
+    const emails = scouts.map(scout => scout.email);
+    const duplicateEmails = emails.filter((email, index) => emails.indexOf(email) !== index);
+    
+    if (duplicateEmails.length > 0) {
+      toast.error("Duplicate email addresses found. Each scout must have a unique email.");
+      return;
+    }
+  
+    // Existing validation
     for (let index = 0; index < scoutCount; index++) {
       const scout = scouts[index];
-
+  
       // Check for empty fields
       if (!validateFullName(scout.fullName)) {
         toast.error(`Scout ${index + 1}: Full name cannot be empty.`);
