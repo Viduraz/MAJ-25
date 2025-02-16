@@ -55,7 +55,16 @@ export default function AdminRegistrations() {
       { Male: 0, Female: 0 }
     );
     const schoolDistribution = registrations.reduce((acc, registration) => {
-      acc[registration.school] = (acc[registration.school] || 0) + 1;
+      const school = registration.school;
+      if (!acc[school]) {
+        acc[school] = { total: 0, scouts: 0, leaders: 0 };
+      }
+      acc[school].total += 1;
+      if (registration.type.toLowerCase() === 'scout') {
+        acc[school].scouts += 1;
+      } else if (registration.type.toLowerCase() === 'leader') {
+        acc[school].leaders += 1;
+      }
       return acc;
     }, {});
     const leaderCount = registrations.filter(registration => registration.type.toLowerCase() === 'leader').length;
@@ -67,7 +76,8 @@ export default function AdminRegistrations() {
   const filteredRegistrations = registrations.filter(registration =>
     registration.school.toLowerCase().includes(searchQuery.toLowerCase()) ||
     registration._id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    registration.fullName.toLowerCase().includes(searchQuery.toLowerCase())
+    registration.fullName.toLowerCase().includes(searchQuery.toLowerCase())||
+    registration.email.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleEdit = (registration) => {
@@ -146,15 +156,29 @@ export default function AdminRegistrations() {
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <div className="bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-lg font-semibold">School Distribution</h2>
-          <ul>
-            {Object.entries(schoolDistribution).map(([school, count]) => (
-              <li key={school} className="flex justify-between">
-                <span>{school}</span>
-                <span>{count}</span>
-              </li>
-            ))}
-          </ul>
+          <h2 className="text-lg font-semibold mb-4">School Distribution</h2>
+          <div className="max-h-[300px] overflow-y-auto">
+            <table className="min-w-full">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="text-left py-2">School</th>
+                  <th className="text-right py-2">Scouts</th>
+                  <th className="text-right py-2">Leaders</th>
+                  <th className="text-right py-2">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.entries(schoolDistribution).map(([school, counts]) => (
+                  <tr key={school} className="border-b">
+                    <td className="py-2">{school}</td>
+                    <td className="text-right py-2">{counts.scouts}</td>
+                    <td className="text-right py-2">{counts.leaders}</td>
+                    <td className="text-right py-2 font-semibold">{counts.total}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
         <div className="bg-white shadow-md rounded-lg p-6">
           <h2 className="text-lg font-semibold">Roles</h2>
