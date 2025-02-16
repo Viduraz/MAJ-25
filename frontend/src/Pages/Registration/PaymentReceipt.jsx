@@ -62,6 +62,7 @@ export default function PaymentReceipt({
       }
 
       toast.success("All registrations saved successfully!");
+      generateExcel(); // Generate and download Excel file after successful registration
       
     } catch (error) {
       console.error("Error saving registrations:", error);
