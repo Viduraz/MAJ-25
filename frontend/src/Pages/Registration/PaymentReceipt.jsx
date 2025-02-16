@@ -39,15 +39,32 @@ export default function PaymentReceipt({
       const existingRegistrations = await axios.get(registrationURL);
       const existingEmails = existingRegistrations.data.map(reg => reg.email);
 
-      // Check for duplicates before saving
-      for (const scout of scouts) {
-        if (existingEmails.includes(scout.email)) {
-          toast.error(`Scout with email ${scout.email} is already registered.`);
-          return; // Stop the registration process
+      // Check for duplicates in both scouts and leaders
+      const allEmails = [...scouts.map(s => s.email), ...leaders.map(l => l.email)];
+      for (const email of allEmails) {
+        if (existingEmails.includes(email)) {
+          toast.error(`Email ${email} is already registered.`);
+          return;
         }
       }
 
-      // If no duplicates found, proceed with registration
+      // Register leaders first
+      for (const leader of leaders) {
+        await axios.post(registrationURL, {
+          fullName: leader.fullName,
+          gender: leader.gender,
+          phoneNumber: leader.phoneNumber,
+          email: leader.email,
+          school: school,
+          idNumber: leader.idNumber,
+          paymentDate: paymentDate,
+          amount: amount,
+          receiptImage: receiptImage,
+          type: "Leader",
+        });
+      }
+
+      // Then register scouts
       for (const scout of scouts) {
         await axios.post(registrationURL, {
           fullName: scout.fullName,
@@ -55,7 +72,7 @@ export default function PaymentReceipt({
           phoneNumber: scout.phoneNumber,
           email: scout.email,
           school: school,
-          idNumber: 0,
+          idNumber: 0, // Scouts don't have ID numbers
           paymentDate: paymentDate,
           amount: amount,
           receiptImage: receiptImage,
@@ -64,11 +81,10 @@ export default function PaymentReceipt({
       }
 
       toast.success("All registrations saved successfully!");
-      generateExcel(); // Generate and download Excel file after successful registration
+      generateExcel();
       
-      // Add a small delay before redirecting to ensure the file downloads
       setTimeout(() => {
-        navigate('/'); // Redirect to home page
+        navigate('/');
       }, 1000);
 
     } catch (error) {
