@@ -8,6 +8,7 @@ import { Input } from "@/Components/ui/input";
 import { ScoutDatePicker } from "./Components/ScoutDatePicker";
 import { Label } from "@/Components/ui/label";
 import { Button } from "@/Components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export default function PaymentReceipt({
   school,
@@ -24,6 +25,7 @@ export default function PaymentReceipt({
   const registrationURL = "https://maj-25-backend.onrender.com/api/registration";
 
   const [uploading, setUploading] = useState(false);
+  const navigate = useNavigate();
 
   // console.log("School: ",school);
   // console.log("Leaders: ",leaders);
@@ -64,6 +66,11 @@ export default function PaymentReceipt({
       toast.success("All registrations saved successfully!");
       generateExcel(); // Generate and download Excel file after successful registration
       
+      // Add a small delay before redirecting to ensure the file downloads
+      setTimeout(() => {
+        navigate('/'); // Redirect to home page
+      }, 1000);
+
     } catch (error) {
       console.error("Error saving registrations:", error);
       toast.error("An error occurred while saving the registrations.");
