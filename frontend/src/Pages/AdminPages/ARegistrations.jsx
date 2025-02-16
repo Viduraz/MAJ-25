@@ -296,7 +296,7 @@ export default function AdminRegistrations() {
               value={editData.amount}
               onChange={(e) => setEditData({ ...editData, amount: e.target.value })}
               className="mt-2 block w-full border border-gray-400 rounded-lg shadow-md focus:ring-green-600 focus:border-green-600"
-              readOnly
+              
             />
             <input
               type="text"
