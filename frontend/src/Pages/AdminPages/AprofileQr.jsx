@@ -3,7 +3,7 @@ import axios from "axios";
 import QRCode from "react-qr-code";
 import { Toaster, toast } from "react-hot-toast";
 import html2canvas from "html2canvas";
-import ID from "../../Assests/name_tag.jpg";
+import ID from "../../Assests/ID1223.jpg";
 import { useNavigate } from "react-router-dom";
 import ProtectedRoute from "../../Components/ProtectedRoute";
 
