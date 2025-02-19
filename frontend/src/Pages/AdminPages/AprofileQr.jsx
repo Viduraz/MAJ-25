@@ -78,8 +78,14 @@ function AprofileQr() {
     }
 
     // Capture the badge with the new QR code
-    const finalCanvas = await html2canvas(element, { scale: 2 });
-    const dataURL = finalCanvas.toDataURL("image/jpeg");
+    const finalCanvas = await html2canvas(element, {
+      scale: 1,
+      width: 900,
+      height: 1110,
+      useCORS: true,
+      allowTaint: true,
+    });
+    const dataURL = finalCanvas.toDataURL("image/jpeg", 1.0);
 
     // Revert QR code back to SVG after capture
     if (qrElement) {
@@ -121,11 +127,13 @@ function AprofileQr() {
             <div className="mt-10">
               <div
                 id="badge"
-                className="relative w-[768px] h-[1082px] mx-auto bg-white shadow-lg rounded-lg"
+                className="relative mx-auto bg-white shadow-lg rounded-lg"
                 style={{
                   backgroundImage: `url(${ID})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
+                  width: "900px",
+                  height: "1110px",
                 }}
               >
                 {/* QR Code */}
@@ -161,7 +169,7 @@ function AprofileQr() {
                 <div
                   className="absolute text-balance text-white"
                   style={{
-                    bottom: "25%",
+                    bottom: "20%",
                     left: "60%",
                     transform: "translateX(-50%)",
                     width: "80%",
