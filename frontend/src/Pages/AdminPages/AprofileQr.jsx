@@ -6,6 +6,7 @@ import html2canvas from "html2canvas";
 import ID from "../../Assests/ID1223.jpg";
 import { useNavigate } from "react-router-dom";
 import ProtectedRoute from "../../Components/ProtectedRoute";
+//1018 1256
 
 function AprofileQr() {
   const [searchEmail, setSearchEmail] = useState("");
@@ -48,7 +49,7 @@ function AprofileQr() {
       showToast("User Not Found");
     }
   };
-
+  
   const handleDownload = async () => {
     const element = document.getElementById("badge");
 
@@ -59,7 +60,7 @@ function AprofileQr() {
       const context = canvas.getContext("2d");
 
       // Adjust size based on QRCode size
-      const size = 280;
+      const size = 430;
       canvas.width = size;
       canvas.height = size;
 
@@ -140,7 +141,7 @@ function AprofileQr() {
                 <div
                   className="absolute"
                   style={{
-                    top: "45%",
+                    top: "50%",
                     left: "50%",
                     transform: "translate(-50%, -50%)",
                     display: "flex",
@@ -152,14 +153,14 @@ function AprofileQr() {
                     borderRadius: "0.5rem",
                   }}
                 >
-                  <h3 className="text-xl font-semibold text-gray-800">
-                    MY QR Code
-                  </h3>
                   {userData && (
                     <QRCode
-                      id="qr-code" // Unique ID for processing
-                      value={JSON.stringify(userData)}
-                      size={280}
+                      id="qr-code"
+                      value={JSON.stringify({
+                        ID: userData.id,
+                        email: userData.email
+                      })}
+                      size={430}
                       className="bg-white p-2"
                     />
                   )}
@@ -169,26 +170,20 @@ function AprofileQr() {
                 <div
                   className="absolute text-balance text-white"
                   style={{
-                    bottom: "20%",
-                    left: "60%",
+                    top: "73%",
+                    left: "50%",
                     transform: "translateX(-50%)",
                     width: "80%",
                   }}
                 >
-                  <p className="text-xl font-semibold">
-                    <strong>Name:</strong> {userData.fullName}
+                  <p className="text-3xl font-semibold text-center">
+                    <strong>{userData.fullName}</strong>
                   </p>
-                  <p className="text-xl font-semibold">
-                    <strong>Sub Camp:</strong> {userData.school}
+                  <p className="text-l font-semibold text-center">
+                    <strong>{userData.email}</strong> 
                   </p>
-                  <p className="text-xl font-semibold">
-                    <strong>Email:</strong> {userData.email}
-                  </p>
-                  <p className="text-xl font-semibold">
-                    <strong>Gender:</strong> {userData.gender}
-                  </p>
-                  <p className="text-xl font-semibold">
-                    <strong>Registered As:</strong> {userData.type}
+                  <p className="text-l font-semibold text-center">
+                    <strong>{userData.school}</strong> 
                   </p>
                 </div>
               </div>
