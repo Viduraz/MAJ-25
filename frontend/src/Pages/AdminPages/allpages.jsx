@@ -11,6 +11,7 @@ const AllPages = () => {
     { title: 'Profile QR', path: '/AProfileQR' },
     { title: 'Registrations', path: '/ARegistrations' },
     { title: 'Pass Activity', path: '/pass-activity' },
+    { title: 'Activity Log', path: '/AActivityLog' },
   ];
 
   return (

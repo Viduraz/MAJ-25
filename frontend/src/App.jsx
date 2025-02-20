@@ -26,6 +26,7 @@ import ProtectedRoute from './Components/ProtectedRoute';
 import Unauthorized from "./Pages/AdminPages/Unauthorized";
 import AllPages from "./Pages/AdminPages/allpages";
 import Sponsors from './Pages/Sponsors';
+import AActivityLog from './Pages/AdminPages/AActivityLog';
 
 
 function App() {
@@ -99,8 +100,13 @@ function App() {
             </ProtectedRoute>
           } />
           <Route path="/pass-activity" element={
-            <ProtectedRoute allowedPage="pass-activity">
+            <ProtectedRoute allowedPage={["pass-activity"]}>
               <PassActivity />
+            </ProtectedRoute>
+          } />
+          <Route path="/AActivityLog" element={
+            <ProtectedRoute allowedPages={['/AActivityLog']}>
+              <AActivityLog />
             </ProtectedRoute>
           } />
 
