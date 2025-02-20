@@ -45,7 +45,7 @@ export default function Registration() {
     "Ku/Humbuluwa Central College",
     "Ku/Lakdas De Mel College",
     "Ku/Mahinda Vidyalaya",
-    "Ku/Maliyadeva Adarsha College",
+    "Ku/Maliyadeva Adarsha Maha Vidyalaya",
     "Ku/Maliyadeva College",
     "Ku/Rambadagalla Central College",
     "Ku/Royal International School",
