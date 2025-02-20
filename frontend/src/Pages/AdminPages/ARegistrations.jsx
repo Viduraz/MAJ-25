@@ -3,6 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import ProtectedRoute from '../../Components/ProtectedRoute';
+import * as XLSX from 'xlsx';
 
 export default function AdminRegistrations() {
   const [registrations, setRegistrations] = useState([]);
@@ -121,6 +122,23 @@ export default function AdminRegistrations() {
     }
   };
 
+  const handleDownloadExcel = () => {
+    const filteredData = filteredRegistrations.map(({ fullName, gender, email, phoneNumber, school, type, idNumber }) => ({
+      fullName,
+      gender,
+      email,
+      phoneNumber,
+      school,
+      type,
+      idNumber
+    }));
+  
+    const worksheet = XLSX.utils.json_to_sheet(filteredData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Registrations');
+    XLSX.writeFile(workbook, 'registrations.xlsx');
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -130,7 +148,7 @@ export default function AdminRegistrations() {
     <ProtectedRoute allowedPage="ARegistrations">
     <div className="min-h-screen bg-gray-100 p-6">
       <h1 className="text-4xl font-bold mb-6">Admin Panel - Registrations</h1>
-      <div className="mb-6">
+      <div className="mb-6 flex justify-between items-center">
         <input
           type="text"
           placeholder="Search by school name"
@@ -138,6 +156,12 @@ export default function AdminRegistrations() {
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full p-2 border border-gray-300 rounded-lg"
         />
+        <button
+          onClick={handleDownloadExcel}
+          className="bg-green-600 text-white px-4 py-2 rounded ml-4"
+        >
+          Download Excel Sheet
+        </button>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         <div className="bg-white shadow-md rounded-lg p-6">
