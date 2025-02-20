@@ -58,13 +58,24 @@ export default function AdminRegistrations() {
     const schoolDistribution = registrations.reduce((acc, registration) => {
       const school = registration.school;
       if (!acc[school]) {
-        acc[school] = { total: 0, scouts: 0, leaders: 0 };
+        acc[school] = { 
+          total: 0, 
+          scouts: 0, 
+          leaders: 0,
+          male: 0,
+          female: 0 
+        };
       }
       acc[school].total += 1;
       if (registration.type.toLowerCase() === 'scout') {
         acc[school].scouts += 1;
       } else if (registration.type.toLowerCase() === 'leader') {
         acc[school].leaders += 1;
+      }
+      if (registration.gender.toLowerCase() === 'male') {
+        acc[school].male += 1;
+      } else if (registration.gender.toLowerCase() === 'female') {
+        acc[school].female += 1;
       }
       return acc;
     }, {});
@@ -208,6 +219,21 @@ export default function AdminRegistrations() {
           <h2 className="text-lg font-semibold">Roles</h2>
           <p>Leaders: {leaderCount}</p>
           <p>Scouts: {scoutCount}</p>
+          
+          {searchQuery && (
+            <div className="mt-4">
+              <h3 className="text-md font-semibold">Gender Distribution:</h3>
+              {Object.entries(schoolDistribution)
+                .filter(([school]) => school.toLowerCase().includes(searchQuery.toLowerCase()))
+                .map(([school, counts]) => (
+                  <div key={school} className="mt-2">
+                    <p className="font-medium">{school}:</p>
+                    <p className="ml-4">Males: {counts.male}</p>
+                    <p className="ml-4">Females: {counts.female}</p>
+                  </div>
+                ))}
+            </div>
+          )}
         </div>
       </div>
       <div className="overflow-x-auto bg-white shadow-md rounded-lg">
