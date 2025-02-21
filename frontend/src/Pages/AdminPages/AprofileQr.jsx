@@ -190,7 +190,7 @@ function AprofileQr() {
       <div className="min-h-screen bg-gradient-to-b from-blue-100 to-white flex items-center justify-center p-10">
         <Toaster/>
         <div className="bg-white shadow-lg rounded-lg p-6 max-w-3xl w-full">
-          <h1 className="text-4xl font-extrabold text-blue-600 mb-6 text-center">
+          <h1 className="text-4xl font-extrabold text-blue-600 mb-6 text-center p-6">
             Search User by Email
           </h1>
           <div className="flex flex-col items-center">
