@@ -55,17 +55,6 @@ const AdminManagement = () => {
     }
   };
 
-  const handleAdd = async (formData) => {
-    try {
-      const response = await axios.post('https://maj-25-backend.onrender.com/api/admin/add', formData);
-      setAdmins([...admins, response.data]);
-      setFormData({ username: '', email: '', password: '', redirectPage: '' });
-      toast.success('Administrator added successfully');
-    } catch (error) {
-      toast.error(error.response?.data?.message || 'Error adding administrator');
-    }
-  };
-
   const handleUpdate = async (formData) => {
     // Check if adminToUpdate and its _id exist
     if (!adminToUpdate || !adminToUpdate._id) {
@@ -92,26 +81,23 @@ const AdminManagement = () => {
     }
   };
 
+  // Update the handleSubmit function
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch('/api/admin/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        toast.success('Admin added successfully!');
-        // Optionally, redirect or reset the form
-      } else {
-        toast.error('Failed to add admin. Please try again.');
+    
+    if (isUpdating) {
+      await handleUpdate(formData);
+    } else {
+      try {
+        const response = await axios.post('https://maj-25-backend.onrender.com/api/admin/add', formData);
+        setAdmins([...admins, response.data]);
+        setFormData({ username: '', email: '', password: '', redirectPage: '' });
+        toast.success('Administrator added successfully');
+        // Refresh the page after successful addition
+        window.location.reload();
+      } catch (error) {
+        toast.error(error.response?.data?.message || 'Error adding administrator');
       }
-    } catch (error) {
-      toast.error('Error adding admin: ' + error.message);
     }
   };
 
