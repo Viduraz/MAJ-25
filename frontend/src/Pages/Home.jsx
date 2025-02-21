@@ -268,7 +268,7 @@ export default function Home() {
       <AnimationContainer>
         <div className="px-0 py-16 text-center bg-gray-100">
           <h2 className="mb-8 text-4xl font-bold text-gray-800">
-            CampSite MAP
+            Jambareeta Destinations
           </h2>
           <div className="flex justify-center">
             <img
