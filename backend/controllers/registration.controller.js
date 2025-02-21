@@ -48,6 +48,7 @@ export const getUserByEmail = async (req, res) => {
         res.status(404).json({ message: error.message });
     }     
 };
+
 export const getAllRegistration = async (req, res) => {
     try {
         const registration = await Registration.find();
@@ -56,6 +57,24 @@ export const getAllRegistration = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 
+};
+
+export const getUsersBySchool = async (req, res) => {
+    const { email } = req.params;
+
+    try {
+        // Find the registration by email to get the school
+        const registration = await Registration.findOne({ email });
+        if (!registration) {
+            return res.status(404).json({ message: "Registration not found" });
+        }
+
+        // Find all registrations with the same school
+        const users = await Registration.find({ school: registration.school });
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };
 
 export const updateRegistration = async (req, res) => {

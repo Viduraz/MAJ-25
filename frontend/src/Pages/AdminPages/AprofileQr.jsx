@@ -3,10 +3,12 @@ import axios from "axios";
 import QRCode from "react-qr-code";
 import { Toaster, toast } from "react-hot-toast";
 import html2canvas from "html2canvas";
-import ID from "../../Assests/ID1223.jpg";
+import ID from "../../Assests/TAG.jpg";
 import { useNavigate } from "react-router-dom";
 import ProtectedRoute from "../../Components/ProtectedRoute";
-//1018 1256
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
+import { renderToString } from 'react-dom/server';
 
 function AprofileQr() {
   const [searchEmail, setSearchEmail] = useState("");
@@ -17,7 +19,7 @@ function AprofileQr() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      navigate("/admin"); // Redirect to login if no token
+      navigate("/admin");
     }
   }, [navigate]);
 
@@ -49,63 +51,146 @@ function AprofileQr() {
       showToast("User Not Found");
     }
   };
-  
+
+  const handleAllSearch = async () => {
+    try {
+      const response = await axios.get(
+        `https://maj-25-backend.onrender.com/api/registration/sameschool/all/${searchEmail}`
+      );
+      if (response.data) {
+        showToast("Users Found", "success");
+        return response.data;
+      } else {
+        showToast("Users Not Found");
+        return [];
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      showToast("Users Not Found");
+      return [];
+    }
+  };
+
+  const createBadgeElement = (user) => {
+    const badgeDiv = document.createElement('div');
+    badgeDiv.style.position = 'relative';
+    badgeDiv.style.width = '900px';
+    badgeDiv.style.height = '1110px';
+    badgeDiv.style.backgroundImage = `url(${ID})`;
+    badgeDiv.style.backgroundSize = 'cover';
+    badgeDiv.style.backgroundPosition = 'center';
+    badgeDiv.style.backgroundColor = 'white';
+
+    // Create QR code container
+    const qrContainer = document.createElement('div');
+    qrContainer.style.position = 'absolute';
+    qrContainer.style.top = '50%';
+    qrContainer.style.left = '50%';
+    qrContainer.style.transform = 'translate(-50%, -50%)';
+    qrContainer.style.backgroundColor = 'white';
+    qrContainer.style.padding = '1rem';
+    qrContainer.style.borderRadius = '0.5rem';
+
+    // Create QR code using the React component
+    const qrCodeString = renderToString(
+        <QRCode
+            value={JSON.stringify({ ID: user.id, email: user.email })}
+            size={460}
+            className="bg-white p-2"
+        />
+    );
+    qrContainer.innerHTML = qrCodeString;
+    badgeDiv.appendChild(qrContainer);
+
+    // Create text container
+    const textContainer = document.createElement('div');
+    textContainer.style.position = 'absolute';
+    textContainer.style.top = '75%';
+    textContainer.style.left = '50%';
+    textContainer.style.transform = 'translateX(-50%)';
+    textContainer.style.width = '80%';
+    textContainer.style.textAlign = 'center';
+    textContainer.style.color = 'white';
+    textContainer.style.fontFamily = "'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
+
+    // Add user details
+    textContainer.innerHTML = `
+      <p style="font-size: 30px; font-weight: 600; margin: 5px 0;"><strong>${user.fullName}</strong></p>
+      <p style="font-size: 20px; font-weight: 600; margin: 5px 0;"><strong>${user.school}</strong></p>
+    `;
+    badgeDiv.appendChild(textContainer);
+
+    return badgeDiv;
+  };
+
   const handleDownload = async () => {
     const element = document.getElementById("badge");
-
-    // Convert QR code (SVG) to Canvas
-    const qrElement = document.getElementById("qr-code");
-    if (qrElement) {
-      const canvas = document.createElement("canvas");
-      const context = canvas.getContext("2d");
-
-      // Adjust size based on QRCode size
-      const size = 430;
-      canvas.width = size;
-      canvas.height = size;
-
-      const img = new Image();
-      img.src = `data:image/svg+xml;base64,${btoa(
-        new XMLSerializer().serializeToString(qrElement)
-      )}`;
-      await new Promise((resolve) => (img.onload = resolve));
-
-      // Draw QR code onto the new canvas
-      context.drawImage(img, 0, 0, size, size);
-
-      // Replace the SVG QR code with the canvas temporarily
-      qrElement.replaceWith(canvas);
-      canvas.id = "qr-code";
-    }
-
-    // Capture the badge with the new QR code
-    const finalCanvas = await html2canvas(element, {
+    const canvas = await html2canvas(element, {
       scale: 1,
       width: 900,
       height: 1110,
       useCORS: true,
       allowTaint: true,
     });
-    const dataURL = finalCanvas.toDataURL("image/jpeg", 1.0);
-
-    // Revert QR code back to SVG after capture
-    if (qrElement) {
-      document.getElementById("qr-code").replaceWith(qrElement);
-    }
-
-    // Trigger download
+    
+    const dataURL = canvas.toDataURL("image/jpeg", 1.0);
     const link = document.createElement("a");
     link.href = dataURL;
     link.download = "badge.jpg";
     link.click();
   };
 
+  const handleAllDownload = async () => {
+    const users = await handleAllSearch();
+    if (!users.length) return;
+
+    const zip = new JSZip();
+    const container = document.createElement('div');
+    container.style.position = 'absolute';
+    container.style.left = '-9999px';
+    container.style.top = '0';
+    document.body.appendChild(container);
+
+    try {
+      toast.loading('Generating badges...', { duration: 5000 });
+      
+      for (const user of users) {
+        const badgeElement = createBadgeElement(user);
+        container.innerHTML = '';
+        container.appendChild(badgeElement);
+        
+        await new Promise(resolve => setTimeout(resolve, 100)); // Give time for elements to render
+
+        const canvas = await html2canvas(badgeElement, {
+          scale: 1,
+          width: 900,
+          height: 1110,
+          useCORS: true,
+          allowTaint: true,
+          logging: false,
+        });
+
+        const dataURL = canvas.toDataURL('image/jpeg', 1.0);
+        zip.file(`${user.email}.jpg`, dataURL.split(',')[1], { base64: true });
+      }
+
+      const zipBlob = await zip.generateAsync({ type: 'blob' });
+      saveAs(zipBlob, 'badges.zip');
+      toast.success('Badges downloaded successfully!');
+    } catch (error) {
+      console.error('Error generating badges:', error);
+      toast.error('Error generating badges');
+    } finally {
+      document.body.removeChild(container);
+    }
+  };
+
   return (
     <ProtectedRoute allowedPage="AprofileQr">
       <div className="min-h-screen bg-gradient-to-b from-blue-100 to-white flex items-center justify-center p-10">
-        <Toaster />
-        <div className="bg-white shadow-lg rounded-lg p-0 max-w-3xl w-full">
-          <h1 className="text-4xl font-extrabold text-blue-600 mb-6 text-center">
+        <Toaster/>
+        <div className="bg-white shadow-lg rounded-lg p-6 max-w-3xl w-full">
+          <h1 className="text-4xl font-extrabold text-blue-600 mb-6 text-center p-6">
             Search User by Email
           </h1>
           <div className="flex flex-col items-center">
@@ -137,7 +222,6 @@ function AprofileQr() {
                   height: "1110px",
                 }}
               >
-                {/* QR Code */}
                 <div
                   className="absolute"
                   style={{
@@ -153,24 +237,21 @@ function AprofileQr() {
                     borderRadius: "0.5rem",
                   }}
                 >
-                  {userData && (
-                    <QRCode
-                      id="qr-code"
-                      value={JSON.stringify({
-                        ID: userData.id,
-                        email: userData.email
-                      })}
-                      size={430}
-                      className="bg-white p-2"
-                    />
-                  )}
+                  <QRCode
+                    id="qr-code"
+                    value={JSON.stringify({
+                      ID: userData.id,
+                      email: userData.email
+                    })}
+                    size={460}
+                    className="bg-white p-2"
+                  />
                 </div>
 
-                {/* User details */}
                 <div
                   className="absolute text-balance text-white"
                   style={{
-                    top: "73%",
+                    top: "75%",
                     left: "50%",
                     transform: "translateX(-50%)",
                     width: "80%",
@@ -180,20 +261,26 @@ function AprofileQr() {
                     <strong>{userData.fullName}</strong>
                   </p>
                   <p className="text-l font-semibold text-center">
-                    <strong>{userData.email}</strong> 
-                  </p>
-                  <p className="text-l font-semibold text-center">
-                    <strong>{userData.school}</strong> 
+                    <strong>{userData.school}</strong>
                   </p>
                 </div>
               </div>
 
-              <button
-                onClick={handleDownload}
-                className="mt-6 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg transition-all"
-              >
-                Download Badge
-              </button>
+              <div className="flex justify-center gap-4 mt-6">
+                <button
+                  onClick={handleDownload}
+                  className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg transition-all"
+                >
+                  Download Tag
+                </button>
+
+                <button
+                  onClick={handleAllDownload}
+                  className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg transition-all"
+                >
+                  Download All Tags
+                </button>
+              </div>
             </div>
           )}
         </div>
