@@ -50,6 +50,14 @@ import Activity40 from '../../Assests/Activity-40.jpg';
 import Activity41 from '../../Assests/Activity-41.jpg';
 
 import Title1 from '../../Assests/title_1.jpg';
+import Title2 from '../../Assests/title_2.jpg';
+import Title3 from '../../Assests/title_3.jpg';
+import Title4 from '../../Assests/title_4.jpg';
+import Title5 from '../../Assests/title_5.jpg';
+import Title6 from '../../Assests/title_6.jpg';
+import Title7 from '../../Assests/title_7.jpg';
+
+import MainTitle from '../../Assests/activityLogTitle.png';
 
 function AActivityLog(){
   const [searchEmail, setSearchEmail] = useState("");
@@ -120,13 +128,14 @@ function AActivityLog(){
     const addHeader = () => {
       pdf.setFontSize(100);
       pdf.setTextColor("darkBlue");
-      pdf.text("Activity Log", 1240, 70, { align: "center" });
+      //pdf.text("Activity Log", 1240, 70, { align: "center" });MainTitle
+      pdf.addImage(MainTitle, 'PNG', 50, 10, 2380, 150);
 
       pdf.setFontSize(72);
       pdf.setTextColor("black");
-      pdf.text(`${user.fullName}`, 50, 130);
+      pdf.text(`${user.fullName}`, 50, 220);
       pdf.setFontSize(36);
-      pdf.text(`${user.school}`, 50, 150);
+      pdf.text(`${user.school}`, 50, 250);
     };
 
     pdf.setFont("helvetica", "bold");
@@ -144,6 +153,8 @@ function AActivityLog(){
     //console.log(categorizedActivities);
 
     const categoryName = {'Adventure':'Adventure', 'Bussiness_&_Entrepreneurship':'Bussiness & Entrepreneurship', 'Health_And_Environment':'Health & Environment', 'Scout_Craft':'Scout Craft', 'Society_and_Culture':'Society & Culture', 'Technology':'Technology', 'Water_activities':'Water Activities'};
+    const categoryNameImage = {'Adventure':Title5, 'Bussiness_&_Entrepreneurship':Title6, 'Health_And_Environment':Title4, 'Scout_Craft':Title3, 'Society_and_Culture':Title1, 'Technology':Title2, 'Water_activities':Title7};
+
     const imageName = {
       'Activity-01': Activity1,
       'Activity-02': Activity2,
@@ -201,7 +212,15 @@ function AActivityLog(){
       pdf.setFontSize(72);
       pdf.setTextColor("black");
       
-      pdf.text(`${categoryName[categories[j]]}`, 50, 250 + (rowNum * 270));
+      //pdf.text(`${categoryName[categories[j]]}`, 50, 250 + (rowNum * 270));
+      
+      try {
+        pdf.addImage(categoryNameImage[categories[j]], 'PNG', 50, 270 + (rowNum * 270), 2380, 150);
+        rowNum++;
+      } catch (error) {
+        console.error("Error adding category image:", error);
+      }
+      console.log(categories);
 
       for (let i = 0; i < categorizedActivities[categories[j]].length; i++) {
         if (rowNum >= maxRowsPerPage) {
@@ -211,14 +230,20 @@ function AActivityLog(){
           // Print category name again on the new page
           pdf.setFontSize(72);
           pdf.setTextColor("black");
-          pdf.text(`${categoryName[categories[j]]}`, 50, 250 + (rowNum * 270));
+          //pdf.text(`${categoryName[categories[j]]}`, 50, 250 + (rowNum * 270));
+          try {
+            pdf.addImage(categoryNameImage[categories[j]], 'PNG', 50, 270 + (rowNum * 270), 2380, 150);
+            rowNum++;
+          } catch (error) {
+            console.error("Error adding category image:", error);
+          }
         }
         if (i % 2 === 0) {
-          pdf.addImage(imageName[categorizedActivities[categories[j]][i]], 'PNG', 50, 260 + (rowNum * 270), 1165, 250);
+          pdf.addImage(imageName[categorizedActivities[categories[j]][i]], 'PNG', 50, 270 + (rowNum * 270), 1165, 250);
           if (i == categorizedActivities[categories[j]].length - 1)
             rowNum++;
         } else {
-          pdf.addImage(imageName[categorizedActivities[categories[j]][i]], 'PNG', 1265, 260 + (rowNum * 270), 1165, 250);
+          pdf.addImage(imageName[categorizedActivities[categories[j]][i]], 'PNG', 1265, 270 + (rowNum * 270), 1165, 250);
           rowNum++;
         }
         //console.log(categorizedActivities[categories[j]][i]);
