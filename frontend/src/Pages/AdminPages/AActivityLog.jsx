@@ -119,6 +119,7 @@ function AActivityLog(){
   };
 
   const createPDF = async (user, activities) => {
+    console.log(user.fullName);
     const pdf = new jsPDF({
       orientation: 'portrait',
       unit: 'px',
@@ -199,7 +200,7 @@ function AActivityLog(){
       'Activity-41': Activity41,
     };
     const categories = Object.keys(categorizedActivities);
-    
+
     for (let j = 0; j < categories.length; j++) {
       // Check if adding the category title would exceed the page limit
       if (rowNum >= maxRowsPerPage) {
@@ -220,7 +221,7 @@ function AActivityLog(){
       } catch (error) {
         console.error("Error adding category image:", error);
       }
-      console.log(categories);
+      
 
       for (let i = 0; i < categorizedActivities[categories[j]].length; i++) {
         if (rowNum >= maxRowsPerPage) {
