@@ -127,23 +127,35 @@ export default function Home() {
 
   // Function to calculate time left until 20th February 2026
   function calculateTimeLeft() {
-    const difference = +new Date("2025-02-26") - +new Date();
-    let timeLeft = {};
+    const eventStart = new Date("2025-02-26");
+    const eventEnd = new Date("2025-03-02"); // Assuming 5-day event
+    const now = new Date();
+    const difference = +eventStart - +now;
 
-    if (difference > 0) {
-      timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
-      };
+    // Check if event is currently happening
+    if (now >= eventStart && now <= eventEnd) {
+      return "HAPPENING NOW";
     }
 
-    return timeLeft;
+    // Check if event has ended
+    if (difference < 0) {
+      return "EVENT COMPLETED";
+    }
+
+    // Calculate remaining time
+    return {
+      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((difference / 1000 / 60) % 60),
+      seconds: Math.floor((difference / 1000) % 60),
+    };
   }
 
   // Function to format time left
   const formatTimeLeft = () => {
+    if (typeof timeLeft === "string") {
+      return timeLeft; // Return the status message directly
+    }
     return `${timeLeft.days || 0}d ${timeLeft.hours || 0}h ${
       timeLeft.minutes || 0
     }m ${timeLeft.seconds || 0}s`;
@@ -166,7 +178,7 @@ export default function Home() {
 
         <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center text-white">
           <p className="mb-4 text-2xl tracking-wide uppercase">
-            Plants Seeds Of Change Today
+            Plant Seeds Of Change Today
           </p>
           <h1 className="mb-6 text-6xl font-bold leading-tight">
             Maliyadeva <span className="text-gray-400">Adarsha</span> Jambareeta
@@ -268,7 +280,7 @@ export default function Home() {
       <AnimationContainer>
         <div className="px-0 py-16 text-center bg-gray-100">
           <h2 className="mb-8 text-4xl font-bold text-gray-800">
-            CampSite MAP
+            Jambareeta Destinations
           </h2>
           <div className="flex justify-center">
             <img
@@ -450,14 +462,16 @@ export default function Home() {
       <AnimationContainer>
         <div className="py-12 mx-4 text-center rounded-lg shadow-lg bg-gradient-to-r from-purple-500 to-blue-500">
           <h2 className="mb-4 text-4xl font-bold text-white">
-            Countdown to Event
+            {typeof timeLeft === "string" ? timeLeft : "Countdown to Event"}
           </h2>
           <div className="text-6xl font-extrabold text-white">
-            {formatTimeLeft()}
+            {typeof timeLeft === "string" ? "" : formatTimeLeft()}
           </div>
-          <p className="mt-2 text-lg text-white">
-            Days : Hours : Minutes : Seconds
-          </p>
+          {typeof timeLeft !== "string" && (
+            <p className="mt-2 text-lg text-white">
+              Days : Hours : Minutes : Seconds
+            </p>
+          )}
         </div>
       </AnimationContainer>
 
