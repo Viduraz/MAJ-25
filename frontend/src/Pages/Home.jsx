@@ -166,7 +166,7 @@ export default function Home() {
 
         <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center text-white">
           <p className="mb-4 text-2xl tracking-wide uppercase">
-            Plants Seeds Of Change Today
+            Plant Seeds Of Change Today
           </p>
           <h1 className="mb-6 text-6xl font-bold leading-tight">
             Maliyadeva <span className="text-gray-400">Adarsha</span> Jambareeta
