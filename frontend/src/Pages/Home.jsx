@@ -17,6 +17,7 @@ import nestle from "../Assests/nestle.jpg";
 import ddji1 from "../Assests/ddji1.jpg";
 import ajithsir from "../Assests/AjithSIR.png";
 import reGiOpen from "../Assests/Registration_Open.jpg"
+import sirasaTV from "../Assests/SIRASATV.jpg"
 import ictfrombs from "../Assests/ictfromabc_logo.png";
 import { useNavigate } from 'react-router-dom';
 
@@ -54,9 +55,9 @@ export default function Home() {
       image: reGiOpen
     },
     {
-      title: "New Activities Announced",
-      description: "Exciting new activities including rope courses, wilderness survival workshops, and environmental conservation projects have been added to the event schedule.",
-      image: "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?q=80&w=1000&auto=format&fit=crop"
+      title: "Sirasa TV Holiday Adventure",
+      description: "Tune in to Sirasa TV this weekend for a special holiday adventure featuring the MAJ 2025 organizing committee.",
+      image: sirasaTV
     },
     {
       title: "Volunteer Opportunities",
