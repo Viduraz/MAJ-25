@@ -178,7 +178,7 @@ export default function Home() {
 
         <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center text-white">
           <p className="mb-4 text-2xl tracking-wide uppercase">
-            Plants Seeds Of Change Today
+            Plant Seeds Of Change Today
           </p>
           <h1 className="mb-6 text-6xl font-bold leading-tight">
             Maliyadeva <span className="text-gray-400">Adarsha</span> Jambareeta
@@ -280,7 +280,7 @@ export default function Home() {
       <AnimationContainer>
         <div className="px-0 py-16 text-center bg-gray-100">
           <h2 className="mb-8 text-4xl font-bold text-gray-800">
-            CampSite MAP
+            Jambareeta Destinations
           </h2>
           <div className="flex justify-center">
             <img

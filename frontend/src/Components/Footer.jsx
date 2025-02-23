@@ -1,7 +1,10 @@
 import React from "react";
 import campbadge from "../Assests/campbadge.png";
+import { useNavigate } from 'react-router-dom';
 
 export default function Footer() {
+  const navigate = useNavigate();
+
   return (
     <footer className="bg-gray-800 text-white">
       {/* Footer Content */}
@@ -93,11 +96,14 @@ export default function Footer() {
               </svg>
             </a>
             {/* Website */}
-            <a href="#" className="hover:scale-110 transition">
+            <a 
+              onClick={() => navigate('/admin')} 
+              className="hover:scale-110 transition cursor-pointer"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-6 h-6 text-gray-400 hover:text-white transition"
-                fill="currentColor"
+                fill="currentColor" 
                 viewBox="0 0 24 24"
               >
                 <path d="M12 0c-6.6 0-12 5.4-12 12s5.4 12 12 12 12-5.4 12-12-5.4-12-12-12zm0 22c-5.5 0-10-4.5-10-10s4.5-10 10-10 10 4.5 10 10-4.5 10-10 10zm-1-17h2v8h-2v-8zm0 10h2v2h-2v-2z" />
