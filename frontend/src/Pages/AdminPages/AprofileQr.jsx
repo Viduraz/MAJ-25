@@ -9,6 +9,7 @@ import ProtectedRoute from "../../Components/ProtectedRoute";
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { renderToString } from 'react-dom/server';
+import jsPDF from 'jspdf';
 
 function AprofileQr() {
   const [searchEmail, setSearchEmail] = useState("");
@@ -185,6 +186,87 @@ function AprofileQr() {
     }
   };
 
+  const handleA3Download = async () => {
+    const users = await handleAllSearch();
+    if (!users.length) return;
+
+    try {
+      toast.loading('Generating A3 pages...', { duration: 5000 });
+      
+      // Create PDF with A3 size (297mm x 420mm)
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a3'
+      });
+
+      const container = document.createElement('div');
+      container.style.position = 'absolute';
+      container.style.left = '-9999px';
+      container.style.top = '0';
+      document.body.appendChild(container);
+
+      // Calculate tags per page and total pages
+      const tagsPerPage = 9;
+      const totalPages = Math.ceil(users.length / tagsPerPage);
+
+      // Tag dimensions (in mm)
+      const tagWidth = 85; // ~1018px
+      const tagHeight = 105; // ~1256px
+      const margin = 10;
+      const startX = 16;
+      const startY = 15;
+
+      for (let page = 0; page < totalPages; page++) {
+        if (page > 0) {
+          pdf.addPage();
+        }
+
+        // Process 9 tags per page
+        for (let i = 0; i < tagsPerPage; i++) {
+          const userIndex = page * tagsPerPage + i;
+          if (userIndex >= users.length) break;
+
+          const user = users[userIndex];
+          const badgeElement = createBadgeElement(user);
+          container.innerHTML = '';
+          container.appendChild(badgeElement);
+
+          await new Promise(resolve => setTimeout(resolve, 100));
+
+          const canvas = await html2canvas(badgeElement, {
+            scale: 1,
+            width: 1018,
+            height: 1256,
+            useCORS: true,
+            allowTaint: true,
+            logging: false,
+          });
+
+          // Calculate position for current tag
+          const row = Math.floor(i / 3);
+          const col = i % 3;
+          const x = startX + col * (tagWidth + margin);
+          const y = startY + row * (tagHeight + margin);
+
+          // Add tag to PDF
+          const imgData = canvas.toDataURL('image/jpeg', 1.0);
+          pdf.addImage(imgData, 'JPEG', x, y, tagWidth, tagHeight);
+        }
+      }
+
+      // Save PDF
+      pdf.save('tags_a3.pdf');
+      toast.success('A3 pages generated successfully!');
+
+    } catch (error) {
+      console.error('Error generating A3 pages:', error);
+      toast.error('Error generating A3 pages');
+    } finally {
+      document.body.removeChild(container);
+    }
+  };
+
   return (
     <ProtectedRoute allowedPage="AprofileQr">
       <div className="min-h-screen bg-gradient-to-b from-blue-100 to-white flex items-center justify-center p-10">
@@ -279,6 +361,12 @@ function AprofileQr() {
                   className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg transition-all"
                 >
                   Download All Tags
+                </button>
+                <button
+                  onClick={handleA3Download}
+                 className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg transition-all"
+                 >
+                  Download A3
                 </button>
               </div>
             </div>
