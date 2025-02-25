@@ -47,7 +47,7 @@ export default function Registration() {
     "Ku/Mahinda Vidyalaya",
     "Ku/Maliyadeva Adarsha Maha Vidyalaya",
     "Ku/Maliyadeva College",
-    "Ku/Rambadagalla Central College",
+    "Ku/S W R D Banaranayake College",
     "Ku/Royal International School",
     "Ku/Shantha Bernadet Maha Vidyalaya",
     "Ku/Sir John Kothalawala College",
