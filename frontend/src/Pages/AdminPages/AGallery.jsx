@@ -19,23 +19,28 @@ export const AGallery = () => {
 
   // Function to upload image
   const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
 
     try {
       setUploading(true);
       const storage = getStorage(firebaseApp);
-      const storageRef = ref(storage, `gallery/${Date.now()}-${file.name}`);
       
-      await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(storageRef);
+      // Upload all files in parallel
+      const uploadPromises = files.map(async (file) => {
+        const storageRef = ref(storage, `gallery/${Date.now()}-${file.name}`);
+        await uploadBytes(storageRef, file);
+        return getDownloadURL(storageRef);
+      });
+
+      const downloadURLs = await Promise.all(uploadPromises);
       
-      // Add new image URL to the list
-      setImages(prev => [...prev, downloadURL]);
-      toast.success('Image uploaded successfully!');
+      // Add all new image URLs to the list
+      setImages(prev => [...prev, ...downloadURLs]);
+      toast.success(`${files.length} images uploaded successfully!`);
     } catch (error) {
-      console.error('Error uploading image:', error);
-      toast.error('Failed to upload image');
+      console.error('Error uploading images:', error);
+      toast.error('Failed to upload images');
     } finally {
       setUploading(false);
     }
@@ -101,6 +106,7 @@ export const AGallery = () => {
           <input
             type="file"
             accept="image/*"
+            multiple
             onChange={handleImageUpload}
             disabled={uploading}
             className="block w-full text-sm text-gray-500
@@ -110,7 +116,7 @@ export const AGallery = () => {
               file:bg-blue-50 file:text-blue-700
               hover:file:bg-blue-100"
           />
-          {uploading && <p className="mt-2 text-blue-600">Uploading...</p>}
+          {uploading && <p className="mt-2 text-blue-600">Uploading multiple images...</p>}
         </div>
 
         {/* Gallery Preview with Delete Buttons */}
