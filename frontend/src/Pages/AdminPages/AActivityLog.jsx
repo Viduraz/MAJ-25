@@ -119,7 +119,13 @@ function AActivityLog(){
   };
 
   const createPDF = async (user, activities) => {
-    console.log(user.fullName);
+    // Remove duplicate activities based on id
+    const uniqueActivities = user.activities.filter((activity, index, self) =>
+      index === self.findIndex((a) => a.id === activity.id)
+    );
+    
+    // Use the deduplicated activities list
+    console.log(user.fullName, uniqueActivities);
     const pdf = new jsPDF({
       orientation: 'portrait',
       unit: 'px',
@@ -149,11 +155,11 @@ function AActivityLog(){
     //console.log("Activities List");
     //console.log(activities);
     //list of lists
-    const categorizedActivities = categorize(user.activities, activities);
+    const categorizedActivities = categorize(uniqueActivities, activities);
     //console.log(user['fullName']);
     //console.log(categorizedActivities);
 
-    const categoryName = {'Adventure':'Adventure', 'Bussiness_&_Entrepreneurship':'Bussiness & Entrepreneurship', 'Health_And_Environment':'Health & Environment', 'Scout_Craft':'Scout Craft', 'Society_and_Culture':'Society & Culture', 'Technology':'Technology', 'Water_activities':'Water Activities'};
+    //const categoryName = {'Adventure':'Adventure', 'Bussiness_&_Entrepreneurship':'Bussiness & Entrepreneurship', 'Health_And_Environment':'Health & Environment', 'Scout_Craft':'Scout Craft', 'Society_and_Culture':'Society & Culture', 'Technology':'Technology', 'Water_activities':'Water Activities'};
     const categoryNameImage = {'Adventure':Title5, 'Bussiness_&_Entrepreneurship':Title6, 'Health_And_Environment':Title4, 'Scout_Craft':Title3, 'Society_and_Culture':Title1, 'Technology':Title2, 'Water_activities':Title7};
 
     const imageName = {
