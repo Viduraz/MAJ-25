@@ -125,7 +125,7 @@ function AActivityLog(){
     );
     
     // Use the deduplicated activities list
-    console.log(user.fullName, uniqueActivities);
+    console.log(user.fullName);
     const pdf = new jsPDF({
       orientation: 'portrait',
       unit: 'px',
