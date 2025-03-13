@@ -268,8 +268,10 @@ function AActivityLog(){
     const activities = await axios.get('https://maj-25-backend.onrender.com/api/activity');
 
     userData.forEach((user, index) => {
-      const pdfBlob = createPDF(user, activities.data);
-      zip.file(`log_${user.email}.pdf`, pdfBlob);
+      if(user.type == "Scout"){
+        const pdfBlob = createPDF(user, activities.data);
+        zip.file(`log_${user.email}.pdf`, pdfBlob);
+      }
     });
 
     const zipBlob = await zip.generateAsync({ type: "blob" });
