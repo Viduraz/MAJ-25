@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import v1 from "../Assests/v1.mp4";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "react-hot-toast"; // Add this import
 import AnimationContainer from "@/Components/AnimationContainer";
 import map from "../Assests/MAP.png";
 import gamagesir from "../Assests/gamagesir.png";
@@ -73,7 +74,7 @@ export default function Home() {
   useEffect(() => {
     const fetchRegisteredCount = async () => {
       try {
-        const response = await axios.get("http://35.232.49.147:3000/api/registration");
+        const response = await axios.get("https://35.232.49.147:3000/api/registration");
         console.log("API Response:", response.data);
         
         // Check if the response data is an array
