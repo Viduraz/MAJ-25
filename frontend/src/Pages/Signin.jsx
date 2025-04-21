@@ -28,7 +28,7 @@ export default function Signin() {
     e.preventDefault();
 
     if (isSwitchOn) {
-      const URL = 'https://maj-25-backend.onrender.com/api/registration/single';
+      const URL = 'http://localhost:3000/api/registration/single';
 
       try {
         dispatch(signInStart());
@@ -54,7 +54,7 @@ export default function Signin() {
     } else {
       try {
         dispatch(signInStart());
-        const response = await axios.post('https://maj-25-backend.onrender.com/api/auth/signin', formData);
+        const response = await axios.post('http://localhost:3000/api/auth/signin', formData);
 
         if (response.data) {
           dispatch(signInSuccess(response.data));

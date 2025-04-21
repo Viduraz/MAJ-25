@@ -38,7 +38,7 @@ function AprofileQr() {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `https://maj-25-backend.onrender.com/api/registration/${searchEmail}`
+        `http://localhost:3000/api/registration/${searchEmail}`
       );
       if (response.data) {
         setUserData(response.data);
@@ -56,7 +56,7 @@ function AprofileQr() {
   const handleAllSearch = async () => {
     try {
       const response = await axios.get(
-        `https://maj-25-backend.onrender.com/api/registration/sameschool/all/${searchEmail}`
+        `http://localhost:3000/api/registration/sameschool/all/${searchEmail}`
       );
       if (response.data) {
         showToast("Users Found", "success");

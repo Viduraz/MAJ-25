@@ -54,7 +54,7 @@ export default defineConfig({
     },
     proxy: {
       '/api': {
-        target: 'https://maj-25-backend.onrender.com',
+        target: 'http://localhost:3000',
         changeOrigin: true
       }
     }

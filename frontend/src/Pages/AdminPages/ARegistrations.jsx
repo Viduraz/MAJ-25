@@ -22,7 +22,7 @@ export default function AdminRegistrations() {
 
     const fetchRegistrations = async () => {
       try {
-        const response = await axios.get('https://maj-25-backend.onrender.com/api/registration');
+        const response = await axios.get('http://localhost:3000/api/registration');
         const registrations = response.data || [];
         setRegistrations(registrations);
         setLoading(false);
@@ -98,7 +98,7 @@ export default function AdminRegistrations() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://maj-25-backend.onrender.com/api/registration/${id}`);
+      await axios.delete(`http://localhost:3000/api/registration/${id}`);
       setRegistrations(registrations.filter(registration => registration._id !== id));
       toast.success('Registration deleted successfully');
     } catch (error) {
@@ -108,7 +108,7 @@ export default function AdminRegistrations() {
 
   const handleSaveEdit = async () => {
     try {
-      await axios.put(`https://maj-25-backend.onrender.com/api/registration/${editData._id}`, {
+      await axios.put(`http://localhost:3000/api/registration/${editData._id}`, {
         fullName: editData.fullName,
         gender: editData.gender,
         phoneNumber: editData.phoneNumber,

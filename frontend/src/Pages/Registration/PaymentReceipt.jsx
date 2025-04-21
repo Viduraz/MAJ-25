@@ -22,7 +22,7 @@ export default function PaymentReceipt({
   setReceiptImage,
   onPrevious,
 }) {
-  const registrationURL = "https://maj-25-backend.onrender.com/api/registration";
+  const registrationURL = "http://localhost:3000/api/registration";
 
   const [uploading, setUploading] = useState(false);
   const navigate = useNavigate();
