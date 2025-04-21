@@ -282,7 +282,7 @@ function AActivityLog(){
     <ProtectedRoute allowedPage="AprofileQr">
       <div className="min-h-screen bg-gradient-to-b from-blue-100 to-white flex items-center justify-center p-10">
         <Toaster/>
-        <div className="bg-white shadow-lg rounded-lg p-0 max-w-3xl w-full p-6">
+        <div className="bg-white shadow-lg rounded-lg max-w-3xl w-full p-6">
           <h1 className="text-4xl font-extrabold text-blue-600 mb-6 text-center">
             Search by Email of Leader
           </h1>

@@ -33,8 +33,7 @@ export default defineConfig({
         },
         manualChunks: (id) => {
           if (id.includes('node_modules')) {
-            if (id.includes('@fortawesome')) return 'vendor-fontawesome';
-            return 'vendor';
+            if (id.includes('@fortawesome')) ;
           }
         }
       }
