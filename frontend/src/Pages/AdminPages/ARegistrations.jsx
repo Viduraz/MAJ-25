@@ -22,7 +22,7 @@ export default function AdminRegistrations() {
 
     const fetchRegistrations = async () => {
       try {
-        const response = await axios.get('35.232.49.147/api/registration');
+        const response = await axios.get('http://35.232.49.147:3000/api/registration');
         const registrations = response.data || [];
         setRegistrations(registrations);
         setLoading(false);
@@ -98,7 +98,7 @@ export default function AdminRegistrations() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`35.232.49.147/api/registration/${id}`);
+      await axios.delete(`http://35.232.49.147:3000/api/registration/${id}`);
       setRegistrations(registrations.filter(registration => registration._id !== id));
       toast.success('Registration deleted successfully');
     } catch (error) {
@@ -108,7 +108,7 @@ export default function AdminRegistrations() {
 
   const handleSaveEdit = async () => {
     try {
-      await axios.put(`35.232.49.147/api/registration/${editData._id}`, {
+      await axios.put(`http://35.232.49.147:3000/api/registration/${editData._id}`, {
         fullName: editData.fullName,
         gender: editData.gender,
         phoneNumber: editData.phoneNumber,

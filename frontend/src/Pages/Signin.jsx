@@ -28,7 +28,7 @@ export default function Signin() {
     e.preventDefault();
 
     if (isSwitchOn) {
-      const URL = '35.232.49.147/api/registration/single';
+      const URL = 'http://35.232.49.147:3000/api/registration/single';
 
       try {
         dispatch(signInStart());
@@ -54,7 +54,7 @@ export default function Signin() {
     } else {
       try {
         dispatch(signInStart());
-        const response = await axios.post('35.232.49.147/api/auth/signin', formData);
+        const response = await axios.post('http://35.232.49.147:3000/api/auth/signin', formData);
 
         if (response.data) {
           dispatch(signInSuccess(response.data));

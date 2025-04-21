@@ -53,7 +53,7 @@ export default defineConfig({
     },
     proxy: {
       '/api': {
-        target: '35.232.49.147',
+        target: 'http://35.232.49.147:3000',
         changeOrigin: true
       }
     }

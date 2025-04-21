@@ -38,7 +38,7 @@ function AprofileQr() {
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `35.232.49.147/api/registration/${searchEmail}`
+        `http://35.232.49.147:3000/api/registration/${searchEmail}`
       );
       if (response.data) {
         setUserData(response.data);
@@ -56,7 +56,7 @@ function AprofileQr() {
   const handleAllSearch = async () => {
     try {
       const response = await axios.get(
-        `35.232.49.147/api/registration/sameschool/all/${searchEmail}`
+        `http://35.232.49.147:3000/api/registration/sameschool/all/${searchEmail}`
       );
       if (response.data) {
         showToast("Users Found", "success");

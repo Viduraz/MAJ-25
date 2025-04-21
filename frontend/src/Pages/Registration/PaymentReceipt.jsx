@@ -22,7 +22,7 @@ export default function PaymentReceipt({
   setReceiptImage,
   onPrevious,
 }) {
-  const registrationURL = "35.232.49.147/api/registration";
+  const registrationURL = "http://35.232.49.147:3000/api/registration";
 
   const [uploading, setUploading] = useState(false);
   const navigate = useNavigate();

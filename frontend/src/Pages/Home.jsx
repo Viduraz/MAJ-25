@@ -73,7 +73,7 @@ export default function Home() {
   useEffect(() => {
     const fetchRegisteredCount = async () => {
       try {
-        const response = await axios.get("35.232.49.147/api/registration");
+        const response = await axios.get("http://35.232.49.147:3000/api/registration");
         console.log("API Response:", response.data);
         
         // Check if the response data is an array
@@ -99,7 +99,7 @@ export default function Home() {
     const fetchNews = async () => {
       try {
         const response = await axios.get(
-          "35.232.49.147/api/news"
+          "http://35.232.49.147:3000/api/news"
         );
         setNews(response.data);
       } catch (error) {
