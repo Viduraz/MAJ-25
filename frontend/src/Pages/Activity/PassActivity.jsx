@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ProtectedRoute from '../../Components/ProtectedRoute';
 
-const baseUrl = 'http://localhost:3000';
+const baseUrl = '35.232.49.147';
 var scoutDetails = {};
 
 function PassActivity() {

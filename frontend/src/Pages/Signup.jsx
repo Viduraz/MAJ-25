@@ -20,7 +20,7 @@ export default function SignUp() {
     try {
       setLoading(true);
       setError(false);
-      const res = await axios.post('http://localhost:3000/api/auth/signup', formData);
+      const res = await axios.post('35.232.49.147/api/auth/signup', formData);
       const data = res.data;
       setLoading(false);
       if (data.success === false) {

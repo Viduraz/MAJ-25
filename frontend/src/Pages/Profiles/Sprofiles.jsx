@@ -45,7 +45,7 @@ export default function Sprofiles() {
 
   const fetchUserActivities = async (email) => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/activity/user/${email}`);
+      const response = await axios.get(`35.232.49.147/api/activity/user/${email}`);
       setActivities(response.data);
     } catch (error) {
       console.error('Error fetching user activities:', error);

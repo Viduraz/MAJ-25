@@ -27,7 +27,7 @@ const AdminManagement = () => {
   useEffect(() => {
     const fetchAdmins = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/admin');
+        const response = await axios.get('35.232.49.147/api/admin');
         setAdmins(response.data);
       } catch (error) {
         console.error('Error fetching admins:', error);
@@ -47,7 +47,7 @@ const AdminManagement = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/admin/delete/${id}`);
+      await axios.delete(`35.232.49.147/api/admin/delete/${id}`);
       setAdmins(admins.filter((admin) => admin._id !== id));
       toast.success('Admin deleted successfully');
     } catch (error) {
@@ -64,7 +64,7 @@ const AdminManagement = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/admin/update/${adminToUpdate._id}`,
+        `35.232.49.147/api/admin/update/${adminToUpdate._id}`,
         formData
       );
       
@@ -89,7 +89,7 @@ const AdminManagement = () => {
       await handleUpdate(formData);
     } else {
       try {
-        const response = await axios.post('http://localhost:3000/api/admin/add', formData);
+        const response = await axios.post('35.232.49.147/api/admin/add', formData);
         setAdmins([...admins, response.data]);
         setFormData({ username: '', email: '', password: '', redirectPage: '' });
         toast.success('Administrator added successfully');

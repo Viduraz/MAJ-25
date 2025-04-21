@@ -74,7 +74,7 @@ export default function Home() {
     const fetchRegisteredCount = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/registration"
+          "35.232.49.147/api/registration"
         );
         console.log("Registered Count Response:", {
           data: response.data,
@@ -98,7 +98,7 @@ export default function Home() {
     const fetchNews = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/news"
+          "35.232.49.147/api/news"
         );
         setNews(response.data);
       } catch (error) {

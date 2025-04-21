@@ -86,7 +86,7 @@ function AActivityLog(){
   const handleSearch = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/registration/sameschool/all/${searchEmail}`
+        `35.232.49.147/api/registration/sameschool/all/${searchEmail}`
       );
       //console.log(response.data);
       if (response.data) {
@@ -265,7 +265,7 @@ function AActivityLog(){
   const handleDownload = async () => {
     const zip = new JSZip();
 
-    const activities = await axios.get('http://localhost:3000/api/activity');
+    const activities = await axios.get('35.232.49.147/api/activity');
 
     userData.forEach((user, index) => {
       if(user.type == "Scout"){

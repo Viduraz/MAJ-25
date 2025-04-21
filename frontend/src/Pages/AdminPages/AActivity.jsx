@@ -21,7 +21,7 @@ const AActivity = () => {
 
   const fetchActivities = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/activity');
+      const response = await axios.get('35.232.49.147/api/activity');
       setActivities(response.data);
       toast.success('Activities loaded successfully!');
     } catch (error) {
@@ -40,7 +40,7 @@ const AActivity = () => {
     try {
       const activityId = generateNextActivityId();
       const activityToAdd = { ...newActivity, id: activityId };
-      const response = await axios.post('http://localhost:3000/api/activity', activityToAdd);
+      const response = await axios.post('35.232.49.147/api/activity', activityToAdd);
       setActivities([...activities, response.data]);
       setNewActivity({ id: '', name: '', category: '' });
       toast.success('Activity added successfully!');
@@ -52,7 +52,7 @@ const AActivity = () => {
 
   const handleEditActivity = async (activity) => {
     try {
-      const response = await axios.put(`http://localhost:3000/api/activity/${activity.id}`, activity);
+      const response = await axios.put(`35.232.49.147/api/activity/${activity.id}`, activity);
       setActivities(activities.map((act) => (act.id === activity.id ? response.data : act)));
       setEditActivity(null);
       toast.success('Activity edited successfully!');
@@ -64,7 +64,7 @@ const AActivity = () => {
 
   const handleDeleteActivity = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/activity/${id}`);
+      await axios.delete(`35.232.49.147/api/activity/${id}`);
       setActivities(activities.filter((activity) => activity.id !== id));
       toast.success('Activity deleted successfully!');
     } catch (error) {
