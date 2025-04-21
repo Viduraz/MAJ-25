@@ -73,20 +73,21 @@ export default function Home() {
   useEffect(() => {
     const fetchRegisteredCount = async () => {
       try {
-        const response = await axios.get(
-          "35.232.49.147/api/registration"
-        );
-        console.log("Registered Count Response:", {
-          data: response.data,
-          status: response.status,
-          statusText: response.statusText,
-        });
-        setCount(response.data.length);
-        localStorage.setItem("registeredCount", response.data.length);
-        // Set the registered users data to state
-        setRegisteredUsers(response.data);
+        const response = await axios.get("35.232.49.147/api/registration");
+        console.log("API Response:", response.data);
+        
+        // Check if the response data is an array
+        if (Array.isArray(response.data)) {
+          setCount(response.data.length);
+          localStorage.setItem("registeredCount", response.data.length);
+          setRegisteredUsers(response.data); // Set the registered users data to state
+        } else {
+          console.error("Unexpected response data:", response.data);
+          toast.error("Failed to fetch registered count. Please try again.");
+        }
       } catch (error) {
         console.error("Error fetching registered count:", error);
+        toast.error("Error fetching registered count.");
       }
     };
 
@@ -476,6 +477,10 @@ export default function Home() {
         </div>
       </AnimationContainer>
 
+      {/* Check for registered users */}
+      {!Array.isArray(registeredUsers) && (
+        <p>No registered users found.</p>
+      )}
       
     </div>
   );
