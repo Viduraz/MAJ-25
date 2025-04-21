@@ -59,7 +59,5 @@ export default defineConfig({
       }
     }
   },
-  optimizeDeps: {
-    exclude: ['chunk-F2GNF72Y.js']
-  }
+ 
 });
