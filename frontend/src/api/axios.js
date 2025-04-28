@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-// Option 1: Use relative URLs (recommended)
-const API = axios.create({ baseURL: '/api' });
+// Change this:
+// const API = axios.create({ baseURL: '/registration' });
+// or whatever current configuration you have
 
-// Option 2: Use HTTPS explicitly
-// const API = axios.create({ baseURL: 'https://35.232.49.147:3000/api' });
+// To this - use the full API path:
+const API = axios.create({ baseURL: '/api' });
 
 export default API;
