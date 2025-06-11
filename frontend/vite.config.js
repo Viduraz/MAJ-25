@@ -53,8 +53,22 @@ export default defineConfig({
     },
     proxy: {
       '/api': {
-        target: 'http://35.232.49.147:3000',
-        changeOrigin: true
+        target: 'http://35.232.49.147:3000', // Change from HTTPS to HTTP
+        changeOrigin: true,
+        secure: false,
+        timeout: 60000,
+        retries: 3,
+        configure: (proxy, options) => {
+          proxy.on('error', (err, req, res) => {
+            console.log('proxy error', err);
+          });
+          proxy.on('proxyReq', (proxyReq, req, res) => {
+            console.log('Sending Request to the Target:', req.method, req.url);
+          });
+          proxy.on('proxyRes', (proxyRes, req, res) => {
+            console.log('Received Response from the Target:', proxyRes.statusCode, req.url);
+          });
+        },
       }
     }
   },

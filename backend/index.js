@@ -19,7 +19,12 @@ mongoose.connect(process.env.MONGOURI).then(() => {
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:5173', 'https://maj2025.com', 'http://35.232.49.147:5173'], // Add more origins
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(cookieParser());
 
 app.get('/', (req, res) => {

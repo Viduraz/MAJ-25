@@ -1,10 +1,22 @@
 import axios from 'axios';
 
-// Change this:
-// const API = axios.create({ baseURL: '/registration' });
-// or whatever current configuration you have
+const API = axios.create({ 
+  baseURL: 'http://35.232.49.147:3000/api',
+  timeout: 30000,
+  headers: {
+    'Content-Type': 'application/json',
+  }
+});
 
-// To this - use the full API path:
-const API = axios.create({ baseURL: '/api' });
+// Add interceptors for better error handling
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.code === 'ECONNREFUSED') {
+      console.error('Backend server is not accessible');
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default API;
