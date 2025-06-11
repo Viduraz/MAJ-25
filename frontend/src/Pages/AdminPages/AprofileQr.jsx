@@ -55,8 +55,13 @@ function AprofileQr() {
 
   const handleAllSearch = async () => {
     try {
+      // Use the same base URL logic
+      const baseURL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? '/api'
+        : 'http://35.232.49.147:3000/api';
+      
       const response = await axios.get(
-        `http://35.232.49.147:3000/api/registration/sameschool/all/${searchEmail}`
+        `${baseURL}/registration/sameschool/all/${searchEmail}`
       );
       if (response.data) {
         showToast("Users Found", "success");
