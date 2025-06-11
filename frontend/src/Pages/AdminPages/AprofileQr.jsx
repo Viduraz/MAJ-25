@@ -37,8 +37,13 @@ function AprofileQr() {
 
   const handleSearch = async () => {
     try {
+      // Use the same base URL logic as handleAllSearch
+      const baseURL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? '/api'
+        : 'http://35.232.49.147:3000/api';
+      
       const response = await axios.get(
-        `http://35.232.49.147:3000/api/registration/${searchEmail}`
+        `${baseURL}/registration/${searchEmail}`
       );
       if (response.data) {
         setUserData(response.data);
