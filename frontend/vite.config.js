@@ -53,7 +53,7 @@ export default defineConfig({
     },
     proxy: {
       '/api': {
-        target: 'http://35.232.49.147:3000', // Change from HTTPS to HTTP
+        target: 'http://35.232.49.147:3000', 
         changeOrigin: true,
         secure: false,
         timeout: 60000,
