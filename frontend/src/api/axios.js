@@ -40,7 +40,22 @@ API.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.error('API request failed:', error.message);
+    // Better error logging to help with debugging
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error('API error response:', {
+        status: error.response.status,
+        data: error.response.data,
+        headers: error.response.headers
+      });
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error('API request made, but no response received:', error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error('API request setup error:', error.message);
+    }
     return Promise.reject(error);
   }
 );
