@@ -45,6 +45,13 @@ app.use(cors({
 }));
 app.use(cookieParser());
 
+// Add this middleware to log incoming requests
+app.use((req, res, next) => {
+  console.log(`Incoming request: ${req.method} ${req.path}`);
+  console.log('Origin:', req.get('origin'));
+  next();
+});
+
 app.get('/', (req, res) => {
     res.send('🎉 Backend is working!');
 });
