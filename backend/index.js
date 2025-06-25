@@ -20,14 +20,25 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({
-  origin: [
-    'http://localhost:5173', 
-    'https://maj2025.com', 
-    'http://maj2025.com', 
-    'https://www.maj2025.com',
-    'http://www.maj2025.com',
-    'http://35.232.49.147:5173'
-  ], 
+  origin: function(origin, callback) {
+    const allowedOrigins = [
+      'http://localhost:5173', 
+      'https://maj2025.com', 
+      'http://maj2025.com', 
+      'https://www.maj2025.com',
+      'http://www.maj2025.com',
+      'http://35.232.49.147:5173',
+      'https://maj-25.netlify.app',
+      'http://maj-25.netlify.app'
+    ];
+    
+    // Allow requests with no origin (like mobile apps)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept']
