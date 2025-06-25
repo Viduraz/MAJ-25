@@ -20,10 +20,17 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://maj2025.com', 'http://maj2025.com', 'http://35.232.49.147:5173'], 
+  origin: [
+    'http://localhost:5173', 
+    'https://maj2025.com', 
+    'http://maj2025.com', 
+    'https://www.maj2025.com',
+    'http://www.maj2025.com',
+    'http://35.232.49.147:5173'
+  ], 
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept']
 }));
 app.use(cookieParser());
 

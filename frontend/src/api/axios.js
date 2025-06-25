@@ -7,7 +7,14 @@ const getBaseURL = () => {
     return '/api'; // Use proxy in development
   }
   
-  // Production - use direct backend URL
+  // For maj2025.com domain
+  if (window.location.hostname === 'maj2025.com' || window.location.hostname.includes('maj2025')) {
+    // Use https if the site is served over https, otherwise use http
+    const protocol = window.location.protocol === 'https:' ? 'https' : 'http';
+    return `${protocol}://35.232.49.147:3000/api`;
+  }
+  
+  // Fallback for any other environments
   return 'http://35.232.49.147:3000/api';
 };
 
@@ -16,7 +23,8 @@ const API = axios.create({
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
-  }
+  },
+  withCredentials: true // Enable sending cookies with cross-origin requests
 });
 
 // Add interceptors for better error handling
@@ -40,6 +48,7 @@ API.interceptors.response.use(
     return response;
   },
   (error) => {
+    console.error('API request failed:', error.message);
     if (error.code === 'ECONNREFUSED') {
       console.error('Backend server is not accessible');
     }
